@@ -2,6 +2,8 @@
 
 已有实现（github上找的）：https://exam.yfhl.net/
 
+已部署：https://www.zzzs.ml/exam/
+
 # 1.功能
 
 ## 1.1用户管理
