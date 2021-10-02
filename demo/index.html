@@ -1,0 +1,135 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>软工第七组文科计算机在线考试平台登录页面</title>
+</head>
+
+<body>
+    <script src="../main/zzz.js"></script>
+    <script>
+        zzz.fetch.js("../main/zdata.js");
+        zzz.fetch.css("css/global.css");
+
+        function show() {
+            let data = zzz.queryAttr("form input", null, (ele) => {
+                return ele.value || ele.text;
+            });
+            console.log(data);
+            alert(data);
+            window.open("main.html","_self");
+        }
+    </script>
+    <style>
+        #main {
+            position: absolute;
+            display: flex;
+            top: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            justify-content:
+                center;
+            align-items: center;
+            align-content: center;
+            vertical-align: unset;
+            flex-direction: column;
+            font-size:
+                30px;
+            font-family: title;
+            color: rgb(154, 1, 0);
+
+        }
+
+        #main div {
+            transition: all 0.5s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        #main div:hover {
+            background-color: #bb4141;
+            color: white;
+        }
+
+        #logo {
+            position: relative;
+            display: block;
+            height: auto;
+            width: auto;
+            align-content: center;
+            align-items:
+                center;
+            justify-content: center;
+            margin: 0.3em;
+        }
+
+        #bg {
+            position: relative;
+            display: block;
+            height: auto;
+            width: auto;
+            align-content: center;
+            align-items:
+                center;
+            justify-content: center;
+            margin-left: 0.3em;
+            padding-right: 4em;
+            align-content: baseline;
+            justify-content: left;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        input {
+            width: 13em;
+            height: 1.5em;
+            font-family: 宋体;
+            font-size: 1em;
+            border-width: 3px;
+            border-color: #7c0909;
+            border-style: solid;
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+            transition-duration: 1s;
+        }
+
+        input:hover {
+            background-color: #fff4d4;
+        }
+
+        input:focus {
+            background-color: #ffdb7a;
+        }
+        input[type="button"]:hover{
+            background-color: rgb(255, 255, 255)!important;
+            color: var(--pku-red)!important;
+        }
+        p{
+            margin: 0;
+        }
+    </style>
+    <div id="main" style="">
+        <div style="text-align: center;"><p style="margin: 0;font-size: 2em;" class="title">北大文计平台</p></div>
+        <img id="logo" src="images/pkulogo.png" style="">
+        <div style="display: flex;position: relative;">
+            <img id="bg" src="images/bg.jpg" style="">
+            <form id="f" style="" onsubmit="return false">
+                <div style="position: relative;"><p>用户名</p><input type="text"><a contenteditable="false" style="display: inline;background-color: #7c0909;position: absolute;color: white;height: 1.5em;line-height:1.5em;width: 1.5em;right:0;text-align: center;" onclick="zzz.get.tag('input')[0].value='';">×</a></div>
+                <div>密码</div><input type="password">
+                <div
+                    style="display: flex;align-content: center;justify-content: left;align-items: last baseline;flex-basis: max-content;flex-flow: column;">
+                    <input type="button" value="登录"
+                        style="background: #7c0909;border: 0px;margin-top: 20px;padding: 5px;right: 0;display: block;position: relative;color: white;cursor: pointer;"
+                        onclick="show()">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+@font-face {
+    font-style: normal;
+    font-family: 'title';
+    src: url('../font/华文中宋.ttf') format('truetype');
+}
+@font-face {
+    font-style: normal;
+    font-family: default;
+    src:'宋体';
+}
+:root {
+    --pku-red: rgb(139, 0, 22);
+    --pku-light: rgb(154, 1, 0);
+    --pku-dark: rgb(82, 0, 12);
+    font-size: 20px;
+    font-family: default;
+}
+
+p {
+    margin: 0;
+}
+
+div {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 0;
+    transition: all 0.5s ease-out;
+}
+input{
+    outline: 0;
+    border-color: var(--pku-red);
+    border-width: 3px;
+    border-style: solid;
+}
+a{
+    color:blue;
+    background-color: transparent;
+    cursor: pointer;
+}
+a:hover{
+    background-color: blue;
+    color:red;
+}
+a:active{
+    background-color: transparent;
+}
+a:visited{
+    color:red;
+}
+.flex{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.flexv{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+.center{
+    justify-content: center;
+    align-items: center;
+}
+.trans{
+    transition: all 0.5s ease-out;
+}

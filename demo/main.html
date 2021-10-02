@@ -1,0 +1,175 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>软工第七组文科计算机在线考试平台</title>
+</head>
+
+<body>
+    <script src="../main/zzz.js"></script>
+    <script>
+        zzz.fetch.js("../main/zdata.js");
+        zzz.fetch.css("css/global.css");
+
+        function logout(e) {
+            var e = e || this.event || window.event;
+            e.stopPropagation();
+            e.preventDefault();
+            zzz.anim.set(zzz.get.id("main"), {
+                filter: "blur(10px)"
+            });
+            window.msg = zzz.create("div", {
+                innerHTML: "你确定要注销吗？",
+                id: "logout",
+                className: "flex center",
+                onclick: "logout2()"
+            }, {
+                fontSize: "2em",
+                left: "40%",
+                top: "40%",
+                right: "40%",
+                bottom: "40%",
+                position: "fixed",
+                background: "var(--pku-dark)",
+                color: "white",
+                textAlign: "center"
+            }, document.body);
+            zzz.incidence.bind(zzz.get.id("main"), "click", nologout);
+            return false;
+        }
+
+        function nologout(e) {
+            console.log(e);
+            e.preventDefault();
+            e = zzz.incidence.interpret(e);
+            if (e.target.id === "logout") return false;
+            zzz.anim.set(zzz.get.id("main"), {
+                filter: "blur(0)"
+            });
+            if (msg && (!zzz.incidence.erase(msg, "click", nologout)) && document.body.removeChild(msg)) msg = null;
+            return false;
+        }
+
+        function logout2() {
+            window.open("index.html", "_self");
+        }
+    </script>
+    <style>
+        #main {
+            position: absolute;
+            display: block;
+            top: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            font-size: 30px;
+            font-family: title;
+            color: black;
+        }
+
+        #head {
+            top: 0;
+            width: 100%;
+            height: 3em;
+            background-color: var(--pku-light);
+            overflow: hidden;
+            align-content: center;
+        }
+
+        .title {
+            font-size: 3em;
+            margin-right: 2em;
+            color: white;
+            line-height: 1em;
+        }
+
+        .foot {
+            background-color: var(--pku-red);
+            bottom: 0;
+            color: white;
+            width: 100%;
+            height: 2em;
+            display: block;
+        }
+
+        #content {
+            width: 100%;
+            height: auto;
+            min-height: 800px;
+            flex-direction: row;
+        }
+
+        #copyright {
+            font-size: 0.6em;
+            opacity: 0.9;
+        }
+
+        #copyright span {
+            margin: 0 auto;
+        }
+
+        .btn {
+            background: linear-gradient(0deg, rgba(255, 0, 0, .8), rgba(255, 0, 0, 0) 100%);
+            /*linear-gradient(0deg, rgba(255, 74, 50, 0.8), rgba(255, 0, 0, 0) 70.71%);*/
+            min-width: 3em;
+            margin-left: 0.2em;
+            transition: all 1s ease-in;
+            height: 100%;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: linear-gradient(0deg, rgba(192, 27, 27, 0.8), rgba(161, 0, 0, 0) 0%);
+            /*linear-gradient(0deg, rgba(255, 116, 97, 0.8), rgba(255, 0, 0, 0) 20.71%);*/
+        }
+
+        .btn:active {
+            background-color: rgba(255, 255, 255, 0);
+        }
+        .func{
+            width: 100%;
+            margin: 3em;
+            margin-left: 1em;
+            margin-right: 1em;
+            background-color: var(--pku-red);
+            color: white;
+        }
+        .func p{
+            margin-bottom: 0.1em;
+        }
+        .title2{
+            font-size: 2em;
+        }
+    </style>
+    <div id="main">
+        <div id="head" class="flex">
+            <p class="title" style="margin-right: auto;">北大文计平台</p>
+            <div class="flex" style="width: auto;justify-content: right;">
+                <div class="flex center btn">
+                    <p>用户名</p>
+                </div>
+                <div class="flex center btn" onclick="logout();">
+                    <p>注销</p>
+                </div>
+            </div>
+        </div>
+        <div id="content" class="flex">
+            <div class="flexv func center"><p class="title2">考试</p><p>时间</p></div>
+            <div class="flexv func center"><p class="title2">考试</p><p>权限</p></div>
+            <div class="flexv func center"><p class="title2">考试</p><p onclick="alert('开考啦！')">点击开始</p></div>
+        </div>
+        <div id="foot" class="foot" style="border-top:8px solid var(--pku-light)">
+            <div id="copyright" class="flex center" >
+                <span style="margin: 0;color:gray;">©opy®ight:2021-2021</span>
+                <a style="margin: 0;"><span>备案号</span>xxxx-xxxx-xxxx-xxxx-xxxx</a>
+            </div>
+            <div style="position: absolute;right: 0;justify-content: right;top:0;height: 100%;" class="flex center">
+                <a class="btn">帮助</a>
+                <p class="btn">关于</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
