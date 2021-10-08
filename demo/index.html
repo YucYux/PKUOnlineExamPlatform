@@ -9,7 +9,7 @@
     <script>
         zzz.fetch.js("../main/zdata.js");
         zzz.fetch.css("css/global.css");
-
+        zzz.fetch.js("script/global.js");
         function show() {
             let data = zzz.queryAttr("form input", null, (ele) => {
                 return ele.value || ele.text;
@@ -21,22 +21,13 @@
     </script>
     <style>
         #main {
-            position: absolute;
             display: flex;
-            top: 0;
-            margin: 0;
-            width: 100%;
-            height: 100%;
-            left: 0;
             justify-content:
                 center;
             align-items: center;
             align-content: center;
             vertical-align: unset;
             flex-direction: column;
-            font-size:
-                30px;
-            font-family: title;
             color: rgb(154, 1, 0);
 
         }
@@ -97,35 +88,20 @@
             transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
             transition-duration: 1s;
         }
-
-        input:hover {
-            background-color: #fff4d4;
-        }
-
-        input:focus {
-            background-color: #ffdb7a;
-        }
-        input[type="button"]:hover{
-            background-color: rgb(255, 255, 255)!important;
-            color: var(--pku-red)!important;
-        }
-        p{
-            margin: 0;
-        }
     </style>
     <div id="main" style="">
-        <div style="text-align: center;"><p style="margin: 0;font-size: 2em;" class="title">北大文计平台</p></div>
+        <div style="text-align: center;"><p style="margin: 0;font-size: 2em;color:inherit;" class="title">北大文计平台</p></div>
         <img id="logo" src="images/pkulogo.png" style="">
         <div style="display: flex;position: relative;">
             <img id="bg" src="images/bg.jpg" style="">
-            <form id="f" style="" onsubmit="return false">
-                <div style="position: relative;"><p>用户名</p><input type="text"><a contenteditable="false" style="display: inline;background-color: #7c0909;position: absolute;color: white;height: 1.5em;line-height:1.5em;width: 1.5em;right:0;text-align: center;" onclick="zzz.get.tag('input')[0].value='';">×</a></div>
+            <form style="" onsubmit="return false;">
+                <div style="position: relative;"><p>学号</p><input type="text"><a contenteditable="false" style="display: inline;background-color: #7c0909;position: absolute;color: white;height: 1.5em;line-height:1.5em;width: 1.5em;right:0;text-align: center;" onclick="zzz.get.tag('input')[0].value='';">×</a></div>
                 <div>密码</div><input type="password">
                 <div
                     style="display: flex;align-content: center;justify-content: left;align-items: last baseline;flex-basis: max-content;flex-flow: column;">
                     <input type="button" value="登录"
                         style="background: #7c0909;border: 0px;margin-top: 20px;padding: 5px;right: 0;display: block;position: relative;color: white;cursor: pointer;"
-                        onclick="show()">
+                        onclick="login()">
                 </div>
             </form>
         </div>

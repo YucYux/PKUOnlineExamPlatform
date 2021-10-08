@@ -1,18 +1,26 @@
 @font-face {
     font-style: normal;
     font-family: 'title';
-    src: url('../font/华文中宋.ttf') format('truetype');
+    src: local('STZhongs'), url('../font/华文中宋.ttf') format('truetype');
 }
+
 @font-face {
     font-style: normal;
-    font-family: default;
-    src:'宋体';
+    font-family: 'default';
+    src: local('宋体'), local('Simsun');
 }
+
+@font-face {
+    font-family: 'render';
+    src: local('Simhei'), local("Simsun");
+}
+
 :root {
+    --render: 'Times New Roman', render;
     --pku-red: rgb(139, 0, 22);
     --pku-light: rgb(154, 1, 0);
     --pku-dark: rgb(82, 0, 12);
-    font-size: 20px;
+    font-size: 1.5vw;
     font-family: default;
 }
 
@@ -25,43 +33,169 @@ div {
     display: block;
     margin: 0;
     padding: 0;
-    transition: all 0.5s ease-out;
 }
-input{
+
+input {
     outline: 0;
     border-color: var(--pku-red);
     border-width: 3px;
+    font-size: 1em;
     border-style: solid;
 }
-a{
-    color:blue;
+
+input:hover {
+    background-color: #fff4d4;
+}
+
+input:focus {
+    background-color: #ffdb7a;
+}
+input[type="button"]:hover{
+    background-color: rgb(255, 255, 255)!important;
+    color: var(--pku-red)!important;
+}
+
+a {
+    color: blue;
     background-color: transparent;
     cursor: pointer;
+    text-decoration: none;
 }
-a:hover{
+
+a:hover {
     background-color: blue;
-    color:red;
+    color: red;
 }
-a:active{
+
+a:active {
     background-color: transparent;
 }
-a:visited{
-    color:red;
+
+a:visited {
+    color: red;
+    text-decoration: dashed;
 }
-.flex{
+
+.flex {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
 }
-.flexv{
+
+.flexv {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
 }
-.center{
+
+.center {
     justify-content: center;
     align-items: center;
 }
-.trans{
-    transition: all 0.5s ease-out;
+
+.height {
+    height: 100%;
+}
+
+.trans {
+    transition: all 0.8s ease-out;
+}
+.fasttrans{
+    transition: all 0.3s cubic-bezier(.17,.84,.44,1);
+}
+.upandaway{
+    transform:translateY(-100%);
+}
+
+#main {
+    position: absolute;
+    display: block;
+    top: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    font-family: title;
+    color: black;
+}
+
+#head {
+    top: 0;
+    width: 100%;
+    height: 3em;
+    background-color: var(--pku-light);
+    overflow: hidden;
+    z-index:999;
+    align-content: center;
+}
+
+.title {
+    font-size: 3em;
+    margin-right: 2em;
+    color: white;
+    line-height: 1em;
+}
+
+.foot {
+    background-color: var(--pku-red);
+    bottom: 0;
+    color: white;
+    width: auto;
+    height: 2em;
+    display: block;
+}
+
+#copyright {
+    font-size: 0.6em;
+    opacity: 0.9;
+}
+
+#copyright span {
+    margin: 0 auto;
+}
+
+#content {
+    width: auto;
+    height: auto;
+    min-height: 800px;
+    padding: 1em;
+}
+
+.btn {
+    background-color: rgba(0, 0, 0, 0);
+    /*linear-gradient(0deg, rgba(255, 0, 0, .8), rgba(255, 0, 0, 0) 100%);*/
+    /*linear-gradient(0deg, rgba(255, 74, 50, 0.8), rgba(255, 0, 0, 0) 70.71%);*/
+    min-width: 3em;
+    transition: all 0.2s ease-out;
+    text-align: center;
+    width: calc(100% - 0.4em);
+    height: 100%;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+}
+
+.btn:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    /*linear-gradient(0deg, rgba(255, 116, 97, 0.8), rgba(255, 0, 0, 0) 20.71%);*/
+}
+
+.btn:active {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.render {
+    background-color: var(--pku-light);
+    min-height: 1em;
+    min-width: 1em;
+    margin: 0.3em;
+    width: max-content;
+    max-width: 100%;
+    word-wrap: break-word;
+    font-family: var(--render);
+    word-break: break-all;
+}
+.answer{
+    min-height: 20vw;
+    width: auto;
+    font-size: 1em;
 }

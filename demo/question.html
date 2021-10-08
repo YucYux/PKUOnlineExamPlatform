@@ -1,0 +1,99 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>考试题目样例</title>
+</head>
+
+<body>
+    <script src="../main/zzz.js"></script>
+    <script>
+        //zzz.fetch.js("script/require.js");
+        zzz.fetch.js("../main/zdata.js");
+        zzz.fetch.js("script/global.js");
+        zzz.fetch.css("css/global.css");
+        zzz.fetch.js("script/ace-1.4.13.js");
+        zzz.fetch.css("css/ace.css");
+        function random_question() {
+            var title = "<p class='render'>这里是标题</p>",
+                content = ["<p class='render'>", '这里是内容', '</p>'],
+                height = 5;
+            zzz.get.cls("question_title")[0].innerHTML = title;
+            while (height--) {
+                zzz.get.cls("question_content")[0].innerHTML += content.join("");
+                content[1] = content[1] + content[1];
+            }
+        }
+        setTimeout(random_question, 2000);
+    </script>
+    <style>
+        div {
+            min-height: 2em;
+        }
+
+        .question_title {
+            font-size: 2em;
+        }
+
+        .question_content {
+            text-indent: 2em;
+        }
+
+        .question_content * {}
+
+        .result {}
+    </style>
+    <div id="main">
+        <div id="head" class="flex">
+            <p class="btn title" style="margin-right: auto;width:auto;">北大文计平台</p>
+            <div class="flex" style="width: auto;justify-content: right;">
+                <div class="flex center btn"  id="user_name">
+                    <p>登录</p>
+                </div>
+            </div>
+        </div>
+        <div id="content" class="flexv">
+            <div class="question_title">
+                <p class="render"></p>
+            </div>
+            <div class="question_content">
+                <p></p>
+            </div>
+            <div class="question_title"><p class="render">回答</p></div>
+            <div class="answer"></div>
+            <div class="result">
+                <p class='btn' style="font-size: 2em;font-family: render;">提交</p>
+            </div>
+        </div>
+        <div id="foot" class="foot" style="border-top:8px solid var(--pku-light)">
+            <div id="copyright" class="flex center">
+                <span style="margin: 0;color:gray;">©opy®ight:2021-2021</span>
+                <a style="margin: 0;"><span>备案号</span>xxxx-xxxx-xxxx-xxxx-xxxx</a>
+            </div>
+            <div style="position: absolute;right: 0;justify-content: right;top:0;height: 100%;" class="flex center">
+                <a class="btn flex center">帮助</a>
+                <p class="btn flex center">关于</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function startEditor() {
+            if (!window.ace) {
+                setTimeout(() => {
+                    startEditor();
+                }, 1000);
+                return;
+            }
+            ace.config.set('basePath','script') ;
+            var editor = ace.edit(zzz.get.cls("answer")[0], {
+                mode: "ace/mode/python",
+                selectionStyle: "text"
+            });
+            editor.setTheme("ace/theme/pku");
+            window.editor=editor;
+        }
+        setTimeout(startEditor,1000);
+    </script>
+</body>
+
+</html>

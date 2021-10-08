@@ -1,0 +1,113 @@
+.ace-pku .ace_gutter {
+  background: #ebebeb;
+  color: rgb(116, 9, 9)
+}
+
+.ace-pku .ace_print-margin {
+  width: 1px;
+  background: #e8e8e8
+}
+
+.ace-pku {
+  background-color: #FFFFFF;
+  color: #000000
+}
+
+.ace-pku .ace_cursor {
+  color: #000000
+}
+
+.ace-pku .ace_marker-layer .ace_selection {
+  background: #BDD5FC
+}
+
+.ace-pku .ace_multiselect .ace_selection.ace_start {
+  box-shadow: 0 0 3px 0px #FFFFFF;
+}
+
+.ace-pku .ace_marker-layer .ace_step {
+  background: rgba(139, 22, 18, 0.418)
+}
+
+.ace-pku .ace_marker-layer .ace_bracket {
+  margin: -1px 0 0 -1px;
+  border: 1px solid #BFBFBF
+}
+
+.ace-pku .ace_marker-layer .ace_active-line {
+  background: #f38f5671
+}
+
+.ace-pku .ace_gutter-active-line {
+  background-color : #dcdcdc
+}
+
+.ace-pku .ace_marker-layer .ace_selected-word {
+  border: 1px solid #BDD5FC
+}
+
+.ace-pku .ace_invisible {
+  color: #BFBFBF
+}
+
+.ace-pku .ace_keyword,
+.ace-pku .ace_meta,
+.ace-pku .ace_support.ace_constant.ace_property-value {
+  color: var(--pku-red)
+}
+
+.ace-pku .ace_keyword.ace_operator {
+  color: #0084ff
+}
+
+.ace-pku .ace_keyword.ace_other.ace_unit {
+  color: #105eb8
+}
+
+.ace-pku .ace_constant.ace_language {
+  color: #af7f27
+}
+
+.ace-pku .ace_constant.ace_numeric {
+  color: #000000
+}
+
+.ace-pku .ace_constant.ace_character.ace_entity {
+  color: #BF78CC
+}
+
+.ace-pku .ace_invalid {
+  background-color: #FF002A
+}
+
+.ace-pku .ace_fold {
+  background-color: #AF956F;
+  border-color: #000000
+}
+.ace-pku .ace_support.ace_function{
+    color:#fa0000
+}
+
+.ace-pku .ace_storage,
+.ace-pku .ace_support.ace_class,
+.ace-pku .ace_support.ace_other,
+.ace-pku .ace_support.ace_type {
+  color: #C52727
+}
+
+.ace-pku .ace_string {
+  color: #0570f3
+}
+
+.ace-pku .ace_comment {
+  color: #6be955
+}
+
+.ace-pku .ace_entity.ace_name.ace_tag,
+.ace-pku .ace_entity.ace_other.ace_attribute-name {
+  color: #606060
+}
+
+.ace-pku .ace_indent-guide {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==") right repeat-y
+}

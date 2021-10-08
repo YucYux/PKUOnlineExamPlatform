@@ -1,0 +1,1 @@
+define("ace/theme/pku",["require","exports","module","ace/lib/dom"],function(c,e,a){e.isDark=!1,e.cssClass="ace-pku",e.cssText=``,c("../lib/dom").importCssString(e.cssText,e.cssClass,!1)}),window.require(["ace/theme/pku"],function(c){"object"==typeof module&&"object"==typeof exports&&module&&(module.exports=c)});
