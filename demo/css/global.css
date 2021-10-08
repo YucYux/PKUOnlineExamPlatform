@@ -195,7 +195,17 @@ a:visited {
     word-break: break-all;
 }
 .answer{
-    min-height: 20vw;
+    min-height: 60vw;
     width: auto;
     font-size: 1em;
+}
+#vscode{
+    position:absolute;
+    width:100%;
+    height:100%;
+    display: block;
+    left: 0;
+    top: 0;
+    border:0;
+    outline: none;
 }
