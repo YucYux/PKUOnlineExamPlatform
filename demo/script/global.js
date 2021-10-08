@@ -35,7 +35,7 @@ function nologout(e) {
     zzz.anim.set(zzz.get.id("main"), {
         filter: "blur(0)"
     });
-    if (msg && (!zzz.incidence.erase(msg, "click", nologout)) && document.body.removeChild(msg)) msg = null;
+    if (msg && (!zzz.incidence.erase(zzz.get.id("main"), "click", nologout)) && document.body.removeChild(msg)) msg = null;
     return false;
 }
 
