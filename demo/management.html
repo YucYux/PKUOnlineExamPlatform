@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>控制台</title>
+</head>
+
+<body>
+    <script src="script/zzz.js"></script>
+    <script>
+        zzz.fetch.js("script/zdata.js");
+        zzz.fetch.css("css/global.css");
+        zzz.fetch.js("script/global.js");
+    </script>
+    <style>
+.menu{
+	width: 3em;
+	border-right: 0.2em solid var(--pku-light);
+}
+.menu a:target{
+    background-color: var(--pku-light);
+    color: white;
+}
+    </style>
+    <div id="main">
+        <div id="head" class="flex">
+            <p class="btn title" style="margin-right: auto;width:auto;">北大文计平台管理页面</p>
+            <div class="flex" style="width: auto;justify-content: right;">
+                <div class="flex center btn"  id="user_name">
+                    <p>登录</p>
+                </div>
+            </div>
+        </div>
+        <div id="content" class="flex">
+            <div class="menu flexv">
+                <a href="javascript:callService(0)" id="service0">用户</a>
+                <a href="javascript:callService(1)" id="service1">题库</a>
+                <a href="javascript:callService(2)" id="service2">考试</a>
+            </div>
+            <div class="service">
+                <pre>code for rendering...</pre>
+            </div>
+        </div>
+        <div id="foot" class="foot" style="border-top:8px solid var(--pku-light)">
+            <div id="copyright" class="flex center">
+                <span style="margin: 0;color:gray;">©opy®ight:2021-2021</span>
+                <a style="margin: 0;"><span>备案号</span>xxxx-xxxx-xxxx-xxxx-xxxx</a>
+            </div>
+            <div style="position: absolute;right: 0;justify-content: right;top:0;height: 100%;" class="flex center">
+                <a class="btn flex center">帮助</a>
+                <p class="btn flex center">关于</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function callService(code) {
+            var service=zzz.get.cls("service")[0];
+            location.hash="service"+code;
+            service.style.top=zzz.toNum(zzz.get.style(zzz.get.id("service"+code),"height"))*code+"px";
+            var data=[];
+            switch (code) {
+                case 0:
+                    data=["此处应该有表格"]
+                    break;
+                case 1:
+                    data=["此处应该有题目","假装有一些","[标题][内容][答案][判分程序][统计信息][特征]"]
+                    break;
+                case 2:
+                    data=["此处应该有考试信息与作答情况"]
+                    break;
+            }
+            var renderedText="";
+            for(let i of data){
+                renderedText+="<pre>"+i+"</pre>";
+            }
+            service.innerHTML=renderedText;
+        }
+    </script>
+</body>
+
+</html>

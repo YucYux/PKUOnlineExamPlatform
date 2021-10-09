@@ -13,15 +13,27 @@
         zzz.fetch.js("script/global.js");
     </script>
     <style>
+        body {
+            counter-set: s;
+        }
+
         .func {
-            width: 100%;
+            width: auto;
             margin: 1em;
             background-color: var(--pku-red);
             color: white;
         }
 
-        .func p {
+        .func * {
+            align-items: end;
             margin-bottom: 0.1em;
+        }
+
+        .func .btn:before {
+            counter-increment: s;
+            content: counter(s);
+            font-size: 2em;
+            padding-right: 0.5em;
         }
 
         .func:hover {
@@ -31,32 +43,36 @@
         .title2 {
             font-size: 2em;
         }
+
+        #full {
+            align-items: start;
+        }
     </style>
     <div id="main">
         <div id="head" class="flex">
             <p class="btn title" style="margin-right: auto;width:auto;">北大文计平台</p>
             <div class="flex" style="width: auto;justify-content: right;">
-                <div class="flex center btn"  id="user_name">
+                <div class="flex center btn" id="user_name">
                     <p>登录</p>
                 </div>
             </div>
         </div>
-        <div id="content" class="flex">
-            <div class="flexv func center">
-                <div class="flexv center btn">
+        <div id="content" class="flexv">
+            <div class="flex func">
+                <div class="flex btn">
                     <p class="title2">考试</p>
                     <p>时间</p>
                 </div>
             </div>
-            <div class="flexv func center">
-                <div class="flexv center btn">
-                    <p class="title2">考试</p>
+            <div class="flex func">
+                <div class="flexv btn" id="full">
+                    <p class="title2">点击查看题目2</p>
                     <p>权限</p>
                 </div>
             </div>
-            <div class="flexv func center">
-                <div class="flexv center btn">
-                    <p class="title2">考试</p><a href="./question.html">点击开始</a>
+            <div class="flex func">
+                <div class="flex btn">
+                    <p class="title2">...</p><a href="./question.html">点击开始</a>
                 </div>
             </div>
         </div>
@@ -71,6 +87,38 @@
             </div>
         </div>
     </div>
+    <script>
+        function increment() {
+            var l = 5,
+                t = 1000;
+            while (l)
+                setTimeout(function () {
+                    zzz.get("#content").appendChild(zzz.create("div", {
+                        className: "flex func",
+                        innerHTML: `
+                <div class="flex btn">
+                    <p class="title2">考试/题目</p>
+                    <p>id=` + zzz.random.string(10) + `</p>
+                </div>
+            `
+                    }));
+                }, (l--) * t);
+        }
+        increment();
+
+        function binds() {
+            console.log("bind");
+            if (!window.bindPanel) {
+                setTimeout(binds, 1000);
+                return;
+            }
+            bindPanel(zzz.get("#full"), "detail", "<div><pre>此处是考题的详细内容</pre></div>", {
+                overflow: "hidden",
+                height: "5em"
+            }, zzz.get("#full"));
+        }
+        binds();
+    </script>
 </body>
 
 </html>

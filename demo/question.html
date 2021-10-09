@@ -8,12 +8,13 @@
 <body>
     <script src="script/zzz.js"></script>
     <script>
-        //zzz.fetch.js("script/require.js");
         zzz.fetch.js("script/zdata.js");
-        zzz.fetch.js("script/global.js");
         zzz.fetch.css("css/global.css");
+        //zzz.fetch.js("script/require.js");
+        zzz.fetch.js("script/global.js");
         zzz.fetch.js("script/ace-1.4.13.js");
         zzz.fetch.css("css/ace.css");
+
         function random_question() {
             var title = "<p class='render'>这里是标题</p>",
                 content = ["<p class='render'>", '这里是内容', '</p>'],
@@ -27,27 +28,21 @@
         setTimeout(random_question, 2000);
     </script>
     <style>
-        div {
-            min-height: 2em;
-        }
-
         .question_title {
             font-size: 2em;
         }
-
         .question_content {
             text-indent: 2em;
         }
-
-        .question_content * {}
-
-        .result {}
+        #content {
+            padding-right: 20%;
+        }
     </style>
     <div id="main">
         <div id="head" class="flex">
             <p class="btn title" style="margin-right: auto;width:auto;">北大文计平台</p>
             <div class="flex" style="width: auto;justify-content: right;">
-                <div class="flex center btn"  id="user_name">
+                <div class="flex center btn" id="user_name">
                     <p>登录</p>
                 </div>
             </div>
@@ -59,7 +54,9 @@
             <div class="question_content">
                 <p></p>
             </div>
-            <div class="question_title"><p class="render">回答</p></div>
+            <div class="question_title">
+                <p class="render">回答</p>
+            </div>
             <div class="answer"></div>
             <div class="result">
                 <p class='btn' style="font-size: 2em;font-family: render;">提交</p>
@@ -84,26 +81,50 @@
                 }, 1000);
                 return;
             }
-            ace.config.set('basePath','script') ;
+            ace.config.set('basePath', 'script');
             var editor = ace.edit(zzz.get.cls("answer")[0], {
                 mode: "ace/mode/python",
                 selectionStyle: "text"
             });
             editor.setTheme("ace/theme/pku");
-            window.editor=editor;
+            window.editor = editor;
         }
+
         function startVSCode() {
-            if(window.vscode){
+            if (window.vscode) {
                 return;
             }
-            var v=zzz.create("iframe",{
-                id:"vscode",
-                src:"https://github1s.com/ZzzzzzzSkyward//exam"
-            },null,zzz.get.cls("answer")[0]);
-            window.vscode=v;
+            zzz.fetch.js("script/monaco/loader.js");
+            var v = zzz.create("div", {
+                id: "vscode"
+            }, null, zzz.get.cls("answer")[0]);
+            window.vscode = v;
+            setTimeout(startCodeInterface, 10);
+        }
+
+        function startCodeInterface() {
+            try {
+                require.config({
+                    paths: {
+                        'vs': 'script/monaco'
+                    }
+                });
+            } catch (e) {
+                setTimeout(startCodeInterface, 1000);
+                return;
+            }
+            require(['vs/editor/editor.main'], function () {
+                window.vscodeeditor = monaco.editor.create(vscode, {
+                    value: [
+                        'def init():',
+                        '\tprint("Hello world!")',
+                    ].join('\n'),
+                    language: 'python'
+                });
+            });
             return;
         }
-        setTimeout(startVSCode,1000);
+        setTimeout(startVSCode, 1000);
     </script>
 </body>
 
