@@ -13,20 +13,21 @@
         zzz.fetch.js("script/global.js");
     </script>
     <style>
-.menu{
-	width: 3em;
-	border-right: 0.2em solid var(--pku-light);
-}
-.menu a:target{
-    background-color: var(--pku-light);
-    color: white;
-}
+        .menu {
+            width: 3em;
+            border-right: 0.2em solid var(--pku-light);
+        }
+
+        .menu a:target {
+            background-color: var(--pku-light);
+            color: white;
+        }
     </style>
     <div id="main">
         <div id="head" class="flex">
             <p class="btn title" style="margin-right: auto;width:auto;">北大文计平台管理页面</p>
             <div class="flex" style="width: auto;justify-content: right;">
-                <div class="flex center btn"  id="user_name">
+                <div class="flex center btn" id="user_name">
                     <p>登录</p>
                 </div>
             </div>
@@ -54,26 +55,30 @@
     </div>
     <script>
         function callService(code) {
-            var service=zzz.get.cls("service")[0];
-            location.hash="service"+code;
-            service.style.top=zzz.toNum(zzz.get.style(zzz.get.id("service"+code),"height"))*code+"px";
-            var data=[];
-            switch (code) {
-                case 0:
-                    data=["此处应该有表格"]
-                    break;
-                case 1:
-                    data=["此处应该有题目","假装有一些","[标题][内容][答案][判分程序][统计信息][特征]"]
-                    break;
-                case 2:
-                    data=["此处应该有考试信息与作答情况"]
-                    break;
-            }
-            var renderedText="";
-            for(let i of data){
-                renderedText+="<pre>"+i+"</pre>";
-            }
-            service.innerHTML=renderedText;
+            var service = zzz.get.cls("service")[0];
+            location.hash = "service" + code;
+            service.style.top = zzz.toNum(zzz.get.style(zzz.get.id("service" + code), "height")) * code + "px";
+            service.innerHTML =
+                '<div style="width: 60vw;height: 1em;position: relative;" class="loading">加载中，请稍候</div>';
+            setTimeout(function () {
+                var data = [];
+                switch (code) {
+                    case 0:
+                        data = ["此处应该有表格"]
+                        break;
+                    case 1:
+                        data = ["此处应该有题目", "假装有一些", "[标题][内容][答案][判分程序][统计信息][特征]"]
+                        break;
+                    case 2:
+                        data = ["此处应该有考试信息与作答情况"]
+                        break;
+                }
+                var renderedText = "";
+                for (let i of data) {
+                    renderedText += "<pre>" + i + "</pre>";
+                }
+                service.innerHTML = renderedText;
+            }, 1000);
         }
     </script>
 </body>

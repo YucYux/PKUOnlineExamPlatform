@@ -121,20 +121,20 @@ function init() {
         window.user_status = status;
     }
     var button = zzz.get("#user_name");
-    if(button)
-    if (window.user_status) {
-        button.innerText = user_status.name;
-        bindPanel(button, "logout_panel", '<input class="flex btn" type="button" value="注销" style="background: transparent;border: 0px;margin:0;right: 0;display: block;position: relative;color: white;cursor: pointer;width:100%;" onclick="logout()">', {
-            position: "absolute",
-            right: 0,
-            top: '3em',
-            width: zzz.get.style(zzz.get.id("user_name"), "width"),
-            backgroundColor: 'rgba(104, 0, 0, 0.44)',
-            opacity: 0.9,
-            padding: zzz.get.style(zzz.get.id("user_name"), "paddingLeft")
-        }, zzz.get("#main"));
-    } else {
-        bindPanel(button, "login_panel", `
+    if (button)
+        if (window.user_status) {
+            button.innerText = user_status.name;
+            bindPanel(button, "logout_panel", '<input class="flex btn" type="button" value="注销" style="background: transparent;border: 0px;margin:0;right: 0;display: block;position: relative;color: white;cursor: pointer;width:100%;" onclick="logout()">', {
+                position: "absolute",
+                right: 0,
+                top: '3em',
+                width: zzz.get.style(zzz.get.id("user_name"), "width"),
+                backgroundColor: 'rgba(104, 0, 0, 0.44)',
+                opacity: 0.9,
+                padding: zzz.get.style(zzz.get.id("user_name"), "paddingLeft")
+            }, zzz.get("#main"));
+        } else {
+            bindPanel(button, "login_panel", `
             <form id="f" class="flexv center" onsubmit="return false;">
         <div style="position: relative;"><p>学号</p><input type="text"><a contenteditable="false" style="display: inline;background-color: #7c0909;position: absolute;color: white;height: 1.5em;line-height:1.5em;width: 1.5em;right:0;text-align: center;" onclick="zzz.get.tag('input')[0].value='';">×</a></div>
         <div><p>密码</p><input type="password"></div>
@@ -144,42 +144,41 @@ function init() {
                 onclick="login()">
         </div>
     </form>`, {
-            position: "absolute",
-            right: 0,
-            top: '3em',
-            backgroundColor: 'rgba(104, 0, 0, 0.44)',
-            opacity: 0.9,
-            paddingLeft: '0.5em',
-            paddingRight: '0.5em',
-        }, zzz.get("#main"));
-    }
-    var title=zzz.get.cls("title")[0];
-    var makeDir=function(dict){
-        var template="<a class='flex center btn' href='%url%'>%name%</a>",res="";
-        for(let key in dict){
-            res+=template.replace("%name%",key).replace("%url%",dict[key]);
+                position: "absolute",
+                right: 0,
+                top: 'var(--head-height)',
+                backgroundColor: 'rgba(104, 0, 0, 0.44)',
+                opacity: 0.9,
+                paddingLeft: '0.5em',
+                paddingRight: '0.5em',
+            }, zzz.get("#main"));
+        }
+    var title = zzz.get.cls("title")[0];
+    var makeDir = function (dict) {
+        var template = "<a class='flex center btn' href='%url%'>%name%</a>",
+            res = "";
+        for (let key in dict) {
+            res += template.replace("%name%", key).replace("%url%", dict[key]);
         }
         return res;
     }
-    if(title)
-    bindPanel(title,"navigate",'<div class="flexv center">'+makeDir(
-        {
-            "考试":"main.html",
-            "题目":"question.html",
-            "管理":"management.html"
-        }
-    )+'</div>',{
-        position: "absolute",
-        left:0,
-        top:zzz.get.style(zzz.get.id("head"),"height"),
-        width:zzz.get.style(title,"width"),
-        backgroundColor:"rgba(0,0,0,0.4)",
-        color:"white",
-        height:"max-content"
-    },zzz.get("#main"));
+    if (title)
+        bindPanel(title, "navigate", '<div class="flexv center">' + makeDir({
+            "考试": "main.html",
+            "题目": "question.html",
+            "管理": "management.html"
+        }) + '</div>', {
+            position: "absolute",
+            left: 0,
+            top: zzz.get.style(zzz.get.id("head"), "height"),
+            width: zzz.get.style(title, "width"),
+            backgroundColor: "rgba(0,0,0,0.4)",
+            color: "white",
+            height: "max-content"
+        }, zzz.get("#main"));
     bind_events();
 }
-setTimeout(init,1000);
+setTimeout(init, 1000);
 
 function bind_events() {
     var helps = zzz.get.cls("btn flex center");

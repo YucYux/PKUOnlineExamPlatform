@@ -10,10 +10,11 @@
     <script>
         zzz.fetch.js("script/zdata.js");
         zzz.fetch.css("css/global.css");
-        //zzz.fetch.js("script/require.js");
         zzz.fetch.js("script/global.js");
-        zzz.fetch.js("script/ace-1.4.13.js");
-        zzz.fetch.css("css/ace.css");
+        zzz.fetch.js("script/monaco.js")
+        zzz.fetch.js("script/require.js");
+        //zzz.fetch.js("script/ace-1.4.13.js");
+        //zzz.fetch.css("css/ace.css");
 
         function random_question() {
             var title = "<p class='render'>这里是标题</p>",
@@ -31,9 +32,11 @@
         .question_title {
             font-size: 2em;
         }
+
         .question_content {
             text-indent: 2em;
         }
+
         #content {
             padding-right: 20%;
         }
@@ -72,6 +75,12 @@
                 <p class="btn flex center">关于</p>
             </div>
         </div>
+        <div class="sidebar flexv fasttrans"
+            style="position: fixed;right: 0;height: 100%;top: 0;background: rgba(0, 0, 0, 0.39);width: 10em;display: block;">
+            <div class="btn flex center" style="height: 1em;">浮动的侧边栏</div>
+            <div class="btn flex center" style="height: auto;">考试信息</div>
+            <progress id="progress"></progress>
+        </div>
     </div>
     <script>
         function startEditor() {
@@ -89,42 +98,24 @@
             editor.setTheme("ace/theme/pku");
             window.editor = editor;
         }
-
-        function startVSCode() {
-            if (window.vscode) {
-                return;
-            }
-            zzz.fetch.js("script/monaco/loader.js");
-            var v = zzz.create("div", {
-                id: "vscode"
-            }, null, zzz.get.cls("answer")[0]);
-            window.vscode = v;
-            setTimeout(startCodeInterface, 10);
-        }
-
-        function startCodeInterface() {
-            try {
-                require.config({
-                    paths: {
-                        'vs': 'script/monaco'
-                    }
+        setTimeout(() => {
+            zzz.fetch.js("script/monaco.js");
+        }, 100);
+        window.ticking = 0;
+        window.addEventListener('scroll', function (e) {
+            var y = window.scrollY;
+            var ele = zzz.get.cls("sidebar")[0];
+            if (!ticking) {
+                window.requestAnimationFrame(function () {
+                    if (scrollY < 3 * zzz.browser.screenY / 100) ele.style.top = 1.5 * 3 * zzz.browser
+                        .screenX / 100 - scrollY + "px";
+                    else ele.style.top = 0;
+                    zzz.get.id("progress").value = y / scrollMaxY;
+                    ticking = false;
                 });
-            } catch (e) {
-                setTimeout(startCodeInterface, 1000);
-                return;
+                ticking = true;
             }
-            require(['vs/editor/editor.main'], function () {
-                window.vscodeeditor = monaco.editor.create(vscode, {
-                    value: [
-                        'def init():',
-                        '\tprint("Hello world!")',
-                    ].join('\n'),
-                    language: 'python'
-                });
-            });
-            return;
-        }
-        setTimeout(startVSCode, 1000);
+        });
     </script>
 </body>
 

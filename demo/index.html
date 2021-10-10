@@ -1,4 +1,5 @@
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>软工第七组文科计算机在线考试平台登录页面</title>
@@ -10,13 +11,14 @@
         zzz.fetch.js("script/zdata.js");
         zzz.fetch.css("css/global.css");
         zzz.fetch.js("script/global.js");
+
         function show() {
             let data = zzz.queryAttr("form input", null, (ele) => {
                 return ele.value || ele.text;
             });
             console.log(data);
             alert(data);
-            window.open("main.html","_self");
+            window.open("main.html", "_self");
         }
     </script>
     <style>
@@ -90,12 +92,18 @@
         }
     </style>
     <div id="main" style="">
-        <div style="text-align: center;"><p style="margin: 0;font-size: 2em;color:inherit;" class="title">北大文计平台</p></div>
+        <div style="text-align: center;">
+            <p style="margin: 0;font-size: 2em;color:inherit;" class="title">北大文计平台</p>
+        </div>
         <img id="logo" src="images/pkulogo.png" style="">
         <div style="display: flex;position: relative;">
             <img id="bg" src="images/bg.jpg" style="">
             <form style="" onsubmit="return false;">
-                <div style="position: relative;"><p>学号</p><input type="text"><a contenteditable="false" style="display: inline;background-color: #7c0909;position: absolute;color: white;height: 1.5em;line-height:1.5em;width: 1.5em;right:0;text-align: center;" onclick="zzz.get.tag('input')[0].value='';">×</a></div>
+                <div style="position: relative;">
+                    <p>学号</p><input type="text"><a contenteditable="false"
+                        style="display: inline;background-color: #7c0909;position: absolute;color: white;height: 1.5em;line-height:1.5em;width: 1.5em;right:0;text-align: center;"
+                        onclick="zzz.get.tag('input')[0].value='';">×</a>
+                </div>
                 <div>密码</div><input type="password">
                 <div
                     style="display: flex;align-content: center;justify-content: left;align-items: last baseline;flex-basis: max-content;flex-flow: column;">
