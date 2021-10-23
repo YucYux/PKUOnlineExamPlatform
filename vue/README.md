@@ -1,6 +1,6 @@
 # pkuoep
 
-> 用npm4能稳定跑，用npm5以上出bug
+> A Vue.js project
 
 ## Build Setup
 
