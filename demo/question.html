@@ -31,14 +31,24 @@
     <style>
         .question_title {
             font-size: 2em;
+            transform:translateZ(50px);
+            color:#10a2fa;
+            border-left:.5em solid #08f;
+            position:sticky;
+            top:.2em;
         }
-
+        .question_title:hover {
+	color: var(--pku-light);
+}
         .question_content {
             text-indent: 2em;
+            transform:translateZ(10px);
         }
 
         #content {
             padding-right: 20%;
+            transform-style:preserve-3d;
+    perspective:1000px;
         }
     </style>
     <div id="main">
@@ -58,7 +68,7 @@
                 <p></p>
             </div>
             <div class="question_title">
-                <p class="render">回答</p>
+                <p class="render">回答(请双击编辑器以运行python代码)</p>
             </div>
             <div class="answer"></div>
             <div class="result">
@@ -107,6 +117,7 @@
             var ele = zzz.get.cls("sidebar")[0];
             if (!ticking) {
                 window.requestAnimationFrame(function () {
+                zzz.get.id("content").style.perspectiveOrigin="50% "+(scrollY+zzz.browser.screenY/2)+"px";
                     if (scrollY < 3 * zzz.browser.screenY / 100) ele.style.top = 1.5 * 3 * zzz.browser
                         .screenX / 100 - scrollY + "px";
                     else ele.style.top = 0;
