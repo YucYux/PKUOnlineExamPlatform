@@ -187,7 +187,7 @@ function bind_events() {
         if (window.md) return;
         zzz.fetch.js("https://cdn.jsdelivr.net/npm/marked/marked.min.js");
         let md = zzz.fetch.ajax({
-            url: "front-edge-function.md",
+            url: "README.md",
             method: "get",
             async: false
         }).responseText;
