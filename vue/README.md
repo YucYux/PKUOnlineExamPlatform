@@ -1,6 +1,6 @@
 # pkuoep
 
-> npm4能稳定跑，npm5及以上可能会出bug
+> 创建脚手架的时候建议npm4，运行的时候npm可以高版本
 
 ## Build Setup
 
