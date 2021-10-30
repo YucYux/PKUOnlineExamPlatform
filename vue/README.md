@@ -2,6 +2,18 @@
 
 > 创建脚手架的时候建议npm4，运行的时候npm可以高版本
 
+# 除了vue/cli以及vue-router外，部署时还需要安装的的package
+vuex 
+element 
+element-ui 
+iview 
+moment 
+Raven 
+vue-i18n 
+babel-polyfill 
+vue-clipboard2 
+vue-analytics
+
 ## Build Setup
 
 ``` bash
