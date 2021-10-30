@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <Navi></Navi>
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <ul>
@@ -84,12 +85,17 @@
 </template>
 
 <script>
+import Navi from "./Navi.vue"
+
 export default {
   name: 'HelloWorld',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  components:{
+    Navi
   }
 }
 </script>
