@@ -70,3 +70,13 @@ input::placeholder {
     background-image: url(../images/circuit-board.svg);
     background-size: 50vw;
 }
+
+.bg{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bgcolor);
+    background-image: var(--bgimg) var(--bgimage);
+}
