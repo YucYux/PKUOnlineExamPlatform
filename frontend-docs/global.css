@@ -1,0 +1,72 @@
+:root {
+    --pku-red: rgba(139, 0, 22, var(--opacity));
+    --pku-light: rgba(154, 1, 0, var(--opacity));
+    --pku-dark: rgba(82, 0, 12, var(--opacity));
+    --opacity: 1;
+    --ratio:calc(4 / 3);
+    font-size: 1.5vw;
+    font-family: default, SimSun;
+}
+
+input {
+    outline: 0;
+    --color: var(--pku-red);
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+input:hover {
+    background-color: #fff4d4a6;
+}
+
+input:focus {
+    background-color: #ffdc7aa6;
+}
+
+input::placeholder {
+    color: var(--color);
+    --opacity: 0.5;
+}
+
+.flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.flex-vertical {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.center {
+    justify-content: center;
+    justify-self: center;
+    justify-items: center;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    vertical-align: middle;
+}
+
+.transition {
+    --timing: cubic-bezier(.17, .84, .44, 1);
+    --time: 0.3s;
+    --attribute: all;
+    transition: var(--attribute) var(--time) var(--timing)
+}
+
+#main {
+    position: absolute;
+    display: block;
+    top: 0;
+    margin: 0;
+    width: 100%;
+    min-width: calc(--ratio * 100vh);
+    left: 0;
+    background-blend-mode: lighten;
+    --bgcolor: rgba(255, 255, 255, 0.8);
+    background-color: var(--bgcolor);
+    background-image: url(../images/circuit-board.svg);
+    background-size: 50vw;
+}
