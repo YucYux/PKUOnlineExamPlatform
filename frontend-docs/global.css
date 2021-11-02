@@ -2,9 +2,12 @@
     --pku-red: rgba(139, 0, 22, var(--opacity));
     --pku-light: rgba(154, 1, 0, var(--opacity));
     --pku-dark: rgba(82, 0, 12, var(--opacity));
+    --shade:rgba(0,0,0,0.5);
+    --header-height:20vh;
+    --footer-height:20vh;
     --opacity: 1;
     --ratio:calc(4 / 3);
-    font-size: 1.5vw;
+    font-size: 3vh;
     font-family: default, SimSun;
 }
 
@@ -66,17 +69,85 @@ input::placeholder {
     left: 0;
     background-blend-mode: lighten;
     --bgcolor: rgba(255, 255, 255, 0.8);
+    --bgimg:url(../images/circuit-board.svg);
+    --bgsize:50vw;
     background-color: var(--bgcolor);
-    background-image: url(../images/circuit-board.svg);
-    background-size: 50vw;
+    background-image: var(--bgimg);
+    background-size: var(--bgsize);
 }
-
+.shadow {
+    --shadow-opacity:0.2;
+    --shadow:rgba(0,0,0,var(--shadow-opacity));
+    --shadow-blur:3px;
+	box-shadow: 0 0 var(--shadow-blur) 3px var(--shadow);
+}
 .bg{
     position: absolute;
     left: 0;
     top: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--bgcolor);
+    background-repeat: inherit;
+    background-position: inherit;
+    background-size: inherit;
+    background-color: inherit;
     background-image: var(--bgimg) var(--bgimage);
+}
+#header {
+    top:0;
+    height: var(--header-height);
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+#content {
+    width: auto;
+    height: auto;
+    min-height: calc(100vh - var(--foot-height) - var(--head-height));
+}
+#title {
+    font-size: calc(var(--header-height) - 3px);
+    padding-right: .2em;
+}
+#banner{
+    font-size: 1em;
+}
+.menuitem{
+    padding-right: .1em;
+    padding-left: .1em;
+    position: relative;
+}
+.menuitem svg{
+    height:100%;
+    width: auto;
+    max-width: var(--head-height);
+    fill:white;
+}
+.menuitem:hover{
+    background-color: var(--shade);
+}
+.submenu{
+    transform: translateY(calc(0 - var(--header-height)));
+    opacity: 0;
+    transition-delay: 3s;
+}
+.menuitem:hover .submenu{
+    transform: translateY(0);
+    opacity: 1;
+    transition-delay:0;
+}
+#footer {
+    display: block;
+    padding: .1em;
+    font-size: .7em;
+    position: relative;
+    background-color: var(--bgcolor);
+    bottom: 0;
+    min-height: var(--footer-height);
+    z-index: 0;
+}
+.link-item:hover{
+    filter:brightness(5);
+}
+.list{
 }
