@@ -5,6 +5,8 @@
     --shade:rgba(0,0,0,0.5);
     --header-height:20vh;
     --footer-height:20vh;
+    --white:rgba(255,255,255,var(--opacity));
+    --black:rgba(20,20,20,var(--opacity));
     --opacity: 1;
     --ratio:calc(4 / 3);
     font-size: 3vh;
@@ -14,7 +16,7 @@
 input {
     outline: 0;
     --color: var(--pku-red);
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: var(--white);
 }
 
 input:hover {
@@ -68,7 +70,8 @@ input::placeholder {
     min-width: calc(--ratio * 100vh);
     left: 0;
     background-blend-mode: lighten;
-    --bgcolor: rgba(255, 255, 255, 0.8);
+    --bgcolor: var(var(--white));
+    --opacity:0.7;
     --bgimg:url(../images/circuit-board.svg);
     --bgsize:50vw;
     background-color: var(--bgcolor);
@@ -150,4 +153,38 @@ input::placeholder {
     filter:brightness(5);
 }
 .list{
+    --bgcolor:rgba(0,0,40,.5);
+    background-color:var(--bgcolor);
+    position:relative;
+}
+.list-menu{
+    background-color:inherit;
+}
+.list-filter>input[type=text]{
+    border:3px solid;
+    --height:1.5em;
+    height:var(--height);
+    font-size:1em;
+    min-width:4em;
+    width:max-content;
+    overflow:hidden;
+    border-color:var(--color);
+}
+.list-filter>button{
+    position:absolute;
+    right:0;
+    top:0;
+    height:var(--height);
+    width:var(--height);
+    background-color:var(--color);
+}
+.list-header{
+    position:sticky;
+    top:0;
+    --opacity:.4;
+    background-color:var(--light)
+}
+.list-header-item{
+}
+.list-body{
 }
