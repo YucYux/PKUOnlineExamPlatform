@@ -3,7 +3,7 @@ from django.utils.timezone import now
 from account.models import User
 from utils.models import JSONField
 from utils.models import RichTextField
-
+from utils.constants import ContestStatus, ContestType
 class Contest(models.Model):
     title = models.TextField()
     description = RichTextField()
@@ -25,4 +25,28 @@ class Contest(models.Model):
     visible = models.BooleanField(default=True)
     allowed_ip_ranges = JSONField(default=list)
 
-    
+    @property
+    def status(self):
+        if self.start_time > now():
+            # 没有开始 返回1
+            return ContestStatus.CONTEST_NOT_START
+        elif self.end_time < now():
+            # 已经结束 返回-1
+            return ContestStatus.CONTEST_ENDED
+        else:
+            # 正在进行 返回0
+            return ContestStatus.CONTEST_UNDERWAY
+
+    #是否可以看到
+    @property
+    def contest_type(self):
+        if self.password:
+            return ContestType.PASSWORD_PROTECTED_CONTEST
+        return ContestType.PUBLIC_CONTEST
+
+    # 是否有权查看problem 的一些统计信息 诸如submission_number, accepted_number 等
+    def problem_details_permission(self, user):
+        return self.rule_type == ContestRuleType.ACM or \
+               self.status == ContestStatus.CONTEST_ENDED or \
+               user.is_authenticated and user.is_contest_admin(self) or \
+               self.real_time_rank
