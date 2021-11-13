@@ -1,17 +1,18 @@
 from django.db import models
-from django.utils.timezone import now
-from account.models import User
-from utils.models import JSONField
 from utils.models import RichTextField
-from utils.constants import ContestStatus, ContestType
+from django.utils.timezone import now
+from ..account.models import User
+from utils.models import JSONField
+from utils.constants import ContestStatus, ContestType, ContestRuleType
+# Create your models here.
+
+
 class Contest(models.Model):
     title = models.TextField()
     description = RichTextField()
-
     # show real time rank or cached rank
     real_time_rank = models.BooleanField()
     password = models.TextField(null=True)
-
     # enum of ContestRuleType
     rule_type = models.TextField()
     start_time = models.DateTimeField()
@@ -19,11 +20,9 @@ class Contest(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     last_update_time = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    #TODO delete?
     # 是否可见 false的话相当于删除
     visible = models.BooleanField(default=True)
-    allowed_ip_ranges = JSONField(default=list)
+    # allowed_ip_ranges = JSONField(default=list)
 
     @property
     def status(self):
@@ -37,7 +36,6 @@ class Contest(models.Model):
             # 正在进行 返回0
             return ContestStatus.CONTEST_UNDERWAY
 
-    #是否可以看到
     @property
     def contest_type(self):
         if self.password:
@@ -50,3 +48,10 @@ class Contest(models.Model):
                self.status == ContestStatus.CONTEST_ENDED or \
                user.is_authenticated and user.is_contest_admin(self) or \
                self.real_time_rank
+
+    class Meta:
+        db_table = "contest"
+        ordering = ("-start_time",)
+
+
+
