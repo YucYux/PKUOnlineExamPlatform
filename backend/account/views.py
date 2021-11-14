@@ -1,6 +1,8 @@
 from rest_framework.response import Response
 from rest_framework import status
+from django.http import JsonResponse
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from .serializers import UserRegisterSerializer
 from django.contrib import auth
 
@@ -28,3 +30,10 @@ class UserLogoutAPI(APIView):
     def get(self, request):
         auth.logout(request)
         return Response(status=status.HTTP_200_OK)
+
+class HelloAPI(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        username = request.successful_authenticator.get_user(request.successful_authenticator.get_validated_token(request.successful_authenticator.get_raw_token(request.successful_authenticator.get_header(request))))
+        return Response(username.admin_type, status=status.HTTP_200_OK)
