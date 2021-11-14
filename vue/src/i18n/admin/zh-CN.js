@@ -1,4 +1,4 @@
-export const m = {
+export default {
   // SideMenu.vue
   Dashboard: '仪表盘',
   General: '常用设置',

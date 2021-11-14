@@ -5,9 +5,9 @@ import ivenUS from 'iview/dist/locale/en-US'
 import ivzhCN from 'iview/dist/locale/zh-CN'
 import ivzhTW from 'iview/dist/locale/zh-TW'
 // element UI
-import elenUS from 'element-ui/lib/locale/lang/en'
-import elzhCN from 'element-ui/lib/locale/lang/zh-CN'
-import elzhTW from 'element-ui/lib/locale/lang/zh-TW'
+import elenUS from './admin/en-US'
+import elzhCN from './admin/zh-CN'
+import elzhTW from './admin/zh-TW'
 
 Vue.use(VueI18n)
 

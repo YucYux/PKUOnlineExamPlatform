@@ -1,6 +1,6 @@
 <template>
     <div id="navi">
-        <Menu theme="primary" mode="horizontal" @on-select="">
+        <Menu theme="primary" mode="horizontal" >
             <Menu-item name="/">
                 <Icon type="home"></Icon>
                 主页
