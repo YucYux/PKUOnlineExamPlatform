@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-bz7^w%-zg%fh$9%u&_nra#m)y9v@x74tjy6b+%57u09+iju%&^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'contest',
+    #'contest',
     'rest_framework',
     'account',
 ]
@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'PKUOnlineExamPlatform',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'root',
         'HOST': '127.0.0.1',
         'POST': '3306',
     }
