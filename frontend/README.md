@@ -2,7 +2,7 @@
 
 ### baseURL: http://39.104.48.59:8080/
 
-#### register
+### 注册
 
 url
 ```
@@ -24,7 +24,7 @@ axios response
       "username": "Carol",
       "password": "pbkdf2_sha256$260000$9lJqzQx8CDCIYuJCJIuhuB$E2sBkAMNbCBc2n58JBhW3OfaM+9zub8frfWZKcJVgiE="
     },
-    "status": 201,
+    "status": 201,  //若注册失败，status为400
     "statusText": "Created",
     "headers": {
       "content-length": "122",
@@ -61,7 +61,7 @@ axios response
 ```
 
 
-#### login
+### 登录
 
 url
 ```
@@ -80,7 +80,7 @@ axios response
 ```json
 {
     "data": "",
-    "status": 200,
+    "status": 200,      //若登录失败，status为400
     "statusText": "OK",
     "headers": {
         "content-length": "0"
