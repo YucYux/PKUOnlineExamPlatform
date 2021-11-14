@@ -7,6 +7,7 @@ from views import ContestAnnouncementListAPI,ContestAccessAPI, ContestRankAPI,Co
 # router = DefaultRouter()
 # router.register(r'contest', views.ContestViewSet)
 
+
 urlpatterns = [
     url('contest', ContestAPI.as_view()),
     url(r"^contest/announcement/?$", ContestAnnouncementListAPI.as_view(), name="contest_announcement_api"),
