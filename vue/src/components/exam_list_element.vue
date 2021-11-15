@@ -1,28 +1,29 @@
 <template>
   <div style="padding: 10px; background: #f8f8f9">
     <Card
-      title="CONTEST_NAME"
+      :title="contest_name"
       icon="ios-trophy"
-      :padding="0"
+      padding="0"
       shadow
-      style="width: 800px"
+      style="width: 100%"
       to="#"
     >
       <CellGroup>
-        <Cell>{{ informations }}</Cell>
-        <Cell
-          ><Icon type="md-calendar" />{{
-            exam_date
+        <Cell :title="contest_info"></Cell>
+        <Cell>
+          <Icon type="md-calendar" />{{
+            contest_date
           }}&nbsp;&nbsp;&nbsp;&nbsp;<Icon type="md-clock" />{{
-            time_limit
-          }}</Cell
-        >
+            contest_time
+          }}
+          </Cell>
       </CellGroup>
     </Card>
   </div>
 </template>
 <script>
 export default {
+  props: ['contest_name', 'contest_info', 'contest_date', 'contest_time'],
   data () {
     return {
       informations: 'exam-informations',

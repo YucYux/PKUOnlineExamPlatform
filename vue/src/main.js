@@ -11,19 +11,19 @@ Vue.use(ViewUI)
 const Routers = [
   {
     path: '/index',
-    component: (resolve) => require(['./router/views/index.vue'], resolve)
+    component: (resolve) => require(['./views/index.vue'], resolve)
   },
   {
     path: '/contest',
-    component: (resolve) => require(['./router/views/contest.vue'], resolve)
+    component: (resolve) => require(['./views/contest.vue'], resolve)
   },
   {
     path: '/control',
-    component: (resolve) => require(['./router/views/control.vue'], resolve)
+    component: (resolve) => require(['./views/control.vue'], resolve)
   },
   {
     path: '/grade',
-    component: (resolve) => require(['./router/views/grade.vue'], resolve)
+    component: (resolve) => require(['./views/grade.vue'], resolve)
   }
 ]
 

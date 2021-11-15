@@ -4,7 +4,7 @@
         <Header :style = "{position: 'fixed', width: '100%'}">
           <vmenu></vmenu>
         </Header>
-        <Content :style="{margin: '88px 20px 0px 20px', background: '#fff', minHeight: '590px'}">
+        <Content :style="{margin: '88px 20px 0px 20px', background: '#f5f7f9', minHeight: '575px'}">
             <router-view></router-view>
         </Content>
         <Footer class="layout-footer-center"><img src = './assets/pku_logo.png'/>informations</Footer>
@@ -35,6 +35,7 @@ export default {
   .layout-footer-center{
       text-align: center;
       height: 80px;
+      margin-top: 10px;
       text-align: top;
       color: #d7dde4;
       font-size: 18px;
