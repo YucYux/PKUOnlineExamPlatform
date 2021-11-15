@@ -1,15 +1,62 @@
 <template>
   <div>
-    <div>
-      <Input prefix="ios-contact" placeholder="Username" style="width: auto"></Input>
-    </div>
-    <div style="margin-top: 6px">
-        <Input prefix="ios-lock" placeholder="Password" type="password" style="width: auto"></Input>
-    </div>
-  <div>
+    <Button type="success" @click="modal1 = true" ghost>登录</Button>
+    <Modal
+      v-model="modal1"
+      title="Welcome to PKUOnlineExamPlatform"
+      draggable="true"
+      ok-text="登录"
+      width="360px"
+      cancle-text="取消"
+      @on-ok="ok"
+      @on-cancel="cancel"
+    >
+      <div>
+        <Input
+          prefix="ios-contact"
+          v-model="v_username"
+          placeholder="Username"
+          style="width: auto"
+        ></Input>
+      </div>
+      <div style="margin-top: 6px">
+        <Input
+          prefix="ios-lock"
+          v-model="v_password"
+          placeholder="Password"
+          type="password"
+          style="width: auto"
+        ></Input>
+      </div>
+    </Modal>
+  </div>
 </template>
 <script>
-export default {
 
+import api from '../api.js'
+import store from '../store'
+
+export default {
+  data () {
+    return {
+      modal1: false,
+      v_username: '',
+      v_password: ''
+    }
+  },
+  methods: {
+    ok () {
+      var loginStatus = 2;  // 0:success 1:wrong username/password 2:network error
+      api.APIlogin(this.v_username, this.v_password).
+      then(function(result){alert('登录成功');store.dispatch('changeFooterInfo','欢迎，'+store.getters.getUsername)},
+           function(error){if(error.status = 401) alert('用户名或密码错误');
+                            else alert('无法连接到服务器')});
+      this.v_username = this.v_password = ''
+    },
+    cancel () {
+      this.$Message.info('Clicked cancel')
+      this.v_username = this.v_password = ''
+    }
+  }
 }
 </script>

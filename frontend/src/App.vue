@@ -7,19 +7,30 @@
         <Content :style="{margin: '88px 20px 0px 20px', background: '#fff', minHeight: '590px'}">
             <router-view></router-view>
         </Content>
-        <Footer class="layout-footer-center"><img src = './assets/pku_logo.png'/>informations</Footer>
+        <Footer class="layout-footer-center"><img src = './assets/pku_logo.png'/>{{footerInfo}}</Footer>
       </Layout>
     </div>
 </template>
 <script>
 import vmenu from './components/menu.vue'
+import store from './store'
 
 export default {
+  data() {
+    return {
+      footerInfo
+    }
+  },
   components: {
     vmenu
   },
   method: {
 
+  },
+  computed: {
+    footerInfo: function() {
+      return store.getters.getFooterInfo;
+    }
   }
 }
 </script>
