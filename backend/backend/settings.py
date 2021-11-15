@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'account',
+    'contest',
 ]
 
 REST_FRAMEWORK = {

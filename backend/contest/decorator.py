@@ -1,4 +1,4 @@
-from models import Contest, ContestType, ContestStatus, ContestRuleType
+from contest.models import Contest, ContestType, ContestStatus, ContestRuleType
 from utils.constants import CONTEST_PASSWORD_SESSION_KEY
 import hashlib
 import time

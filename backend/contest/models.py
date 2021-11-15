@@ -1,7 +1,7 @@
 from django.db import models
 from utils.models import RichTextField
 from django.utils.timezone import now
-from ..account.models import User
+from account.models import User
 from utils.models import JSONField
 from utils.constants import ContestStatus, ContestType, ContestRuleType
 # Create your models here.

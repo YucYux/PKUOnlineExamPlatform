@@ -5,9 +5,9 @@ import copy
 import os
 import zipfile
 
-from ..account.models import User
-from ..contest.models import Contest
-from ..contest.serializers import ContestAdminSerializer
+from account.models import User
+from contest.models import Contest
+from contest.serializers import ContestAdminSerializer
 
 from account.models import AdminType
 from utils.constants import CacheKey, CONTEST_PASSWORD_SESSION_KEY
@@ -17,16 +17,16 @@ from utils.decorator import login_required
 from django.core.cache import cache
 from rest_framework import viewsets
 from django.utils.timezone import now
-from models import ContestAnnouncement,Contest,OIContestRank,ACMContestRank
-from serializers import ContestSerializer,ContestAnnouncementSerializer,ContestPasswordVerifySerializer
-from serializers import OIContestRankSerializer,ACMContestRankSerializer
+from contest.models import ContestAnnouncement,Contest,OIContestRank,ACMContestRank
+from .serializers import ContestSerializer,ContestAnnouncementSerializer,ContestPasswordVerifySerializer
+from .serializers import OIContestRankSerializer,ACMContestRankSerializer
 from utils.constants import ContestStatus, ContestRuleType
 from .decorator import check_contest_permission,check_contest_password
 from utils.api import APIView,validate_serializer
 
-class MusicViewSet(viewsets.ModelViewSet):
-    queryset = Contest.object.all()
-    serializer_class = ContestAdminSerializer
+# class MusicViewSet(viewsets.ModelViewSet):
+#     queryset = Contest.object.all()
+#     serializer_class = ContestAdminSerializer
 
 class ContestAnnouncementListAPI(APIView):
     @check_contest_permission(check_type="announcements")

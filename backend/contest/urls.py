@@ -1,13 +1,13 @@
 from django.conf.urls import url, include
-from django.contrib import admin
-from rest_framework.routers import DefaultRouter
-from ..contest import views
-from views import ContestAnnouncementListAPI,ContestAccessAPI, ContestRankAPI,ContestAPI
+# from django.contrib import admin
+# from rest_framework.routers import DefaultRouter
+# from ..contest import views
+from contest.views import ContestAnnouncementListAPI,ContestAccessAPI, ContestRankAPI,ContestAPI
 
 # router = DefaultRouter()
 # router.register(r'contest', views.ContestViewSet)
 
-
+app_name='contest'
 urlpatterns = [
     url('contest', ContestAPI.as_view()),
     url(r"^contest/announcement/?$", ContestAnnouncementListAPI.as_view(), name="contest_announcement_api"),
