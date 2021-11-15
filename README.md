@@ -1,3 +1,3 @@
 # 软工第七组：北大文计平台
 
-demo效果: yucyux.github.io/PKUOnlineExamPlatform
+前端页面：http://39.104.48.59:3000/
