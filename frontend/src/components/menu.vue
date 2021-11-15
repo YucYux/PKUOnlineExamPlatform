@@ -17,10 +17,11 @@
     <Icon type="md-construct" />
     设置
     </MenuItem>
-    <Button class= "logbutton" type="default" ghost>{{log_status}}</Button>
+    <loginButton class= "logbutton" ></loginButton>
   </Menu>
 </template>
 <script>
+import loginButton from './login.vue'
 export default {
   data () {
     return {
@@ -28,9 +29,9 @@ export default {
     }
   },
   computed: {
-    log_status: function () {
-      return '登陆'
-    }
+  },
+  components: {
+    loginButton
   }
 }
 </script>
@@ -54,8 +55,9 @@ font-family: "STSong";
 text-align: top;
 }
 .logbutton{
-margin-top: 14px;
-margin-left: 830px;
+position: fixed;
+right:30px;
+/* margin-left: 830px; */
 float: left;
 }
 </style>
