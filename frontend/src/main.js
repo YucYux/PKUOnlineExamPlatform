@@ -5,6 +5,8 @@ import VueRouter from 'vue-router'
 import app from './App.vue'
 import ViewUI from 'view-design'
 import 'view-design/dist/styles/iview.css'
+import store from './store'
+
 Vue.use(VueRouter)
 Vue.use(ViewUI)
 /* eslint-disable no-new */
@@ -37,6 +39,7 @@ const router = new VueRouter(RouterConfig)
 new Vue({
   el: '#app',
   router: router,
+  store,
   render: h => {
     return h(app)
   }
