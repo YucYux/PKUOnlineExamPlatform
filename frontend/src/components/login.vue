@@ -32,6 +32,10 @@
   </div>
 </template>
 <script>
+
+import api from '../api.js'
+import store from '../store'
+
 export default {
   data () {
     return {
@@ -42,9 +46,11 @@ export default {
   },
   methods: {
     ok () {
-      this.$Message.info(
-        'username:' + this.v_username + 'password:' + this.v_password
-      )
+      var loginStatus = 2;  // 0:success 1:wrong username/password 2:network error
+      api.APIlogin(this.v_username, this.v_password).
+      then(function(result){alert('登录成功');store.dispatch('changeFooterInfo','欢迎，'+store.getters.getUsername)},
+           function(error){if(error.status = 401) alert('用户名或密码错误');
+                            else alert('无法连接到服务器')});
       this.v_username = this.v_password = ''
     },
     cancel () {

@@ -16,7 +16,8 @@ export default {
             }).then(response => {
                 let aAccess = response.data.access;
                 let aRefresh = response.data.refresh;
-                store.dispatch('storeInfoWhenLogin', aAccess, aRefresh, aUsername);
+                store.dispatch('storeInfoWhenLogin', 
+                    {newAccess: aAccess, newRefresh: aRefresh, newUsername: aUsername});
                 resolve(response); 
             }).catch(error => { // status is not 2xx
                 reject(error);

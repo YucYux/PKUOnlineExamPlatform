@@ -3,9 +3,10 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const state={
-    access: '',
-    refresh: '',
-    username: ''
+    access: 'none',
+    refresh: 'none',
+    username: 'none',
+    footerInfo: '您尚未登录'
 };
 const getters = {   
     getAccess(state) {
@@ -16,6 +17,9 @@ const getters = {
     },
     getUsername(state) {
         return state.username;
+    },
+    getFooterInfo(state) {
+        return state.footerInfo;
     }
 };
 const mutations = {
@@ -27,6 +31,9 @@ const mutations = {
     },
     changeUsernameM(state, newUsername) {
         state.username = newUsername;
+    },
+    changeFooterInfoM(state, newInfo) {
+        state.footerInfo = newInfo;
     }
 };
 const actions = {
@@ -39,15 +46,22 @@ const actions = {
     changeUsername(context, newUsername) {
         context.commit('changeUsernameM', newUsername);
     },
-    storeInfoWhenLogin(context, newAccess, newRefresh, newUsername) {
-        context.commit('changeAccessM', newAccess);
-        context.commit('changeRefreshM', newRefresh);
-        context.commit('changeUsernameM', newUsername);
-    }
+    changeFooterInfo(context, newInfo) {
+        context.commit('changeFooterInfoM', newInfo);
+    },  
+    storeInfoWhenLogin(context, newInfo) {
+        context.commit('changeAccessM', newInfo.newAccess);
+        context.commit('changeRefreshM', newInfo.newRefresh);
+        context.commit('changeUsernameM', newInfo.newUsername);
+    },
+     
+
 };
 const store = new Vuex.Store({
     state,
-    getters
+    getters,
+    mutations,
+    actions
 });
  
 export default store;
