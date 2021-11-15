@@ -57,9 +57,15 @@ class ContestAPI(APIView):
 
 class ContestListAPI(APIView):
     def get(self, request):
-        contests = Contest.objects.select_related("created_by").filter(visible=True)
+        #token = request.Get.get("token")
+        #user_type = tokenprocess(token)
+
+        contests = Contest.objects.select_related("created_by").filter(visible=True) #将创建者的信息返回 减少db访问次数
         keyword = request.GET.get("keyword")
-        rule_type = request.GET.get("rule_type")
+        #print(keyword)
+        print(request)
+        rule_type = request.GET.getlist("rule_type")
+        print(rule_type)
         status = request.GET.get("status")
         if keyword:
             contests = contests.filter(title__contains=keyword)
