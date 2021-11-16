@@ -4,33 +4,22 @@
         <Header :style = "{position: 'fixed', width: '100%'}">
           <vmenu></vmenu>
         </Header>
-        <Content :style="{margin: '88px 20px 0px 20px', background: '#fff', minHeight: '590px'}">
+        <Content :style="{padding: '15px 20px 0px 20px', margin: '88px 20px 0px 20px', background: '#5b6270', height:'100%'}">
             <router-view></router-view>
         </Content>
-        <Footer class="layout-footer-center"><img src = './assets/pku_logo.png'/>{{footerInfo}}</Footer>
+        <Footer class="layout-footer-center"><img src = './assets/pku_logo.png'/>informations</Footer>
       </Layout>
     </div>
 </template>
 <script>
 import vmenu from './components/menu.vue'
-import store from './store'
 
 export default {
-  data() {
-    return {
-      footerInfo
-    }
-  },
   components: {
     vmenu
   },
   method: {
 
-  },
-  computed: {
-    footerInfo: function() {
-      return store.getters.getFooterInfo;
-    }
   }
 }
 </script>
@@ -40,13 +29,15 @@ export default {
       border: 1px solid #d7dde4;
       background: #f5f7f9;
       position: relative;
-      border-radius: 4px;
       overflow: hidden;
   }
   .layout-footer-center{
+      position: fixed;
+      bottom:0px;
       text-align: center;
       height: 80px;
-      text-align: top;
+      width: 100%;
+      text-align: center;
       color: #d7dde4;
       font-size: 18px;
       background: #5b6270;
@@ -56,7 +47,7 @@ export default {
     left: 30px;
     width: 132px;
     height: 36px;
-    margin-top: 10px;
+    margin-top: 2px;
     margin-right : 50px;
     margin-bottom: 30px;
   }
