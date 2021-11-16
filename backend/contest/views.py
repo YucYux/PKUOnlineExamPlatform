@@ -70,7 +70,7 @@ class ContestListAPI(APIView):
         if keyword:
             contests = contests.filter(title__contains=keyword)
         if rule_type:
-            contests = contests.filter(rule_type=rule_type)
+            contests = contests.filter(rule_type=rule_type[0])
         if status:
             cur = now()
             if status == ContestStatus.CONTEST_NOT_START:

@@ -34,18 +34,18 @@ class MyUser(APITestCase):
         self.url = reverse('contest_api')
         print(self.url)
 
-    #TODO 解决为什么test过程跳过
-    def get_contest_list(self):
-        print('now test contest list')
+
+    def test_get_contest_list2(self):
+        print('now test contest list2')
         url = reverse("contest_list_api")
         #url = 'contest/contests'
         request_dir = {'rule_type':ContestRuleType.OI}
-        response = self.client.get(url + "?limit=10?rule_type=OI")
+        response = self.client.get(url + "?rule_type=OI")
         print(response.data["data"]["results"])
         self.assertSuccess(response)
         self.assertEqual(len(response.data["data"]["results"]), 2)
 
-'''
+
     def test_get_contest_list(self):
         print('now test contest list')
         url = reverse("contest_list_api")
@@ -54,5 +54,5 @@ class MyUser(APITestCase):
         print(response.data["data"]["results"])
         self.assertSuccess(response)
         self.assertEqual(len(response.data["data"]["results"]), 2)
-'''
+
 
