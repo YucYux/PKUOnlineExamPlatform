@@ -15,4 +15,5 @@ class UserRegisterSerializer(serializers.Serializer):
 class UserLoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
+    admin_Type = serializers.CharField()
 

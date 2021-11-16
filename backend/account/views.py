@@ -1,4 +1,5 @@
 from rest_framework.response import Response
+from rest_framework.renderers import JSONRenderer
 from rest_framework import status
 from django.http import JsonResponse
 from rest_framework.views import APIView
@@ -31,9 +32,9 @@ class UserLogoutAPI(APIView):
         auth.logout(request)
         return Response(status=status.HTTP_200_OK)
 
-class HelloAPI(APIView):
+class GetUserTypeAPI(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        username = request.successful_authenticator.get_user(request.successful_authenticator.get_validated_token(request.successful_authenticator.get_raw_token(request.successful_authenticator.get_header(request))))
-        return Response(username.admin_type, status=status.HTTP_200_OK)
+        user = request.successful_authenticator.get_user(request.successful_authenticator.get_validated_token(request.successful_authenticator.get_raw_token(request.successful_authenticator.get_header(request))))
+        return Response(JSONRenderer().render({'username': user.username, 'class_id': user.class_info, 'admin_type': user.admin_type}), status=status.HTTP_200_OK)
