@@ -26,6 +26,10 @@ const Routers = [
   {
     path: '/grade',
     component: (resolve) => require(['./router/views/grade.vue'], resolve)
+  },
+  {
+    path: '/classes',
+    component: (resolve) => require(['./router/views/classes.vue'], resolve)
   }
 ]
 

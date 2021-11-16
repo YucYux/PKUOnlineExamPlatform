@@ -52,7 +52,7 @@ export default {
       if(store.getters.getUsername != 'none') {
         this.$Notice.success({
                     title: '登录成功',
-                    desc: ''
+                    desc: '您的身份是：'+store.getters.getUsertype
                 });
       }
       else {

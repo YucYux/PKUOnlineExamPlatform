@@ -6,7 +6,8 @@ const state={
     access: 'none',
     refresh: 'none',
     username: 'none',
-    footerInfo: '您尚未登录'
+    footerInfo: '您尚未登录',
+    usertype: 'none', 
 };
 const getters = {   
     getAccess(state) {
@@ -20,6 +21,9 @@ const getters = {
     },
     getFooterInfo(state) {
         return state.footerInfo;
+    },
+    getUsertype(state) {
+        return state.usertype;
     }
 };
 const mutations = {
@@ -34,6 +38,9 @@ const mutations = {
     },
     changeFooterInfoM(state, newInfo) {
         state.footerInfo = newInfo;
+    },
+    changeUsertypeM(state, newUsertype) {
+        state.usertype = newUsertype;
     }
 };
 const actions = {
@@ -49,6 +56,9 @@ const actions = {
     changeFooterInfo(context, newInfo) {
         context.commit('changeFooterInfoM', newInfo);
     },  
+    changeUsertype(context, newUsertype) {
+        context.commit('changeUsertypeM', newUsertype);
+    },
     storeInfoWhenLogin(context, newInfo) {
         context.commit('changeAccessM', newInfo.newAccess);
         context.commit('changeRefreshM', newInfo.newRefresh);
