@@ -15,13 +15,23 @@ export default {
                 password: aPassword
             }).then(response => {
                 let aAccess = response.data.access;
+                axios.defaults.headers.common['Authorization'] = 'Bearer '+aAccess;
                 let aRefresh = response.data.refresh;
                 store.dispatch('storeInfoWhenLogin', 
                     {newAccess: aAccess, newRefresh: aRefresh, newUsername: aUsername});
+                axios.get('user/usertype/')
+                    .then(function (response2) {store.dispatch('changeUsertype',response2.data)})
+                    .catch(error => {reject(error2)});
                 resolve(response); 
             }).catch(error => { // status is not 2xx
                 reject(error);
             })
+        })
+    }, 
+    APIclassesList () {
+        return new Promise((resolve, reject) =>
+        {
+            axios.get('user/')
         })
     }
 }
