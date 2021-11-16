@@ -21,6 +21,7 @@ class UserLoginSerializer(serializers.Serializer):
     admin_Type = serializers.CharField()
 '''
 
+
 class ClassListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Class
