@@ -17,12 +17,13 @@ export default {
                 let aAccess = response.data.access;
                 axios.defaults.headers.common['Authorization'] = 'Bearer '+aAccess;
                 let aRefresh = response.data.refresh;
-                store.dispatch('storeInfoWhenLogin', 
-                    {newAccess: aAccess, newRefresh: aRefresh, newUsername: aUsername});
                 axios.get('user/usertype/')
-                    .then(function (response2) {store.dispatch('changeUsertype',response2.data)})
-                    .catch(error => {reject(error2)});
-                resolve(response); 
+                    .then(response2 => {console.log(response2);
+                                        store.dispatch('changeUsertype',response2.data.admin_type);
+                                        store.dispatch('storeInfoWhenLogin', 
+                                        {newAccess: aAccess, newRefresh: aRefresh, newUsername: aUsername});
+                                        resolve(response); })
+                    .catch(error2 => {reject(error2)});
             }).catch(error => { // status is not 2xx
                 reject(error);
             })
