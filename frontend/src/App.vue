@@ -4,9 +4,10 @@
         <Header :style = "{position: 'fixed', width: '100%'}">
           <vmenu></vmenu>
         </Header>
-        <Content :style="{padding: '15px 20px 0px 20px', margin: '88px 20px 0px 20px', background: '#5b6270', height:'100%'}">
+        <Content :style="{padding: '15px 20px 20px 20px', margin: '88px 20px 20px 20px', background: '#d7dde4', minHeight:'570px'}">
             <router-view></router-view>
         </Content>
+
         <Footer class="layout-footer-center"><img src = './assets/pku_logo.png'/>informations</Footer>
       </Layout>
     </div>
