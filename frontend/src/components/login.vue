@@ -46,11 +46,21 @@ export default {
   },
   methods: {
     ok () {
-      var loginStatus = 2;  // 0:success 1:wrong username/password 2:network error
       api.APIlogin(this.v_username, this.v_password).
-      then(function(result){alert('登录成功');store.dispatch('changeFooterInfo','欢迎，'+store.getters.getUsername)},
-           function(error){if(error.status = 401) alert('用户名或密码错误');
-                            else alert('无法连接到服务器')});
+      then(function(result){store.dispatch('changeFooterInfo','欢迎，'+store.getters.getUsername)},
+           function(error){});
+      if(store.getters.getUsername != 'none') {
+        this.$Notice.success({
+                    title: '登录成功',
+                    desc: ''
+                });
+      }
+      else {
+        this.$Notice.error({
+                    title: '登录失败',
+                    desc: ''
+                });
+      }
       this.v_username = this.v_password = ''
     },
     cancel () {
