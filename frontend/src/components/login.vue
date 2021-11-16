@@ -47,20 +47,19 @@ export default {
   methods: {
     ok () {
       api.APIlogin(this.v_username, this.v_password).
-      then(function(result){store.dispatch('changeFooterInfo','欢迎，'+store.getters.getUsername)},
-           function(error){});
-      if(store.getters.getUsername != 'none') {
-        this.$Notice.success({
+      then(result => {
+            store.dispatch('changeFooterInfo','欢迎，'+store.getters.getUsername);
+            this.$Notice.success({
                     title: '登录成功',
                     desc: '您的身份是：'+store.getters.getUsertype
                 });
-      }
-      else {
-        this.$Notice.error({
+          },
+           error => {
+             this.$Notice.error({
                     title: '登录失败',
                     desc: ''
                 });
-      }
+           });
       this.v_username = this.v_password = ''
     },
     cancel () {
