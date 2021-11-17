@@ -11,7 +11,7 @@ class User(AbstractUser):
     student_name = models.CharField(max_length=30, verbose_name=u"姓名")
     student_number = models.CharField(max_length=11, verbose_name=u"学号")
     admin_type = models.TextField(default=AdminType.STUDENT, verbose_name=u"用户类型")
-    class_info = models.IntegerField(null=True)
+    class_info = models.IntegerField(null=True, blank=True)
 
     class Meta:
         db_table = "User"

@@ -26,3 +26,9 @@ class ClassListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Class
         fields = "__all__"
+
+
+class UserListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["username", "student_name", "student_number", "admin_type", "class_info"]

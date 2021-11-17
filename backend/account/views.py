@@ -1,12 +1,13 @@
 from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.filters import SearchFilter
 from django.http import JsonResponse
 from django.contrib import auth
 
-from .serializers import UserRegisterSerializer, ClassListSerializer
-from .models import Class
+from .serializers import UserRegisterSerializer, ClassListSerializer, UserListSerializer
+from .models import Class, User
 
 class UserRegisterAPI(APIView):
     def post(self, request):
@@ -55,4 +56,14 @@ class GetUserInfoAPI(APIView):
 class GetClassListAPI(generics.ListAPIView):
     queryset = Class.objects.all()
     serializer_class = ClassListSerializer
+
+
+class GetUserListFromClassAPI(generics.ListAPIView):
+    permission_classes = (IsAdminUser,)
+
+    queryset = User.objects.all()
+    serializer_class = UserListSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['class_info']
+
 
