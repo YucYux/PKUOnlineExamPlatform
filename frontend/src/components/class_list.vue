@@ -1,26 +1,38 @@
 <template>
-  <div style="padding: 10px; background: #f8f8f9">
-    <Card
-      :title="Class['class_name']"
-      icon="md-contacts"
-      padding="0"
-      shadow
-      style="width: 100%"
-      to="#"
-    >
-      <CellGroup>
-        <Cell :title="'ID: '+Class['id']"></Cell>
-      </CellGroup>
-    </Card>
-  </div>
+  <Scroll :on-reach-bottom="handleReachBottom" height="90%">
+    <Class v-for="(item, index) in classes" :key="index" :Class="classes[index]"></Class>
+  </Scroll>
 </template>
+
 <script>
+
+import Class from './class_list_element.vue'
+import store from '../store'
+
 export default {
-  props: ['Class'],
   data () {
     return {
-      id: 0
+
     }
+  },
+  methods: {
+    handleReachBottom () {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve()
+        }, 2000)
+      })
+    }
+  },
+  computed: {
+    classes: function () {
+      return store.getters.getClasses
+    }
+  },
+  mounted: function () {
+  },
+  components: {
+    Class
   }
 }
 </script>

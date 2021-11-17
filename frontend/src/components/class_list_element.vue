@@ -1,23 +1,22 @@
-/* eslint-disable */
 <template>
   <div style="padding: 10px; background: #f8f8f9">
     <Card
-      :title="class_name"
+      :title="Class['class_name']"
       icon="md-contacts"
       padding="0"
       shadow
       style="width: 100%"
-      to="/classdetail/membersList"
+      to="#"
     >
       <CellGroup>
-        <Cell :title="class_id"></Cell>
+        <Cell :title="'ID: '+Class['id']"></Cell>
       </CellGroup>
     </Card>
   </div>
 </template>
 <script>
 export default {
-  props: ['class_name', 'class_id'],
+  props: ['Class'],
   data () {
     return {
       id: 0
