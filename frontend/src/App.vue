@@ -1,10 +1,10 @@
 <template>
     <div class='layout'>
       <Layout>
-        <Header :style = "{position: 'fixed', width: '100%'}">
+        <Header :style = "{position: 'relative', width: '100%'}">
           <vmenu></vmenu>
         </Header>
-        <Content :style="{padding: '15px 20px 20px 20px', margin: '88px 20px 20px 20px', background: '#d7dde4', minHeight:'570px'}">
+        <Content :style="{position:'relative', padding: '30px 20px 20px 20px', margin: '35px 20px 20px 20px', background: '#d7dde4', minHeight:'560px'}">
             <router-view></router-view>
         </Content>
 
@@ -26,6 +26,10 @@ export default {
 </script>
 
 <style scoped>
+  Header {
+    position: relative;
+    z-index: 99999;
+  }
   .layout{
       border: 1px solid #d7dde4;
       background: #f5f7f9;
@@ -52,5 +56,4 @@ export default {
     margin-right : 50px;
     margin-bottom: 30px;
   }
-</style>
 </style>
