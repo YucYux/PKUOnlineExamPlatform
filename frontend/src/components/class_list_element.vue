@@ -6,7 +6,7 @@
       padding="0"
       shadow
       style="width: 100%"
-      to="#"
+      to="/classdetail/membersList"
     >
       <CellGroup>
         <Cell :title="'ID: '+Class['id']"></Cell>
