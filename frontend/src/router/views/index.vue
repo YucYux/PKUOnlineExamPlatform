@@ -7,7 +7,6 @@
 
 <script>
 import api from '../../api.js'
-import store from '../../store'
 export default {
     methods: {
         APItest: function() {
