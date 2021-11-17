@@ -17,9 +17,9 @@
     <Icon type="md-construct" />
     设置
     </MenuItem>
-    <MenuItem name="classes" to = '/classes'>
-    <Icon type="md-contacts" />
-    班级
+    <MenuItem name="class" to = '/class'>
+    <Icon type="md-apps" />
+    班级管理
     </MenuItem>
     <loginButton class= "logbutton" ></loginButton>
   </Menu>
@@ -41,6 +41,10 @@ export default {
 </script>
 
 <style>
+Menu {
+  z-index: 99999;
+}
+
 .layout-logo{
 position: relative;
 width: 147px;
@@ -59,9 +63,8 @@ font-family: "STSong";
 text-align: top;
 }
 .logbutton{
-position: fixed;
-right:30px;
-/* margin-left: 830px; */
-float: left;
+position: relative;
+top:0%;
+float: right;
 }
 </style>
