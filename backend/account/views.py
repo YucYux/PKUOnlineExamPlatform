@@ -6,8 +6,10 @@ from rest_framework.filters import SearchFilter
 from django.http import JsonResponse
 from django.contrib import auth
 
-from .serializers import UserRegisterSerializer, ClassListSerializer, UserListSerializer
+from .serializers import UserRegisterSerializer, ClassListSerializer, \
+    UserListSerializer, SetUserClassSerialize
 from .models import Class, User
+
 
 class UserRegisterAPI(APIView):
     def post(self, request):
@@ -50,7 +52,10 @@ class GetUserInfoAPI(APIView):
 
     def get(self, request):
         user = getUserFromRequest(request)
-        return JsonResponse({'username': user.username, 'class_id': user.class_info, 'admin_type': user.admin_type}, status=status.HTTP_200_OK)
+        return JsonResponse({'username': user.username,
+                             'class_id': user.class_info,
+                             'admin_type': user.admin_type},
+                            status=status.HTTP_200_OK)
 
 
 class GetClassListAPI(generics.ListAPIView):
@@ -67,3 +72,30 @@ class GetUserListFromClassAPI(generics.ListAPIView):
     search_fields = ['class_info']
 
 
+class SetUserClass(APIView):
+    permission_classes = (IsAdminUser,)
+
+    def post(self, request):
+        serializer = SetUserClassSerialize(data=request.data)
+        if serializer.is_valid():
+            user = User.objects.get(id=serializer.data["user_id"])
+            user.class_info = serializer.data["new_class_id"]
+            user.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SetUserTA(APIView):
+    permission_classes = (IsAdminUser,)
+
+    def post(self, request):
+        serializer = SetUserClassSerialize(data=request.data)
+        if serializer.is_valid():
+            user = User.objects.get(id=serializer.data["user_id"])
+            user.class_info = serializer.data["new_class_id"]
+            user.admin_type = "Teaching Assistant"
+            user.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -31,4 +31,9 @@ class ClassListSerializer(serializers.ModelSerializer):
 class UserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["username", "student_name", "student_number", "admin_type", "class_info"]
+        fields = ["id", "username", "student_name", "student_number", "admin_type", "class_info"]
+
+
+class SetUserClassSerialize(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    new_class_id = serializers.IntegerField()
