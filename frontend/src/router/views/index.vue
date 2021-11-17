@@ -11,7 +11,7 @@ import store from '../../store'
 export default {
     methods: {
         APItest: function() {
-            api.APIclassInfo();
+            api.APIsetTAClass(8,1);
         }
     }
 }

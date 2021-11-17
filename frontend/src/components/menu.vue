@@ -21,14 +21,24 @@
     <Icon type="md-contacts" />
     班级
     </MenuItem>
-    <loginButton class= "logbutton" ></loginButton>
+    <registerButton class= "registerbutton" ></registerButton>
+    <div v-if="username == 'none'">
+      <loginButton class= "loginbutton" ></loginButton>
+    </div>
+    <div v-else>
+      <logoutButton class= "logoutbutton" ></logoutButton>
+    </div>
+    
   </Menu>
 </template>
 
 <script>
 
 import loginButton from './login.vue'
+import registerButton from './register.vue'
+import logoutButton from './logout.vue'
 import api from '../api.js'
+import store from '../store'
 
 export default {
   data () {
@@ -37,13 +47,18 @@ export default {
     }
   },
   computed: {
+    username: function() {
+      return store.getters.getUsername;
+    }
   },
   components: {
-    loginButton
+    loginButton,
+    registerButton,
+    logoutButton
   },
   methods: {
     onSelect(pageName) {
-      
+
     }
   }
 }
@@ -71,9 +86,22 @@ font-weight: bold;
 font-family: "STSong";
 text-align: top;
 }
-.logbutton{
+.loginbutton{
 position: relative;
 top:0%;
 float: right;
+margin-right: 10px;
+}
+.registerbutton{
+position: relative;
+top:0%;
+float: right;
+margin-right: 10px;
+}
+.logoutbutton{
+position: relative;
+top:0%;
+float: right;
+margin-right: 10px;
 }
 </style>
