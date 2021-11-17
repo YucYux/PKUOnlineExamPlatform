@@ -8,7 +8,9 @@ const state={
     username: 'none',
     footerInfo: '您尚未登录',
     usertype: 'none', 
-    classes: []
+    classes: [],
+    classinfonumber: 0,    
+    classmembers: []
 };
 const getters = {   
     getAccess(state) {
@@ -28,6 +30,12 @@ const getters = {
     },
     getClasses(state) {
         return state.classes;
+    },
+    getClassinfonumber(state) {
+        return state.classinfonumber;
+    },
+    getClassmembers(state) {
+        return state.classmembers;
     }
 };
 const mutations = {
@@ -48,6 +56,12 @@ const mutations = {
     },
     updateClassesM(state, newClasses) {
         state.classes = newClasses;
+    },
+    changeClassinfonumberM(state, newClassinfonumber) {
+        state.classinfonumber = newClassinfonumber;
+    },
+    changeClassmembersM(state, newClassmembers) {
+        state.classmembers = newClassmembers;
     }
 };
 const actions = {
@@ -68,6 +82,12 @@ const actions = {
     },
     updateClasses(context, newClasses) {
         context.commit('updateClassesM', newClasses);
+    },
+    changeClassinfonumber(context, newClassinfonumber) {
+        context.commit('changeClassinfonumber', newClassinfonumber);
+    },
+    changeClassmembers(context, newClassmembers) {
+        context.commit('changeClassmembers', newClassmembers);
     },
     storeInfoWhenLogin(context, newInfo) {
         context.commit('changeAccessM', newInfo.newAccess);
