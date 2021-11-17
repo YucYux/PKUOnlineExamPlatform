@@ -7,13 +7,13 @@
         <Content :style="{position:'relative', padding: '30px 20px 20px 20px', margin: '35px 20px 20px 20px', background: '#d7dde4', minHeight:'560px'}">
             <router-view></router-view>
         </Content>
-
-        <Footer class="layout-footer-center"><img src = './assets/pku_logo.png'/>informations</Footer>
+        <Footer class="layout-footer-center"><img src = './assets/pku_logo.png'/>{{footerInfo}}</Footer>
       </Layout>
     </div>
 </template>
 <script>
 import vmenu from './components/menu.vue'
+import store from './store'
 
 export default {
   components: {
@@ -21,6 +21,14 @@ export default {
   },
   method: {
 
+  },
+  computed: {
+    footerInfo: function() {
+      if(store.getters.getUsername == 'none')
+        return "您尚未登录";
+      else
+        return "欢迎，"+store.getters.getUsername;
+    }
   }
 }
 </script>

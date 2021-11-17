@@ -40,6 +40,16 @@ export default {
                 resolve(response);
             }).catch(error => {reject(error)})
         })
+    },
+    APIclassInfo () {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.get('user/getuserlist/?search='+1).then(response => {
+                console.log(response);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
     }
 }
 

@@ -43,9 +43,7 @@ export default {
   },
   methods: {
     onSelect(pageName) {
-      if(pageName == 'classes') {
-        api.APIclassesList();
-      }
+      
     }
   }
 }

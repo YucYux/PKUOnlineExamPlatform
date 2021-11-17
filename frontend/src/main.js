@@ -6,6 +6,7 @@ import app from './App.vue'
 import ViewUI from 'view-design'
 import 'view-design/dist/styles/iview.css'
 import store from './store'
+import api from './api.js'
 
 Vue.use(VueRouter)
 Vue.use(ViewUI)
@@ -29,7 +30,11 @@ const Routers = [
   },
   {
     path: '/classes',
-    component: (resolve) => require(['./router/views/classes.vue'], resolve)
+    component: (resolve) => require(['./router/views/classes.vue'], resolve),
+    beforeEnter: (to, from, next) => {
+      api.APIclassesList();
+      next();
+    }
   }
 ]
 
