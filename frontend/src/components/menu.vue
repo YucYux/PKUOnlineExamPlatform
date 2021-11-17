@@ -1,5 +1,5 @@
 <template>
-  <Menu mode="horizontal" :theme="theme1" active-name="1">
+  <Menu mode="horizontal" :theme="theme1" active-name="1" @on-select="onSelect">
     <div class="layout-logo"><span>北大文计考试平台</span></div>
     <MenuItem name="index" to = '/index'>
     <Icon type="md-home"/>
@@ -17,15 +17,19 @@
     <Icon type="md-construct" />
     设置
     </MenuItem>
-    <MenuItem name="class" to = '/classes'>
+    <MenuItem name="classes" to = '/classes'>
     <Icon type="md-contacts" />
     班级
     </MenuItem>
     <loginButton class= "logbutton" ></loginButton>
   </Menu>
 </template>
+
 <script>
+
 import loginButton from './login.vue'
+import api from '../api.js'
+
 export default {
   data () {
     return {
@@ -36,6 +40,13 @@ export default {
   },
   components: {
     loginButton
+  },
+  methods: {
+    onSelect(pageName) {
+      if(pageName == 'classes') {
+        api.APIclassesList();
+      }
+    }
   }
 }
 </script>

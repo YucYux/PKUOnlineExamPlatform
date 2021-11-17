@@ -35,6 +35,8 @@ export default {
             axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
             axios.get('user/getclasslist/').then(response => {
                 console.log(response);
+                store.dispatch('updateClasses', response.data);
+                console.log(store.getters.getClasses[0]['class_name']);
                 resolve(response);
             }).catch(error => {reject(error)})
         })
