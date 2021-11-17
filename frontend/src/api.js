@@ -32,7 +32,11 @@ export default {
     APIclassesList () {
         return new Promise((resolve, reject) =>
         {
-            axios.get('user/')
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.get('user/getclasslist/').then(response => {
+                console.log(response);
+                resolve(response);
+            }).catch(error => {reject(error)})
         })
     }
 }
