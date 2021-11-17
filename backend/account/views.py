@@ -1,12 +1,12 @@
+from rest_framework import status, generics
 from rest_framework.response import Response
-from rest_framework.renderers import JSONRenderer
-from rest_framework import status
-from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from .serializers import UserRegisterSerializer
+from django.http import JsonResponse
 from django.contrib import auth
 
+from .serializers import UserRegisterSerializer, ClassListSerializer
+from .models import Class
 
 class UserRegisterAPI(APIView):
     def post(self, request):
@@ -17,6 +17,9 @@ class UserRegisterAPI(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+'''
+已用simple jwt自带的用户登录函数代替
 class UserLoginAPI(APIView):
     def post(self, request):
         data = request.data
@@ -26,15 +29,30 @@ class UserLoginAPI(APIView):
             return Response(status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+'''
 
 class UserLogoutAPI(APIView):
     def get(self, request):
         auth.logout(request)
         return Response(status=status.HTTP_200_OK)
 
-class GetUserTypeAPI(APIView):
+
+def getUserFromRequest(request):
+    return request.successful_authenticator.get_user(
+        request.successful_authenticator.get_validated_token(
+            request.successful_authenticator.get_raw_token(
+                request.successful_authenticator.get_header(request))))
+
+
+class GetUserInfoAPI(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        user = request.successful_authenticator.get_user(request.successful_authenticator.get_validated_token(request.successful_authenticator.get_raw_token(request.successful_authenticator.get_header(request))))
-        return Response(JSONRenderer().render({'username': user.username, 'class_id': user.class_info, 'admin_type': user.admin_type}), status=status.HTTP_200_OK)
+        user = getUserFromRequest(request)
+        return JsonResponse({'username': user.username, 'class_id': user.class_info, 'admin_type': user.admin_type}, status=status.HTTP_200_OK)
+
+
+class GetClassListAPI(generics.ListAPIView):
+    queryset = Class.objects.all()
+    serializer_class = ClassListSerializer
+

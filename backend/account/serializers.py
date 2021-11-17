@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User, Class
 
 
 class UserRegisterSerializer(serializers.Serializer):
@@ -12,8 +12,17 @@ class UserRegisterSerializer(serializers.Serializer):
             password=validated_data['password'],
         )
 
+
+'''
+已用simple jwt自带的用户登录函数代替
 class UserLoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
     admin_Type = serializers.CharField()
+'''
 
+
+class ClassListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Class
+        fields = "__all__"
