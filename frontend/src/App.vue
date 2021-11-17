@@ -31,7 +31,7 @@ export default {
     z-index: 99999;
   }
   .layout{
-      border: 1px solid #d7dde4;
+      border: 0px solid #d7dde4;
       background: #f5f7f9;
       position: relative;
       overflow: hidden;

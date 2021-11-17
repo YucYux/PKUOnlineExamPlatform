@@ -17,9 +17,9 @@
     <Icon type="md-construct" />
     设置
     </MenuItem>
-    <MenuItem name="class" to = '/class'>
-    <Icon type="md-apps" />
-    班级管理
+    <MenuItem name="class" to = '/classes'>
+    <Icon type="md-contacts" />
+    班级
     </MenuItem>
     <loginButton class= "logbutton" ></loginButton>
   </Menu>
