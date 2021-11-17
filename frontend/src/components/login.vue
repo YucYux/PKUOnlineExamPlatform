@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div>
     <Button type="success" @click="modal1 = true" ghost>登录</Button>
@@ -32,7 +33,6 @@
   </div>
 </template>
 <script>
-
 import api from '../api.js'
 import store from '../store'
 
@@ -46,20 +46,25 @@ export default {
   },
   methods: {
     ok () {
-      api.APIlogin(this.v_username, this.v_password).
-      then(result => {
-            store.dispatch('changeFooterInfo','欢迎，'+store.getters.getUsername);
-            this.$Notice.success({
-                    title: '登录成功',
-                    desc: '您的身份是：'+store.getters.getUsertype
-                });
-          },
-           error => {
-             this.$Notice.error({
-                    title: '登录失败',
-                    desc: ''
-                });
-           });
+      api.APIlogin(this.v_username, this.v_password).then(
+        (result) => {
+          store.dispatch(
+            'changeFooterInfo',
+            '欢迎，' + store.getters.getUsername
+          )
+          this.$Notice.success({
+            title: '登录成功',
+            desc: '您的身份是：' + store.getters.getUsertype
+          })
+        },
+        (error) => {
+          this.$Notice.error({
+            title: '登录失败',
+            desc: ''
+          })
+          console.log(error)
+        }
+      )
       this.v_username = this.v_password = ''
     },
     cancel () {

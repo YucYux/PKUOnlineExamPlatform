@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div style="padding: 10px; background: #f8f8f9">
     <Card
@@ -6,7 +7,7 @@
       padding="0"
       shadow
       style="width: 100%"
-      to="#"
+      to="/coding"
     >
       <CellGroup>
         <Cell :title="contest_info"></Cell>

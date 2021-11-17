@@ -1,5 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+/* eslint-disable */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import app from './App.vue'
@@ -11,8 +12,7 @@ import api from './api.js'
 Vue.use(VueRouter)
 Vue.use(ViewUI)
 /* eslint-disable no-new */
-const Routers = [
-  {
+const Routers = [{
     path: '/index',
     component: (resolve) => require(['./router/views/index.vue'], resolve)
   },
@@ -35,7 +35,25 @@ const Routers = [
       api.APIclassesList();
       next();
     }
-  }
+  },
+  {
+    path: '/classdetail',
+    component: (resolve) => require(['./router/views/classdetail.vue'], resolve),
+    children: [
+      {
+        path: 'membersList',
+        component: (resolve) => require(['./components/classmember_list.vue'], resolve)
+      },
+      {
+        path: 'setContest',
+        component: (resolve) => require(['./components/set_contest.vue'], resolve)
+      },
+      {
+        path: 'setMembers',
+        component: (resolve) => require(['./components/set_members.vue'], resolve)
+      }
+    ]
+  },
 ]
 
 const RouterConfig = {

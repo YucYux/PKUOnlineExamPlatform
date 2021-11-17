@@ -1,6 +1,6 @@
 /* eslint-disable */
 <template>
-    <div>control</div>
+    <div>set_contest</div>
 </template>
 
 <script>

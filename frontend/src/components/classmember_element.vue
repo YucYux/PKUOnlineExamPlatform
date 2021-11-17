@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div style="padding: 10px; background: #f8f8f9">
     <Card

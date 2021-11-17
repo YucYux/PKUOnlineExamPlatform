@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <Menu mode="horizontal" :theme="theme1" active-name="1" @on-select="onSelect">
     <div class="layout-logo"><span>北大文计考试平台</span></div>

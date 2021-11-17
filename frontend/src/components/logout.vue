@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div>
     <Button type="success" @click="modal1 = true" ghost>注销</Button>

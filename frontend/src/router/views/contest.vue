@@ -1,5 +1,6 @@
+/* eslint-disable */
 <template>
-    <examlist></examlist>
+  <examlist></examlist>
 </template>
 
 <script>

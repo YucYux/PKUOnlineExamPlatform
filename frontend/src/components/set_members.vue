@@ -1,6 +1,6 @@
 /* eslint-disable */
 <template>
-    <div>control</div>
+    <div>set_members</div>
 </template>
 
 <script>

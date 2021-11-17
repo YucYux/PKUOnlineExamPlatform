@@ -1,6 +1,7 @@
+/* eslint-disable */
 <template>
-  <Scroll :on-reach-bottom="handleReachBottom" height="560">
-    <exam v-for="(item, index) in list_name" :key="index" :contest_name="list_name[index]" :contest_info="list_info[index]" :contest_date="list_date[index]" :contest_time="list_time[index]"></exam>
+  <Scroll :on-reach-bottom="handleReachBottom" height="90%" style="z-index = -1">
+    <exam style="z-index = -1" v-for="(item, index) in list_name" :key="index" :contest_name="list_name[index]" :contest_info="list_info[index]" :contest_date="list_date[index]" :contest_time="list_time[index]"></exam>
   </Scroll>
 </template>
 <script>

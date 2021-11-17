@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
     <div>
     <div>index</div>
@@ -7,6 +8,7 @@
 
 <script>
 import api from '../../api.js'
+import store from '../../store'
 export default {
     methods: {
         APItest: function() {

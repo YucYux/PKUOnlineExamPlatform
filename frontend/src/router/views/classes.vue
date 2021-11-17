@@ -1,5 +1,6 @@
+/* eslint-disable */
 <template>
-    <classlist></classlist>
+  <classlist></classlist>
 </template>
 
 <script>

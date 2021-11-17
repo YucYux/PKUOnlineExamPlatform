@@ -1,18 +1,16 @@
+/* eslint-disable */
 <template>
-  <Scroll :on-reach-bottom="handleReachBottom" height="560">
+  <Scroll :on-reach-bottom="handleReachBottom" height="420">
     <classmember v-for="(item, index) in members" :key="index" :classmember="members[index]"></classmember>
   </Scroll>
 </template>
 
 <script>
-
-import classmember from './classmember_list_element.vue'
+import classmember from './classmember_element.vue'
 import store from '../store'
-
 export default {
   data () {
     return {
-
     }
   },
   methods: {
@@ -26,7 +24,12 @@ export default {
   },
   computed: {
     members: function() {
-      return store.getters.getClassmembers;
+    //   return store.getters.getClassmembers;
+        var l = [];
+        for(var i=0;i<50;++i){
+            l[i] = {username:'student'+i};
+        }
+        return l
     }
   },
   mounted: function () {
