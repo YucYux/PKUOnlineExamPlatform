@@ -16,7 +16,8 @@ class User(AbstractUser):
         (AdminType.TEACHING_ASSISTANT, u"助教"),
         (AdminType.TEACHER, u"老师"),
     )
-    admin_type = models.CharField(max_length=20, choices=admin_choices, verbose_name=u"用户类型")
+    admin_type = models.CharField(max_length=20, choices=admin_choices,
+                                  default=AdminType.STUDENT, verbose_name=u"用户类型")
 
     class Meta:
         db_table = "User"
