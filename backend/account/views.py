@@ -8,7 +8,7 @@ from django.contrib import auth
 
 from .serializers import UserRegisterSerializer, ClassListSerializer, \
     UserListSerializer, SetUserClassSerialize
-from .models import Class, User
+from .models import Class, User, AdminType
 
 
 class UserRegisterAPI(APIView):
@@ -94,7 +94,7 @@ class SetUserTA(APIView):
         if serializer.is_valid():
             user = User.objects.get(id=serializer.data["user_id"])
             user.class_info = serializer.data["new_class_id"]
-            user.admin_type = "Teaching Assistant"
+            user.admin_type = AdminType.TEACHING_ASSISTANT
             user.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
