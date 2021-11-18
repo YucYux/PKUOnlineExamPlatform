@@ -64,7 +64,6 @@ class GetClassListAPI(generics.ListAPIView):
 
 
 class GetUserListFromClassAPI(generics.ListAPIView):
-    permission_classes = (IsAdminUser,)
 
     queryset = User.objects.all()
     serializer_class = UserListSerializer
