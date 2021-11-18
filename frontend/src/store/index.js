@@ -85,10 +85,10 @@ const actions = {
     context.commit('updateClassesM', newClasses);
   },
   changeClassinfonumber(context, newClassinfonumber) {
-    context.commit('changeClassinfonumber', newClassinfonumber);
+    context.commit('changeClassinfonumberM', newClassinfonumber);
   },
   changeClassmembers(context, newClassmembers) {
-    context.commit('changeClassmembers', newClassmembers);
+    context.commit('changeClassmembersM', newClassmembers);
   },
   storeInfoWhenLogin(context, newInfo) {
     context.commit('changeAccessM', newInfo.newAccess);

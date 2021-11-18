@@ -42,7 +42,11 @@ const Routers = [{
     children: [
       {
         path: 'membersList',
-        component: (resolve) => require(['./components/classmember_list.vue'], resolve)
+        component: (resolve) => require(['./components/classmember_list.vue'], resolve),
+        beforeEnter: (to, from, next) => {
+          api.APIclassInfo();
+          next();
+        },
       },
       {
         path: 'setContest',

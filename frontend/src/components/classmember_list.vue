@@ -24,12 +24,7 @@ export default {
   },
   computed: {
     members: function() {
-    //   return store.getters.getClassmembers;
-        var l = [];
-        for(var i=0;i<50;++i){
-            l[i] = {username:'student'+i};
-        }
-        return l
+       return store.getters.getClassmembers;
     }
   },
   mounted: function () {
