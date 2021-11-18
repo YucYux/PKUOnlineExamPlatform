@@ -29,6 +29,10 @@ const Routers = [{
     component: (resolve) => require(['./router/views/grade.vue'], resolve)
   },
   {
+    path: '/coding',
+    component: (resolve) => require(['./router/views/coding.vue'], resolve)
+  },
+  {
     path: '/classes',
     component: (resolve) => require(['./router/views/classes.vue'], resolve),
     beforeEnter: (to, from, next) => {
