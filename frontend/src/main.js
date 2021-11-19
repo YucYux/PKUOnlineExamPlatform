@@ -29,6 +29,10 @@ const Routers = [{
     component: (resolve) => require(['./router/views/grade.vue'], resolve)
   },
   {
+    path: '/coding',
+    component: (resolve) => require(['./router/views/coding.vue'], resolve)
+  },
+  {
     path: '/classes',
     component: (resolve) => require(['./router/views/classes.vue'], resolve),
     beforeEnter: (to, from, next) => {
@@ -42,7 +46,11 @@ const Routers = [{
     children: [
       {
         path: 'membersList',
-        component: (resolve) => require(['./components/classmember_list.vue'], resolve)
+        component: (resolve) => require(['./components/classmember_list.vue'], resolve),
+        beforeEnter: (to, from, next) => {
+          api.APIclassInfo();
+          next();
+        },
       },
       {
         path: 'setContest',
@@ -51,6 +59,10 @@ const Routers = [{
       {
         path: 'setMembers',
         component: (resolve) => require(['./components/set_members.vue'], resolve)
+      },
+      {
+        path: 'setTA',
+        component: (resolve) => require(['./components/set_TA.vue'], resolve)
       }
     ]
   },

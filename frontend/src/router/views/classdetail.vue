@@ -27,6 +27,10 @@
             <Icon type="md-settings"></Icon>
             <span>学生管理</span>
           </MenuItem>
+          <MenuItem name="set_TA" to='setTA'>
+            <Icon type="md-settings"></Icon>
+            <span>助教管理</span>
+          </MenuItem>
         </Menu>
         <div slot="trigger"></div>
       </Sider>

@@ -64,6 +64,7 @@ export default {
             axios.get('user/getclasslist/').then(response => {
                 console.log(response);
                 store.dispatch('updateClasses', response.data);
+                store.dispatch('changeClassinfonumber', response.data[0].class_number);
                 console.log(store.getters.getClasses[0]['class_name']);
                 resolve(response);
             }).catch(error => {reject(error)})
@@ -72,8 +73,9 @@ export default {
     APIclassInfo () {
         return new Promise((resolve, reject) =>
         {
+            let class_number = store.getters.getClassinfonumber;
             axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
-            axios.get('user/getuserlist/?search='+1).then(response => {
+            axios.get('user/getuserlist/?search='+class_number).then(response => {
                 console.log(response);
                 store.dispatch('changeClassmembers', response.data);
                 resolve(response);
@@ -88,9 +90,12 @@ export default {
                 user_id: userID,
                 new_class_id: classID
             }).then(response => {
+                console.log(userID);
+                console.log(classID);
                 console.log(response);
                 resolve(response);
-            }).catch(error => {reject(error)})
+            }).catch(error => {reject(error);console.log(userID);
+                console.log(classID);})
         })
     },
     APIsetTAClass (userID, classID) {
