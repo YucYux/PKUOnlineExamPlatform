@@ -35,6 +35,7 @@ import "material-icons/iconfont/material-icons.css";
 import { gfm } from "@milkdown/preset-gfm";
 import "katex/dist/katex.min.css";
 import { slots } from "../assets/slots.js";
+import monacoeditor from "./monaco-plugin.js";
 let tutorial = `# Milkdown指南
 
 ## 支持Markdown语法
@@ -129,29 +130,41 @@ export default defineComponent({
   },
   props: {
     text: { type: String, default: tutorial },
+    json: { type: Object, default: null },
     editable: { type: Boolean, default: true },
   },
   setup(props) {
     console.log(props);
+    let globalPlugins = [diagram,math];
+    let editorPlugins = [tooltip, emoji, gfm, history, indent, slash, clipboard,commonmark.headless()];
+    let rendererPlugins = [commonmark.headless(),monacoeditor];
     let editor = Editor.make()
       .config((ctx) => {
         ctx.set(editorViewOptionsCtx, {
           editable() {
-            return props.editable;
+            return !!props.editable;
           },
         });
-        ctx.set(defaultValueCtx, props.text);
-      })
-      .use(
+        ctx.set(defaultValueCtx, props.json?{
+          type: "json",
+          value: props.json,
+        }:props.text);
+      });
+
+      editor.use(
         themeFactory({
           slots,
         })
-      )
-      .use(gfm)
-      .use(commonmark.headless())
-      //   .use(listener)
-      //.use(        shiki({       theme:"material-default"        }))
-      /*
+      );
+    if (!!props.editable) {
+      for (let i of editorPlugins) editor.use(i);
+    } else {
+      for (let i of rendererPlugins) editor.use(i);
+    }
+    for (let i of globalPlugins) editor.use(i);
+    //   .use(listener)
+    //.use(        shiki({       theme:"material-default"        }))
+    /*
         'css-variables'
   | 'dark-plus'
   | 'dracula-soft'
@@ -178,28 +191,23 @@ export default defineComponent({
   | 'vitesse-dark'
   | 'vitesse-light'
   */
-      .use(history)
-      .use(indent)
-      .use(slash)
-      .use(math)
-      .use(emoji)
-      .use(tooltip)
-      .use(clipboard)
-      .use(
-        upload.configure(uploadPlugin, {
-          uploader: fileHandler.uploader,
-        })
-      )
-      .use(diagram)
     let ls = {
       markdown: [],
       doc: [console.log],
     };
-    editor
-      .config(function (ctx) {
-        ctx.set(listenerCtx, ls);
-      })
-      .use(listener);
+    if (!!props.editable) {
+      editor.use(
+        upload.configure(uploadPlugin, {
+          uploader: fileHandler.uploader,
+        })
+      );
+
+      editor
+        .config(function (ctx) {
+          ctx.set(listenerCtx, ls);
+        })
+        .use(listener);
+    }
     let editorf = useEditor((root) => {
       return editor.config((ctx) => {
         ctx.set(rootCtx, root);

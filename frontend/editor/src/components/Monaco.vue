@@ -131,8 +131,8 @@ export default defineComponent({
     },
     //设置宽高
     resize(w, h) {
-      if (w) this.$el.style.width = w;
-      if (h) this.$el.style.height = h;
+      if (w) this.$el.style.width = w+"px";
+      if (h) this.$el.style.height = h+"px";
     },
     //加载完毕后执行
     async finish() {
