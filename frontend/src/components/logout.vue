@@ -36,17 +36,18 @@ export default {
       api.APIlogout().
       then(result => {
             this.$Notice.success({
-                    title: '注册成功',
+                    title: '注销成功',
                     desc: ''
                 });
           },
            error => {
              this.$Notice.error({
-                    title: '注册失败',
+                    title: '注销失败',
                     desc: ''
                 });
            });
       this.v_username = this.v_password = ''
+      this.$router.replace('/index');
     },
     cancel () {
       this.$Message.info('Clicked cancel')

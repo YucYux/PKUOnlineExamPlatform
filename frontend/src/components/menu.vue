@@ -6,24 +6,26 @@
     <Icon type="md-home"/>
     主页
     </MenuItem>
-    <MenuItem name="contest" to = '/contest'>
-    <Icon type="md-trophy" />
-    考试
-    </MenuItem>
-    <MenuItem name="grade" to = '/grade'>
-    <Icon type="md-stats" />
-    成绩
-    </MenuItem>
-    <MenuItem name="control" to = '/control'>
-    <Icon type="md-construct" />
-    设置
-    </MenuItem>
-    <MenuItem name="classes" to = '/classes'>
-    <Icon type="md-contacts" />
-    班级
-    </MenuItem>
+    <div v-if="username != ''">
+      <MenuItem name="contest" to = '/contest'>
+      <Icon type="md-trophy" />
+      考试
+      </MenuItem>
+      <MenuItem name="grade" to = '/grade'>
+      <Icon type="md-stats" />
+      成绩
+      </MenuItem>
+      <MenuItem name="control" to = '/control'>
+      <Icon type="md-construct" />
+      设置
+      </MenuItem>
+      <MenuItem name="classes" to = '/classes'>
+      <Icon type="md-contacts" />
+      班级
+      </MenuItem>
+    </div>
     <registerButton class= "registerbutton" ></registerButton>
-    <div v-if="username == 'none'">
+    <div v-if="username === ''">
       <loginButton class= "loginbutton" ></loginButton>
     </div>
     <div v-else>

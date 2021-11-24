@@ -4,11 +4,13 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const state = {
-  access: 'none',
-  refresh: 'none',
-  username: 'none',
+  access: '',
+  refresh: '',
+  username: '',
   footerInfo: '您尚未登录',
-  usertype: 'none',
+  usertype: '',
+  student_name: '',
+  student_number: '',
   classes: [],
   classinfonumber: 0,
   classmembers: []
@@ -37,6 +39,12 @@ const getters = {
   },
   getClassmembers(state) {
     return state.classmembers;
+  },
+  getStudentnumber(state) {
+    return state.student_number;
+  },
+  getStudentname(state) {
+    return state.student_name;
   }
 };
 const mutations = {
@@ -63,6 +71,12 @@ const mutations = {
   },
   changeClassmembersM(state, newClassmembers) {
     state.classmembers = newClassmembers;
+  },
+  changeStudentnameM(state, newStudentname) {
+    state.student_name = newStudentname;
+  },
+  changeStudentnumberM(state, newStudentnumber) {
+    state.student_number = newStudentnumber;
   }
 };
 const actions = {
@@ -90,10 +104,18 @@ const actions = {
   changeClassmembers(context, newClassmembers) {
     context.commit('changeClassmembersM', newClassmembers);
   },
+  changeStudentname(context, newStudentname) {
+    context.commit('changeStudentnameM', newStudentname);
+  },
+  changeStudentnumber(context, newStudentnumber) {
+    context.commit('changeStudentnumberM', newStudentnumber);
+  },
   storeInfoWhenLogin(context, newInfo) {
     context.commit('changeAccessM', newInfo.newAccess);
     context.commit('changeRefreshM', newInfo.newRefresh);
     context.commit('changeUsernameM', newInfo.newUsername);
+    context.commit('changeStudentnameM', newInfo.newStudentname);
+    context.commit('changeStudentnumberM', newInfo.newStudentnumber);
   },
 
 };

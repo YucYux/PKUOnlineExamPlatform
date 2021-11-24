@@ -19,18 +19,22 @@
             <Icon type="md-contacts"></Icon>
             <span>成员列表</span>
           </MenuItem>
-          <MenuItem name="set_contest" to='setContest'>
-            <Icon type="md-search"></Icon>
-            <span>考试管理</span>
-          </MenuItem>
+          <div v-if="usertype != 'Student'">
+            <MenuItem name="set_contest" to='setContest'>
+              <Icon type="md-search"></Icon>
+              <span>考试管理</span>
+            </MenuItem>
           <MenuItem name="set_members" to='setMembers'>
             <Icon type="md-settings"></Icon>
             <span>学生管理</span>
           </MenuItem>
-          <MenuItem name="set_TA" to='setTA'>
-            <Icon type="md-settings"></Icon>
-            <span>助教管理</span>
-          </MenuItem>
+          </div>
+          <div v-if="usertype === 'Teacher'">
+            <MenuItem name="set_TA" to='setTA'>
+              <Icon type="md-settings"></Icon>
+              <span>助教管理</span>
+            </MenuItem>
+          </div>
         </Menu>
         <div slot="trigger"></div>
       </Sider>
@@ -45,6 +49,7 @@
   </div>
 </template>
 <script>
+import store from '../../store'
 export default {
   data () {
     return {
@@ -55,6 +60,9 @@ export default {
   computed: {
     menuitemClasses: function () {
       return ['menu-item', this.isCollapsed ? 'collapsed-menu' : '']
+    },
+    usertype: function() {
+      return store.getters.getUsertype;
     }
   },
   method: {
