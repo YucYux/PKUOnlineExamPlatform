@@ -39,8 +39,7 @@ const Routers = [{
       api.APIclassesList().
       then(
         result => {next();}, 
-        error  => {this.$Notice.error({title: '班级列表获取失败', desc: ''})});
-      next();
+        error  => {next();});
     }
   },
   {
@@ -54,8 +53,7 @@ const Routers = [{
           api.APIclassInfo().
           then(
             result => {next();}, 
-            error  => {this.$Notice.error({title: '班级详情页获取失败', desc: ''})});
-          next();
+            error  => {next();});
         },
       },
       {
@@ -80,6 +78,14 @@ const RouterConfig = {
 }
 
 const router = new VueRouter(RouterConfig)
+
+router.beforeEach((to, from, next) => {
+  let {path} = to;
+  if (store.getters.getUsername === '' && path !== '/index') 
+    next('/index');
+  else
+    next();
+})
 
 new Vue({
   el: '#app',
