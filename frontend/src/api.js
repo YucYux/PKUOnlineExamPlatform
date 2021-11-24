@@ -19,11 +19,14 @@ export default {
                 let aAccess = response.data.access;
                 axios.defaults.headers.common['Authorization'] = 'Bearer '+aAccess;
                 let aRefresh = response.data.refresh;
+                let aStudentnumber = response.data.student_number;
+                let aStudentname = response.data.student_name;
                 axios.get('user/usertype/')
                     .then(response2 => {console.log(response2);
                                         store.dispatch('changeUsertype',response2.data.admin_type);
                                         store.dispatch('storeInfoWhenLogin', 
-                                        {newAccess: aAccess, newRefresh: aRefresh, newUsername: aUsername});
+                                        {newAccess: aAccess, newRefresh: aRefresh, newUsername: aUsername,
+                                        newStudentname: aStudentname, newStudentnumber: aStudentnumber});
                                         resolve(response); })
                     .catch(error2 => {reject(error2)});
             }).catch(error => { // status is not 2xx
