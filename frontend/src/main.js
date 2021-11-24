@@ -36,7 +36,10 @@ const Routers = [{
     path: '/classes',
     component: (resolve) => require(['./router/views/classes.vue'], resolve),
     beforeEnter: (to, from, next) => {
-      api.APIclassesList();
+      api.APIclassesList().
+      then(
+        result => {next();}, 
+        error  => {this.$Notice.error({title: '班级列表获取失败', desc: ''})});
       next();
     }
   },
@@ -48,7 +51,10 @@ const Routers = [{
         path: 'membersList',
         component: (resolve) => require(['./components/classmember_list.vue'], resolve),
         beforeEnter: (to, from, next) => {
-          api.APIclassInfo();
+          api.APIclassInfo().
+          then(
+            result => {next();}, 
+            error  => {this.$Notice.error({title: '班级详情页获取失败', desc: ''})});
           next();
         },
       },
