@@ -105,7 +105,7 @@ export default {
         return new Promise((resolve, reject) => 
         {
             axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
-            axios.post('user/setuserta/',{
+            axios.post('user/setuserta/', {
                 user_id: userID,
                 new_class_id: classID
             }).then(response => {
@@ -114,4 +114,32 @@ export default {
             }).catch(error => {reject(error)})
         })
     },
+    APIchangeStudentname (newStudentname) {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.post('user/edituserprofile/', {
+                student_number: '',
+                student_name: newStudentname
+            }).then(response => {
+                console.log(response);
+                store.dispatch('changeStudentname', newStudentname);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
+    },
+    APIchangeStudentnumber (newStudentnumber) {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.post('user/edituserprofile/', {
+                student_number: newStudentnumber,
+                student_name: ''
+            }).then(response => {
+                console.log(response);
+                store.dispatch('changeStudentnumber', newStudentnumber);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
+    }
 }

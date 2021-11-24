@@ -15,7 +15,7 @@ import store from '../../store'
 export default {
     methods: {
         APItest: function() {
-            api.APIsetTAClass(8,1);
+            api.APIchangeStudentname('田所浩二');
         }
     },
     computed: {
