@@ -37,3 +37,8 @@ class UserListSerializer(serializers.ModelSerializer):
 class SetUserClassSerialize(serializers.Serializer):
     user_id = serializers.IntegerField()
     new_class_id = serializers.IntegerField()
+
+
+class EditUserProfileSerializer(serializers.Serializer):
+    student_name = serializers.CharField(allow_blank=True)
+    student_number = serializers.CharField(allow_blank=True)

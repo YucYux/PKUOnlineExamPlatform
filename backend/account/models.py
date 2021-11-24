@@ -7,6 +7,7 @@ class AdminType(object):
     TEACHING_ASSISTANT = "Teaching_Assistant"
     TEACHER = "Teacher"
 
+
 class User(AbstractUser):
     student_name = models.CharField(max_length=30, blank=True, verbose_name=u"姓名")
     student_number = models.CharField(max_length=11, blank=True, verbose_name=u"学号")

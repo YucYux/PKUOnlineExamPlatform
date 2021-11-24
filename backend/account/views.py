@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.contrib import auth
 
 from .serializers import UserRegisterSerializer, ClassListSerializer, \
-    UserListSerializer, SetUserClassSerialize
+    UserListSerializer, SetUserClassSerialize, EditUserProfileSerializer
 from .models import Class, User, AdminType
 
 
@@ -34,6 +34,7 @@ class UserLoginAPI(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 '''
 
+
 class UserLogoutAPI(APIView):
     def get(self, request):
         auth.logout(request)
@@ -53,6 +54,8 @@ class GetUserInfoAPI(APIView):
     def get(self, request):
         user = getUserFromRequest(request)
         return JsonResponse({'username': user.username,
+                             'student_name': user.student_name,
+                             'student_number': user.student_number,
                              'class_id': user.class_info,
                              'admin_type': user.admin_type},
                             status=status.HTTP_200_OK)
@@ -64,7 +67,6 @@ class GetClassListAPI(generics.ListAPIView):
 
 
 class GetUserListFromClassAPI(generics.ListAPIView):
-
     queryset = User.objects.all()
     serializer_class = UserListSerializer
     filter_backends = [SearchFilter]
@@ -99,3 +101,19 @@ class SetUserTA(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class EditUserProfileAPI(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        serializer = EditUserProfileSerializer(data=request.data)
+        if serializer.is_valid():
+            user = getUserFromRequest(request)
+            if serializer.data["student_name"] is not None:
+                user.student_name = serializer.data["student_name"]
+            if serializer.data["student_number"] is not None:
+                user.student_number = serializer.data["student_number"]
+            user.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
