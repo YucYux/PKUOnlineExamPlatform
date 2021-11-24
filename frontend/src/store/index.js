@@ -4,11 +4,11 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const state = {
-  access: 'none',
-  refresh: 'none',
-  username: 'none',
+  access: '',
+  refresh: '',
+  username: '',
   footerInfo: '您尚未登录',
-  usertype: 'none',
+  usertype: '',
   classes: [],
   classinfonumber: 0,
   classmembers: []

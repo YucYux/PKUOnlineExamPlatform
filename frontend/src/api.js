@@ -49,9 +49,9 @@ export default {
         return new Promise((resolve, reject) =>
         {
             store.dispatch('storeInfoWhenLogin', 
-                        {newAccess: 'none', newRefresh: 'none', newUsername: 'none'});
+                        {newAccess: '', newRefresh: '', newUsername: ''});
             store.dispatch('changeFooterInfo', '您尚未登录');
-            store.dispatch('changeUsertype', 'none');
+            store.dispatch('changeUsertype', '');
             store.dispatch('updateClasses', []);
             store.dispatch('changeClassinfonumber', 0);
             store.dispatch('changeClassmembers', []);
