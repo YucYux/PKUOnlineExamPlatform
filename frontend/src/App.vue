@@ -34,7 +34,7 @@ export default {
   computed: {
     footerInfo: function () {
       if (store.getters.getUsername == "") return "您尚未登录";
-      else return "欢迎，" + store.getters.getUsername;
+      else return "欢迎，" + store.getters.getStudentname;
     },
   },
 };

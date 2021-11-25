@@ -41,7 +41,7 @@
         data () {
             return {
                 value: 0,
-                content: ['content 1', 'content 2', 'content 3', 'content 4']
+                content: ['选课一时爽 期末火葬场', 'content 2', 'content 3', 'content 4']
             }
         }
     }
