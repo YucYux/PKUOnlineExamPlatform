@@ -411,7 +411,6 @@ export default defineComponent({
             fontSize: props.size || "10px",//字号要调一下，默认太小
           }
         );
-      window.editor = this;
       if (this.model) this.editor.setModel(this.model, this.language);
       this.editor.onDidChangeModelContent(this.changed);//注册change事件
       this.editor.colorObj = new bracketColorizer(this.editor);//不要改colorObj变量名，这句话注册彩色括号插件。

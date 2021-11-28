@@ -1,64 +1,52 @@
 <template>
-  <div class="tiptap question-framwork" ref="tp">
+  <div class="tiptap question-framework" ref="main">
     <div class="question-item">
-      <div class="question-title">标题Title</div>
-      <div v-if="title" class="question-input question-input-title">
-        <editor-content :editor="title" />
-        <div class="character-count" v-if="title">
-          {{ title.getCharacterCount() }}/{{ limit }}
+      <div v-if="editor.title" class="question-title">标题Title</div>
+      <div v-if="editor.title.editor" class="question-input question-input-title">
+        <editor-content :editor="editor.title.editor" />
+        <div class="character-count">
+          {{ editor.title.editor.getCharacterCount() }}/{{ limit }}
         </div>
       </div>
     </div>
     <div class="question-item">
       <div class="question-title">标签Tag</div>
-      <div v-if="tag" class="question-input question-input-tag">
-        <editor-content :editor="tag" />
+      <div v-if="editor.tag.editor" class="question-input question-input-tag">
+        <editor-content :editor="editor.tag.editor" />
       </div>
     </div>
     <div class="question-item">
       <div class="question-title">题型Type</div>
-      <div v-if="type" class="question-input question-input-type">
-        <editor-content :editor="type" />
+      <div v-if="editor.type" class="question-input question-input-type">
+        <button v-for="item,i in editor.type.buttons" @click="choose(item,i)" :class="{chosen:item.chosen}">{{item.name}}</button>
       </div>
     </div>
     <div class="question-item">
       <div class="question-title">内容Content</div>
-      <div v-if="content" class="question-input question-input-content">
-        <Milkdown @change="change" />
+      <div v-if="editor.content.editor" class="question-input question-input-content">
+        <Milkdown @change="contentChange" ref="contentEditor"/>
       </div>
     </div>
     <div class="question-item">
       <div class="question-title">选项Choice</div>
-      <div v-if="choice" class="question-input question-input-choice">
-      <editor-content :editor="choice"/>
-      </div>
-    </div>
-    <div class="question-item">
-      <div class="question-title">简答题的回答区域Sentence</div>
-      <div v-if="sentence" class="question-input question-input-sentence">
-      <div></div>
+      <div v-if="editor.choice.editor" class="question-select question-input-select">
+      <editor-content :editor="editor.choice.editor"/>
       </div>
     </div>
     <div class="question-item">
       <div class="question-title">判题函数Compute</div>
-      <div v-if="compute" class="question-input question-input-compute">
-        <vueList/><!-- todo: import a list component that supports changing of computation mode:1.match,2.regExp,3.function written in js,4.function written in python.default set to match if -->
-        <Monaco language="javascript" content="
-function compute(answer){
-  let correctAnswer='';
-  return answer===correctAnswer;
-}"
-               ref="computeFunction"
-              />
+      <div v-if="editor.compute.editor" class="question-input question-input-compute">
+        <Monaco language="javascript" ref="computeEditor" :size="getSize" type="edit"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+//TODO : 改成import {Vue} from "vue";
 import { defineComponent } from "vue";
 //https://tiptap.dev/installation/vue2
-//降级请根据官方文档改代码
+//TODO : 改成...-vue2
 import { Editor, EditorContent,VueNodeViewRenderer } from '@tiptap/vue-3';
 import { Extension } from '@tiptap/core';
 import Blockquote from '@tiptap/extension-blockquote';
@@ -86,26 +74,7 @@ import CharacterCount from "@tiptap/extension-character-count";
 
 import Monaco from "./Monaco.vue";
 import Milkdown from "./Milkdown.vue";
-/*
-数据结构：题目{
-  类型type:选择题（单选题、多选题）、简答题（短回答、长回答）、编程题,
-    标题title:"",其中选择题最终不会显示标题；标题可以作为主键来索引
-    内容content:[
-      {type,content}
-    ],一个json序列，其中每个对象都是一种组件：富文本组件、
-    choice:["A","B","C","D"],
-    answer:0,
-    score:function(answer){return(this.answer===answer)}
-    id:354848959,
-    tag:["single","python","easy"]
-}
-
-
-
-
-
-
-*/
+//改成Vue.component("QuestionFramework",{...})
 export default defineComponent({
   name: "QuestionFramework",
   components: {
@@ -115,34 +84,64 @@ export default defineComponent({
   },
 
   data() {
+    let editor={
+      title:{
+
+      },
+      type:{
+        buttons:[
+          {
+            name:"单项选择题",
+            hasChoice:true,
+            chosen:false,
+          },
+          {
+            name:"多项选择题",
+            hasChoice:true,
+            chosen:false,
+          },
+          {
+            name:"填空题",
+            chosen:false,
+          },
+          {
+            name:"编程题",
+            chosen:true,
+          },
+        ],
+        chosen:3
+      },
+      tag:{
+      },
+      content:{
+      },
+      choice:{},
+      compute:{},
+    }
     return {
-      title: null,
-      type: null,
-      tag:null,
-      compute:null,
-      limit: 100,
-      content: null,
-    };
+      editor,
+      limit:100
+      };
   },
 
   mounted() {
-
-    this.title = new Editor({
+    let ed=this.editor;
+    ed.title.editor = new Editor({
       extensions: [
         Paragraph,
         Document,
         Placeholder.configure({
-          placeholder: "请输入100字以内的标题，选择题将隐藏该内容",
+          placeholder: "请输入"+this.limit+"字以内的标题，选择题将隐藏该内容",
         }),
         CharacterCount.configure({
-          limit: this.limit,
+          limit: this.limit||100,
         }),
         Text,
       ],
       content: "<p>",
     });
 
-    this.tag = new Editor({
+    ed.tag.editor = new Editor({
       extensions: [
         Paragraph,
         Document,
@@ -152,38 +151,50 @@ export default defineComponent({
       ],
       content: `
         <ul data-type="taskList">
-          <li data-type="taskItem" data-checked="true">tag1</li>
+          <li data-type="taskItem" data-checked="true"></li>
         </ul>
       `,
     });
-
-    this.type = new Editor({
-      extensions: [
-        Document,
-        Paragraph,
-        Text,
-        Bold,
-      ],
-      content: `
-        <p>type=</p>
-      `,
-    });
-
-    this.content = "...";
-    //console.log(this.$refs);
-    //this.$refs.computeFunction.listeners.push(this.changed);
-    this.compute="required";
+    ed.content.editor=true;
+    ed.compute.editor=true;
+  },
+  computed:{
+    getSize(){
+      return getComputedStyle(this.$el).fontSize;
+    }
   },
   methods: {
-    change(data) {
-      this.content = data;
+    choose(item,i){
+      for(let j of this.editor.type.buttons){
+        if(j.chosen) j.chosen=false;
+      }
+      item.chosen=true;
+      let ed=this.editor;
+      if(item.hasChoice) ed.choice.editor=new Editor({
+        extensions: [
+        Document,
+        Paragraph,
+        ListItem,
+        BulletList,
+        Text,
+      ],
+      content: `
+        <ul><li></li></ul>
+      `,
+      });
+      else if(ed.choice.editor){
+        //应该要保存一下
+        ed.choice.editor.destroy();
+        delete ed.choice.editor;
+      }
+      ed.type.content=i;
     },
-    changed(data){
-      this.compute=data;
+    contentChange(data) {
+      this.editor.content.content=data;
     },
-    set(target, value) {
-      //json or html
-      /* {
+    setVaule(target, value) {
+      /*json or html
+      {
       "type": "doc",
       "content": [
         {
@@ -198,54 +209,37 @@ export default defineComponent({
       ]
     }
     */
-      this[target].setContent(value);
+      this.editor[target].editor.setContent(value);
     },
     //输出一个Object
+    //应该把数据与类合并到一起，而不是分开来写，但是懒得改了
     serialize() {
+      let ed=this.editor;
       return {
-        title: yDocToProsemirrorJSON(this.ydoc, "title"),
-        type: yDocToProsemirrorJSON(this.ydoc, "type"),
-        tags: yDocToProsemirrorJSON(this.ydoc, "tags"),
-        content: { content: this.content, type: "content" },
-        //todo: add full support, and replace yDoc format with a customized format.
+        title: ed.title.editor?ed.title.editor.getText():null,
+        type: ed.type.buttons[ed.type.chosen].name,
+        choice: ed.choice.editor?ed.choice.editor.getText().split("\n"):null,
+        tag: ed.tag.editor?ed.tag.editor.getText().split("\n"):[],
+        content: ed.content.content||null,
+        compute:ed.compute.editor?this.$refs.computeEditor.text():null,
       };
     },
   },
   beforeUnmount() {
-    this.title.destroy();
-    this.type.destroy();
-    this.tag.destroy();
+    for(let i in this.editor){
+      let item=this.editor[i];
+      if(item.editor){
+        if(item.editor.destroy){
+          item.editor.destroy();
+        }
+      }
+    }
   },
 });
 </script>
 
-<style lang="scss">
-.ProseMirror {
-  > * + * {
-    margin-top: 0.75em;
-  }
-
-  ul[data-type="taskList"] {
-    list-style: none;
-    padding: 0;
-
-    li {
-      display: inline-flex;
-      align-items: center;
-
-      > label {
-        flex: 0 0 auto;
-        user-select: none;
-      }
-
-      > div {
-        display: inline;
-        flex: 1 1 auto;
-      }
-    }
-  }
-}
-.ProseMirror ul[data-type="taskList"] li {
+<style>
+.question-item ul[data-type="taskList"] li {
   display: inline-flex;
   align-items: center;
   background: #948dea8c;
@@ -273,20 +267,11 @@ export default defineComponent({
   border: 1px solid #e9ecef;
   transition: 0.1s all ease-in-out;
   --hover-color: var(--pku-red);
-  &:hover {
-    border-color: var(--hover-color);
-  }
-
-  &--title {
-    font-size: 1.5rem;
-  }
-
-  &--json {
-    background: #0d0d0d;
-    color: #fff;
-    font-size: 0.8rem;
-  }
 }
+.question-item:hover {
+  border-color: var(--hover-color);
+  }
+
 .question-item p {
   margin: 0.1em;
 }
@@ -328,5 +313,22 @@ pre {
   max-height: 100%;
   position: absolute;
   width: 100%;
+}
+.question-item button{
+      border: none;
+    font-size: 1em;
+    margin-left:.2em;
+  color:black;
+  background:transparent;
+  border:var(--pku-light) 1px solid;
+  border-radius:2px;
+    padding:.1em;
+}
+.question-item button.chosen{
+  background: var(--pku-light);
+  color: white;
+}
+.question-item .question-select ul{
+  list-style: upper-alpha;
 }
 </style>

@@ -2,11 +2,42 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 //import Monaco from "./components/Monaco.vue";
-//import QuestionFramework from "./components/QuestionFramework.vue";
+import QuestionFramework from "./components/QuestionFramework.vue";
 import "./assets/global.css";
-//一个小小的倒计时
 //import timer  from "./components/timer.vue";
 import PaperRenderer from "./components/PaperRenderer.vue";
+let paper2=[{type: "code",
+    title: "11:生日礼物",
+    language:"c++",
+    "content": `ftiasch 18岁生日的时候，lqp18_31给她看了一个神奇的序列 $$A1, A2, ..., AN$$. 她被允许选择不超过 M 个连续的部分作为自己的生日礼物。
+
+自然地，ftiasch想要知道选择元素之和的最大值。你能帮助她吗？
+
+## 输入
+
+第1行，两个整数 N (1 ≤ N ≤ 105) 和 M (0 ≤ M ≤ 105), 序列的长度和可以选择的部分。
+
+第2行， N 个整数 A1, A2, ..., AN (0 ≤ |Ai| ≤ 104), 序列。
+
+## 输出
+
+一个整数，最大的和。
+
+**样例输入**
+
+\`\`\`\`text
+5 2
+
+2 -3 2 -1 2
+\`\`\`\`
+
+**样例输出**
+
+\`\`\`text
+5
+\`\`\`
+
+  `}];
 let paper = [
   {
     type: "title",
@@ -16,7 +47,7 @@ let paper = [
     type: "select",
     subtype:"single",
     content: "一道单选题",
-    choice: ["**2x+1**", "$$\\pi$$", "0.3", "<pre>3\n</pre>"],
+    choice: ["**2x+1**", "$$\\pi$$", "0.3", "3<sup>2</sup>"],
   },
   {
     type: "select",
@@ -25,8 +56,13 @@ let paper = [
     choice: ["3", "4", "5"],
   },
   {
+    type: "text",
+    title: "一道填空题",
+    content:"请输入答案"
+  },
+  {
     type: "code",
-    title: "11:生日礼物",
+    title: "一道编程题：11:生日礼物",
     language:"c++",
     content: {
     "type": "doc",
@@ -149,7 +185,7 @@ let paper = [
             ]
         },
         {
-            "type": "fence2",
+            "type": "fence",
             "attrs": {
                 "language": "",
                 "fold": true
@@ -175,7 +211,7 @@ let paper = [
             ]
         },
         {
-            "type": "fence2",
+            "type": "fence",
             "attrs": {
                 "language": "",
                 "fold": true
@@ -197,9 +233,9 @@ let paper = [
 <template>
   <div class="main">
     <QuestionFramework />
+    <PaperRenderer :paper="paper" />
     <Monaco language="markdown" size="20px" type="edit" />
     <timer :time="100" />
-    <PaperRenderer :paper="paper" />
   </div>
 </template>
 
@@ -208,7 +244,11 @@ let paper = [
   --code-font: "Monaco", "Fira Code", "Consolas", "Andale Mono", "Ubuntu Mono",
     "monospace";
   position: relative;
-  background: linear-gradient(#ffb9b9, #8d64fd);
+  background-image:url('assets/circuit-board.svg');
+  background-color: rgba(255,255,255,0.9);
+  background-size:50%;
+  background-repeat:repeat;
+  background-blend-mode:lighten;
   display: flex;
   flex-direction: row;
   align-content: center;
@@ -219,10 +259,11 @@ let paper = [
 }
 .milkdown {
   padding: 0;
-  width: 80%;
+  width: 100%;
 }
 #app > .main > * {
   flex: auto;
+  max-width:80vw;
   padding: 0;
   margin: 0;
 }
@@ -238,7 +279,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin: 0;
-  width: 100%;
+  width: 200%;
   height: 100%;
   padding: 0;
   position: absolute;

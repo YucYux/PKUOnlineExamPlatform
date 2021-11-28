@@ -41,6 +41,7 @@
     "element-plus": "^1.2.0-beta.3",
     "html-webpack-plugin": "^5.5.0",
     "katex": "^0.15.1",
+    "marked": "^4.0.4",
     "material-icons": "^1.10.2",
     "milkdown-plugin-shiki": "^0.1.1",
     "monaco-editor": "^0.30.1",

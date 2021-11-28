@@ -6,7 +6,7 @@ import {
 } from "vue";
 import directive from 'remark-directive';
 import {
-    InputRule
+    InputRule,textblockTypeInputRule
 } from 'prosemirror-inputrules';
 import {
     AtomList,
@@ -231,7 +231,7 @@ Unfortunately, my node was unable to override commonmark plugin.
 */
 const m = createNode((utils) => {
     return {
-        id: 'fence2',
+        id: 'fence',
         type: "code",
         schema: () => ({
             group: 'block',
@@ -295,6 +295,26 @@ const m = createNode((utils) => {
                     });
                 },
             },
+            inputRules: (nodeType) => [
+            new InputRule(/````([^`]*)/, (state, match, start, end) => {
+                const {
+                    tr
+                } = state;
+                if (match[0]) {
+                    tr.replaceWith(start, end, nodeType.create({
+                        language: match[1],
+
+                    }));
+                }
+
+                return tr;
+            }),
+            textblockTypeInputRule(inputRegex, nodeType, ([ok, language]) => {
+                if (!ok)
+                    return;
+                return { language };
+            }),
+        ],
         }),
     };
 });

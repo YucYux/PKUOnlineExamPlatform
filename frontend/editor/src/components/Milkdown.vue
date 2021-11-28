@@ -1,5 +1,7 @@
 <template>
+  <div ref="main">
   <VueEditor :editor="editorf" ref="ve" />
+  </div>
 </template>
 
 <script>
@@ -19,6 +21,7 @@ import {
 //import { nord } from "@milkdown/theme-nord";
 import { VueEditor, useEditor } from "@milkdown/vue";
 import { commonmark } from "@milkdown/preset-commonmark";
+import { fakecommonmark } from "@milkdown/preset-fakecommonmark";
 import { tooltip } from "@milkdown/plugin-tooltip";
 import { slash } from "@milkdown/plugin-slash";
 import { upload, uploadPlugin } from "@milkdown/plugin-upload";
@@ -123,6 +126,7 @@ fileHandler.uploader = async (files, schema) => {
 
   return nodes;
 };
+//TODO : 改成Vue.component("Milkdown",{...})
 export default defineComponent({
   name: "Milkdown",
   components: {
@@ -133,13 +137,15 @@ export default defineComponent({
     json: { type: Object, default: null },
     editable: { type: Boolean, default: true },
   },
-  setup(props) {
+  data(props) {
     console.log(props);
     let globalPlugins = [diagram,math];
     let editorPlugins = [tooltip, emoji, gfm, history, indent, slash, clipboard,commonmark.headless()];
     let rendererPlugins = [commonmark.headless(),monacoeditor];
     let editor = Editor.make()
       .config((ctx) => {
+        //TODO :
+        ctx.set(rootCtx,this.$refs.main);
         ctx.set(editorViewOptionsCtx, {
           editable() {
             return !!props.editable;
@@ -208,6 +214,7 @@ export default defineComponent({
         })
         .use(listener);
     }
+    //TODO : 删掉这句话
     let editorf = useEditor((root) => {
       return editor.config((ctx) => {
         ctx.set(rootCtx, root);
@@ -222,7 +229,6 @@ export default defineComponent({
     };
   },
   mounted() {
-    window.milkdown = this;
     this.ls.markdown.push(this.attention);
     if (this.doc) {
       let that = this;
@@ -261,7 +267,7 @@ export default defineComponent({
           },
         });
       });
-      this.editable = !this.editable;
+      this.editable = bool;
     },
   },
 });

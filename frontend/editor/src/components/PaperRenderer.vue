@@ -1,6 +1,6 @@
 <template>
   <div class="paper transition">
-  <component v-for="question,i in questions" :is="question.type" :data="question" :index="i"/>
+  <component v-for="question,i in questions" :is="question.type" :data="question" :index="i" :ref="i"/>
   </div>
 </template>
 <script src="./PaperRenderer.js"></script>
