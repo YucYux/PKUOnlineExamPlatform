@@ -2,14 +2,17 @@ from account.models import AdminType
 from utils.constants import CacheKey, CONTEST_PASSWORD_SESSION_KEY
 from utils.shortcuts import datetime2str, check_is_id
 from utils.decorator import login_required
+import dateutil.parser
+from utils.api import validate_serializer
 
 from django.core.cache import cache
-from rest_framework.views import APIView
+# from rest_framework.views import APIView
+from utils.api import APIView
 from django.utils.timezone import now
 from .models import Contest
 from .serializers import ContestSerializer
 from .models import ContestStatus,ContestRank
-from .serializers import ContestRankSerializer
+from .serializers import ContestRankSerializer,ContestAdminSerializer,CreateConetestSeriaizer,EditConetestSeriaizer
 from django.http import JsonResponse
 class ContestAPI(APIView):
     def get(self, request):
@@ -101,4 +104,85 @@ class ContestRankAPI(APIView):
         page_qs["results"] = serializer(page_qs["results"], many=True, is_contest_admin=is_contest_admin).data
         return self.success(page_qs)
 
+class ContestAdminAPI(APIView):
+    def post(self, request):
+        serializer=CreateConetestSeriaizer(data=request.data)
+        if serializer.is_valid():
+            data = request.data
+            data["start_time"] = dateutil.parser.parse(data["start_time"])
+            data["end_time"] = dateutil.parser.parse(data["end_time"])
+            data["created_by"] = request.user
+            if data["end_time"] <= data["start_time"]:
+                return self.error("Start time must occur earlier than end time")
+            contest = Contest.objects.create(**data)
+            return self.success(ContestAdminSerializer(contest).data)
+        else:
+            return self.invalid_serializer(serializer)
 
+
+    def put(self, request):
+        data = request.data
+        serializer = EditConetestSeriaizer(data=request.data)
+        if serializer.is_valid():
+            try:
+                contest = Contest.objects.get(id=data.pop("id"))
+                ensure_created_by(contest, request.user)
+            except Contest.DoesNotExist:
+                return self.error("Contest does not exist")
+            data["start_time"] = dateutil.parser.parse(data["start_time"])
+            data["end_time"] = dateutil.parser.parse(data["end_time"])
+            if data["end_time"] <= data["start_time"]:
+                return self.error("Start time must occur earlier than end time")
+            for k, v in data.items():
+                setattr(contest, k, v)
+            contest.save()
+            return self.success(ContestAdminSerializer(contest).data)
+        else:
+            return self.invalid_serializer(serializer)
+
+    def get(self, request):
+        contest_id = request.GET.get("id")
+        if contest_id:
+            try:
+                contest = Contest.objects.get(id=contest_id)
+                ensure_created_by(contest, request.user)
+                return self.success(ContestAdminSerializer(contest).data)
+            except Contest.DoesNotExist:
+                return self.error("Contest does not exist")
+
+        contests = Contest.objects.all().order_by("-create_time")
+
+        keyword = request.GET.get("keyword")
+        if keyword:
+            contests = contests.filter(title__contains=keyword)
+        return self.success(self.paginate_data(request, contests, ContestAdminSerializer))
+
+class DownloadContestSubmissions(APIView):
+    # 下载比赛提交情况，待写
+    def _dump_submissions(self):
+        pass
+
+    def get(self,request):
+        contest_id = request.GET.get("contest_id")
+        if not contest_id:
+            return self.error("Parameter error")
+        try:
+            contest = Contest.objects.get(id=contest_id)
+            ensure_created_by(contest, request.user)
+        except Contest.DoesNotExist:
+            return self.error("Contest does not exist")
+
+        exclude_admin = request.GET.get("exclude_admin") == "1"
+        zip_path = self._dump_submissions(contest, exclude_admin)
+
+def ensure_created_by(obj,user):
+    e = APIError(msg=f"{obj.__class__.__name__} does not exist")
+    if not user.is_assist():
+        raise e
+    return
+
+class APIError(Exception):
+    def __init__(self, msg, err=None):
+        self.err = err
+        self.msg = msg
+        super().__init__(err, msg)
