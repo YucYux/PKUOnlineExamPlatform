@@ -19,3 +19,7 @@ class Difficulty(Choices):
 
 CONTEST_PASSWORD_SESSION_KEY = "contest_password"
 
+class ContestStatus:
+    CONTEST_NOT_START = "1"
+    CONTEST_ENDED = "-1"
+    CONTEST_UNDERWAY = "0"

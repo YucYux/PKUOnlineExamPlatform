@@ -24,6 +24,11 @@ class User(AbstractUser):
         db_table = "User"
         verbose_name = verbose_name_plural = u"用户信息"
 
+    def is_assist(self):
+        return self.admin_type == AdminType.TEACHER and self.admin_type == AdminType.TEACHING_ASSISTANT
+    def is_teacher(self):
+        return self.admin_type == AdminType.TEACHER
+
 
 class Class(models.Model):
     teacher = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=u"授课教师")

@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import JSONField
 from django.utils.timezone import now
 
-from ..account.models import User, Class
+from account.models import User, Class
 
 
 class ContestStatus:
@@ -43,6 +43,7 @@ class ContestRank(models.Model):
     submission_number = models.IntegerField(default=0)
     accepted_number = models.IntegerField(default=0)
     submission_info = JSONField(default=dict)
+    total_time = models.IntegerField(default=0)
 
     class Meta:
         db_table = "Contest_Rank"

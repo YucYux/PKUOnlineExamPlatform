@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Contest
+from .models import Contest,ContestRank
 from django.db import models
 
 
@@ -38,5 +38,17 @@ class ContestSerializer(ContestAdminSerializer):
         model = Contest
         exclude = ("password", "visible", "allowed_ip_ranges")
 
+class ContestRankSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
 
+    class Meta:
+        model = ContestRank
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        self.is_contest_admin = kwargs.pop("is_contest_admin", False)
+        super().__init__(*args, **kwargs)
+
+    def get_user(self, obj):
+        return UsernameSerializer(obj.user, need_real_name=self.is_contest_admin).data
 

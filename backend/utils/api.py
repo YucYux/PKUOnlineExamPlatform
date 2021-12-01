@@ -6,6 +6,7 @@ from django.http import HttpResponse, QueryDict
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
+from django.http import JsonResponse
 
 logger = logging.getLogger("")
 
@@ -40,14 +41,6 @@ class URLEncodedParser(object):
         return QueryDict(body)
 
 
-class JSONResponse(object):
-    content_type = ContentType.json_response
-
-    @classmethod
-    def response(cls, data):
-        resp = HttpResponse(json.dumps(data, indent=4), content_type=cls.content_type)
-        resp.data = data
-        return resp
 
 
 class APIView(View):
@@ -55,7 +48,7 @@ class APIView(View):
     Django view的父类,
     """
     request_parsers = (JSONParser, URLEncodedParser)
-    response_class = JSONResponse
+    response_class = JsonResponse
 
     def _get_request_data(self, request):
         if request.method not in ["GET", "DELETE"]:
@@ -75,7 +68,7 @@ class APIView(View):
         return request.GET
 
     def response(self, data):
-        return self.response_class.response(data)
+        return JsonResponse(data)
 
     def success(self, data=None):
         return self.response({"error": None, "data": data})

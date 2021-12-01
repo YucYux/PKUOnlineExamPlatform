@@ -1,15 +1,16 @@
-from ..account.models import AdminType
-from ..utils.constants import CacheKey, CONTEST_PASSWORD_SESSION_KEY
-from ..utils.shortcuts import datetime2str, check_is_id
-from ..utils.decorator import login_required
+from account.models import AdminType
+from utils.constants import CacheKey, CONTEST_PASSWORD_SESSION_KEY
+from utils.shortcuts import datetime2str, check_is_id
+from utils.decorator import login_required
 
 from django.core.cache import cache
 from rest_framework.views import APIView
 from django.utils.timezone import now
 from .models import Contest
 from .serializers import ContestSerializer
-
-
+from .models import ContestStatus,ContestRank
+from .serializers import ContestRankSerializer
+from django.http import JsonResponse
 class ContestAPI(APIView):
     def get(self, request):
         id = request.GET.get("id")
@@ -32,9 +33,9 @@ class ContestListAPI(APIView):
         contests = Contest.objects.select_related("created_by").filter(visible=True)
         keyword = request.GET.get("keyword")
         #print(keyword)
-        print(request)
+        #print(request)
         rule_type = request.GET.getlist("rule_type")
-        print(rule_type)
+        #print(rule_type)
         status = request.GET.get("status")
         if keyword:
             contests = contests.filter(title__contains=keyword)
@@ -61,22 +62,15 @@ class ContestAccessAPI(APIView):
             contest = Contest.objects.get(id=contest_id, visible=True, password__isnull=False)
         except Contest.DoesNotExist:
             return self.error("Contest does not exist")
-        session_pass = request.session.get(CONTEST_PASSWORD_SESSION_KEY, {}).get(contest.id)
-        return self.success({"access": check_contest_password(session_pass, contest.password)})
 
+        return self.success({"access": True})
 
 class ContestRankAPI(APIView):
     def get_rank(self):
-        if self.contest.rule_type == ContestRuleType.ACM:
-            return ACMContestRank.objects.filter(contest=self.contest,
-                                                 user__admin_type=AdminType.STUDENT,
-                                                 user__is_disabled=False).\
+        return ContestRank.objects.filter(contest=self.contest,
+                                          user__admin_type=AdminType.STUDENT,
+                                          user__is_disabled=False).\
                 select_related("user").order_by("-accepted_number", "total_time")
-        else:
-            return OIContestRank.objects.filter(contest=self.contest,
-                                                user__admin_type=AdminType.STUDENT,
-                                                user__is_disabled=False). \
-                select_related("user").order_by("-total_score")
 
     def column_string(self, n):
         string = ""
@@ -85,16 +79,11 @@ class ContestRankAPI(APIView):
             string = chr(65 + remainder) + string
         return string
 
-    @check_contest_permission(check_type="ranks")
-    def get(self, request):
+    def get(self,request):
         download_csv = request.GET.get("download_csv")
         force_refresh = request.GET.get("force_refresh")
-        is_contest_admin = request.user.is_authenticated and request.user.is_contest_admin(self.contest)
-        if self.contest.rule_type == ContestRuleType.OI:
-            serializer = OIContestRankSerializer
-        else:
-            serializer = ACMContestRankSerializer
-
+        is_contest_admin = request.user.is_authenticated and request.user.is_assist(self.contest)
+        serializer = ContestRankSerializer
         if force_refresh == "1" and is_contest_admin:
             qs = self.get_rank()
         else:
@@ -104,53 +93,12 @@ class ContestRankAPI(APIView):
                 qs = self.get_rank()
                 cache.set(cache_key, qs)
 
+        # 下载排名表的操作，待写
         if download_csv:
             pass
-            # data = serializer(qs, many=True, is_contest_admin=is_contest_admin).data
-            # contest_problems = Problem.objects.filter(contest=self.contest, visible=True).order_by("_id")
-            # problem_ids = [item.id for item in contest_problems]
-            #
-            # f = io.BytesIO()
-            # workbook = xlsxwriter.Workbook(f)
-            # worksheet = workbook.add_worksheet()
-            # worksheet.write("A1", "User ID")
-            # worksheet.write("B1", "Username")
-            # worksheet.write("C1", "Real Name")
-            # if self.contest.rule_type == ContestRuleType.OI:
-            #     worksheet.write("D1", "Total Score")
-            #     for item in range(contest_problems.count()):
-            #         worksheet.write(self.column_string(5 + item) + "1", f"{contest_problems[item].title}")
-            #     for index, item in enumerate(data):
-            #         worksheet.write_string(index + 1, 0, str(item["user"]["id"]))
-            #         worksheet.write_string(index + 1, 1, item["user"]["username"])
-            #         worksheet.write_string(index + 1, 2, item["user"]["real_name"] or "")
-            #         worksheet.write_string(index + 1, 3, str(item["total_score"]))
-            #         for k, v in item["submission_info"].items():
-            #             worksheet.write_string(index + 1, 4 + problem_ids.index(int(k)), str(v))
-            # else:
-            #     worksheet.write("D1", "AC")
-            #     worksheet.write("E1", "Total Submission")
-            #     worksheet.write("F1", "Total Time")
-            #     for item in range(contest_problems.count()):
-            #         worksheet.write(self.column_string(7 + item) + "1", f"{contest_problems[item].title}")
-            #
-            #     for index, item in enumerate(data):
-            #         worksheet.write_string(index + 1, 0, str(item["user"]["id"]))
-            #         worksheet.write_string(index + 1, 1, item["user"]["username"])
-            #         worksheet.write_string(index + 1, 2, item["user"]["real_name"] or "")
-            #         worksheet.write_string(index + 1, 3, str(item["accepted_number"]))
-            #         worksheet.write_string(index + 1, 4, str(item["submission_number"]))
-            #         worksheet.write_string(index + 1, 5, str(item["total_time"]))
-            #         for k, v in item["submission_info"].items():
-            #             worksheet.write_string(index + 1, 6 + problem_ids.index(int(k)), str(v["is_ac"]))
-
-            # workbook.close()
-            # f.seek(0)
-            # response = HttpResponse(f.read())
-            # response["Content-Disposition"] = f"attachment; filename=content-{self.contest.id}-rank.xlsx"
-            # response["Content-Type"] = "application/xlsx"
-            # return response
 
         page_qs = self.paginate_data(request, qs)
         page_qs["results"] = serializer(page_qs["results"], many=True, is_contest_admin=is_contest_admin).data
         return self.success(page_qs)
+
+
