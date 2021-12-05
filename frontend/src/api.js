@@ -58,6 +58,8 @@ export default {
             store.dispatch('updateClasses', []);
             store.dispatch('changeClassinfonumber', 0);
             store.dispatch('changeClassmembers', []);
+            store.dispatch('changeStudentname','');
+            store.dispatch('changeStudentnumber','');
         })
     },
     APIclassesList () {
