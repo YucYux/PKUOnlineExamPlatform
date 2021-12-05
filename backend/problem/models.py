@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models import JSONField
 
-from contest.models import Contest
+from ..contest.models import Contest
 
 
 class ProblemTag(models.Model):
@@ -18,10 +18,10 @@ class ProblemType(object):
 
 
 class Problem(models.Model):
-    '''
+    """
     TODO：算法/文件IO题
     因为Judger还没研究明白，先只考虑算法题
-    '''
+    """
     _id = models.TextField(db_index=True, verbose_name=u'题目ID')
     contest = models.ForeignKey(Contest, null=True, on_delete=models.CASCADE, verbose_name=u'所属考试')
     title = models.TextField(verbose_name=u'题目标题')
@@ -45,6 +45,7 @@ class Problem(models.Model):
     )
     type = models.CharField(max_length=20, choices=type_choices,
                             default=ProblemType.ALGORITHM, verbose_name=u'题目类型')
+    test_case_id = models.TextField(verbose_name=u'输入输出文件存储ID')
 
     class Meta:
         db_table = "Problem"
