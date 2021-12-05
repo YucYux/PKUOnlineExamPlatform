@@ -34,6 +34,9 @@ export default {
             })
         })
     }, 
+    APIloginWithAccess(aAccess){
+        axios.defaults.headers.common['Authorization'] = 'Bearer '+aAccess;
+    },
     APIregister(aUsername, aPassword) {
         return new Promise((resolve, reject) =>
         {
