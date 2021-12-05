@@ -24,8 +24,8 @@
       班级
       </MenuItem>
     </div>
-    <registerButton class= "registerbutton" ></registerButton>
     <div v-if="username === ''">
+      <registerButton class= "registerbutton" ></registerButton>
       <loginButton class= "loginbutton" ></loginButton>
     </div>
     <div v-else>
