@@ -1,15 +1,20 @@
 <template>
   <div style="padding: 10px; background: #f8f8f9">
     <Card
-      :title="Class['class_name']"
-      v-on:click="handleClickCard"
       icon="md-contacts"
       padding="0"
       shadow
       style="width: 100%"
     >
+      <p slot="title">
+            <Icon type="md-contacts"></Icon>
+            {{aClass['class_name']}}
+      </p>
+      <Button type="info" @click="handleClickCard">
+        进入班级详情页
+      </Button>
       <CellGroup>
-        <Cell :title="'ID: '+Class['id']"></Cell>
+        <Cell :title="'ID: '+aClass['id']"></Cell>
       </CellGroup>
     </Card>
   </div>
@@ -17,7 +22,7 @@
 <script>
 import store from '../store'
 export default {
-  props: ['Class'],
+  props: ['aClass'],
   data () {
     return {
       id: 0
@@ -25,9 +30,9 @@ export default {
   },
   methods: {
     handleClickCard() {
-      store.dispatch('changeClassinfonumber', Class['id'])
+      store.dispatch('changeClassinfonumber', this.aClass['id'])
       .then(
-        result => {this.$router.push("/classdetail/memberList");}
+        result => {this.$router.push("/classdetail/membersList");}
       )
     }
   }

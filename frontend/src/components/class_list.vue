@@ -1,12 +1,12 @@
 <template>
   <Scroll :on-reach-bottom="handleReachBottom" height="90%">
-    <Class v-for="(item, index) in classes" :key="index" :Class="classes[index]"></Class>
+    <aClass v-for="(item, index) in classes" :key="index" :aClass="classes[index]"></aClass>
   </Scroll>
 </template>
 
 <script>
 
-import Class from './class_list_element.vue'
+import aClass from './class_list_element.vue'
 import store from '../store'
 
 export default {
@@ -32,7 +32,7 @@ export default {
   mounted: function () {
   },
   components: {
-    Class
+    aClass
   }
 }
 </script>

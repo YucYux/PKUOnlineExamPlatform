@@ -2,7 +2,7 @@
 <template>
   <div style="padding: 10px; background: #f8f8f9">
     <Card
-      :title="classmember['username']"
+      :title="classmember['student_name']"
       icon="md-happy"
       padding="0"
       shadow
