@@ -79,13 +79,18 @@ const RouterConfig = {
 
 const router = new VueRouter(RouterConfig)
 
+
 router.beforeEach((to, from, next) => {
   let {path} = to;
+  if (sessionStorage.getItem('store')) {
+    store.replaceState(Object.assign({}, store.state, JSON.parse(sessionStorage.getItem('store'))))
+  }
   if (store.getters.getUsername === '' && path !== '/index') 
     next('/index');
   else
     next();
 })
+
 
 new Vue({
   el: '#app',
