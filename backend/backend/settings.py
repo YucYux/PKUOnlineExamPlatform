@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'account',
+    'announcement',
     'contest',
 ]
 
@@ -156,5 +157,5 @@ CORS_ALLOW_HEADERS = ('*')
 # TOKEN相关设置
 import datetime
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(seconds=3600),
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(seconds=3 * 3600),
 }
