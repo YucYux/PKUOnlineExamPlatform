@@ -43,6 +43,10 @@ const Routers = [{
     }
   },
   {
+    path: '/questions',
+    component: (resolve) => require(['./router/views/questions.vue'], resolve)
+  },
+  {
     path: '/classdetail',
     component: (resolve) => require(['./router/views/classdetail.vue'], resolve),
     children: [

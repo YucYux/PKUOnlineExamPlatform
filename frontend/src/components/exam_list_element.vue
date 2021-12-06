@@ -7,7 +7,7 @@
       padding="0"
       shadow
       style="width: 100%"
-      to="/coding"
+      :to="{path: '/questions', query: {examid : exam_id}}"
     >
       <CellGroup>
         <Cell :title="contest_info"></Cell>
