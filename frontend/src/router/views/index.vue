@@ -1,8 +1,8 @@
 /* eslint-disable */
 <template>
     <div v-if="username != ''">
-        <!-- <div>index</div>
-        <button @click="APItest()">APItest</button> -->
+        <div>index</div>
+        <button @click="APItest()">APItest</button>
         <board></board>
     </div>
     <div v-else>
@@ -17,7 +17,7 @@ import board from '../../components/announcement_board.vue'
 export default {
     methods: {
         APItest: function() {
-            api.APIchangeStudentname('田所浩二');
+            api.APIgetContestList();
         }
     },
     computed: {

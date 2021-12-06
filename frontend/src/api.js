@@ -2,7 +2,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import store from './store'
-
+const sha256 = require("js-sha256").sha256;
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.baseURL = 'http://39.104.48.59:8080/'
@@ -11,6 +11,7 @@ export default {
     APIlogin (aUsername, aPassword) {
         return new Promise((resolve, reject) =>
         {
+            aPassword = sha256(aPassword);
             axios.post('user/login/', {
                 username: aUsername,
                 password: aPassword
@@ -40,6 +41,7 @@ export default {
     APIregister(aUsername, aPassword) {
         return new Promise((resolve, reject) =>
         {
+            aPassword = sha256(aPassword);
             axios.post('user/register/', {
                 username: aUsername,
                 password: aPassword
@@ -143,6 +145,17 @@ export default {
             }).then(response => {
                 console.log(response);
                 store.dispatch('changeStudentnumber', newStudentnumber);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
+    },
+    APIgetContestList () {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.get('contest/getcontestlist/').then(response => {
+                console.log(response);
+                store.dispatch('changeContests', response.data);
                 resolve(response);
             }).catch(error => {reject(error)})
         })
