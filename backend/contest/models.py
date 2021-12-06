@@ -12,15 +12,15 @@ class ContestStatus:
 
 
 class Contest(models.Model):
-    title = models.TextField()
-    description = models.TextField()
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
-    create_time = models.DateTimeField(auto_now_add=True)
-    last_update_time = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    class_info = models.ForeignKey(Class, on_delete=models.CASCADE)
-    visible = models.BooleanField(default=True)
+    title = models.CharField(max_length=100, verbose_name=u'考试名称')
+    description = models.TextField(verbose_name=u'考试信息')
+    start_time = models.DateTimeField(verbose_name=u'考试开始时间')
+    end_time = models.DateTimeField(verbose_name=u'考试结束时间')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name=u'考试创建时间')
+    last_update_time = models.DateTimeField(auto_now=True, verbose_name=u'考试上次更新时间')
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=u'考试创建者')
+    class_info = models.ForeignKey(Class, on_delete=models.CASCADE, verbose_name=u'考试所属班级')
+    visible = models.BooleanField(default=True, verbose_name=u'考试是否可用')
 
     @property
     def status(self):
@@ -35,6 +35,9 @@ class Contest(models.Model):
         db_table = "Contest"
         verbose_name = verbose_name_plural = u"考试信息"
         ordering = ("-start_time",)
+
+    def __str__(self):
+        return self.title
 
 
 class ContestRank(models.Model):

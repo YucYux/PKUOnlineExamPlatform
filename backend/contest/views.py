@@ -1,3 +1,4 @@
+"""
 from account.models import AdminType
 from utils.constants import CacheKey, CONTEST_PASSWORD_SESSION_KEY
 from utils.shortcuts import datetime2str, check_is_id
@@ -14,6 +15,28 @@ from .serializers import ContestSerializer
 from .models import ContestStatus,ContestRank
 from .serializers import ContestRankSerializer,ContestAdminSerializer,CreateConetestSeriaizer,EditConetestSeriaizer
 from django.http import JsonResponse
+
+"""
+from rest_framework import status, generics
+from .serializers import ContestListSerializer
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+from .models import Contest
+from account.views import getUserFromRequest
+
+
+class GetContestListAPI(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        user = getUserFromRequest(request)
+        queryset = Contest.objects.filter(class_info=user.class_info)
+        serializer = ContestListSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+"""
 class ContestAPI(APIView):
     def get(self, request):
         id = request.GET.get("id")
@@ -35,15 +58,9 @@ class ContestListAPI(APIView):
 
         contests = Contest.objects.select_related("created_by").filter(visible=True)
         keyword = request.GET.get("keyword")
-        #print(keyword)
-        #print(request)
-        rule_type = request.GET.getlist("rule_type")
-        #print(rule_type)
         status = request.GET.get("status")
         if keyword:
             contests = contests.filter(title__contains=keyword)
-        if rule_type:
-            contests = contests.filter(rule_type=rule_type[0])
         if status:
             cur = now()
             if status == ContestStatus.CONTEST_NOT_START:
@@ -56,7 +73,6 @@ class ContestListAPI(APIView):
 
 
 class ContestAccessAPI(APIView):
-    @login_required
     def get(self, request):
         contest_id = request.GET.get("contest_id")
         if not contest_id:
@@ -186,3 +202,5 @@ class APIError(Exception):
         self.err = err
         self.msg = msg
         super().__init__(err, msg)
+        
+"""

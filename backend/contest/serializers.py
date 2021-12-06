@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Contest,ContestRank
+from .models import Contest, ContestRank
 from django.db import models
 
 
@@ -33,11 +33,6 @@ class EditConetestSeriaizer(serializers.Serializer):
     visible = serializers.BooleanField()
 
 
-class ContestSerializer(ContestAdminSerializer):
-    class Meta:
-        model = Contest
-        exclude = ("password", "visible", "allowed_ip_ranges")
-
 class ContestRankSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
 
@@ -52,3 +47,8 @@ class ContestRankSerializer(serializers.ModelSerializer):
     def get_user(self, obj):
         return UsernameSerializer(obj.user).data
 
+
+class ContestListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contest
+        fields = "__all__"
