@@ -14,7 +14,8 @@ const state = {
   classes: [],
   classinfonumber: 0,
   classmembers: [],
-  contests:[]
+  contests: [],
+  announcements: []
 };
 const getters = {
   getAccess(state) {
@@ -49,6 +50,9 @@ const getters = {
   },
   getContests(state) {
     return state.contests;
+  },
+  getAnnouncements(state) {
+    return state.announcements;
   }
 };
 const mutations = {
@@ -84,6 +88,9 @@ const mutations = {
   },
   changeContestsM(state, newContests) {
     state.contests = newContests;
+  },
+  changeAnnouncementsM(state, newAnnouncements) {
+    state.announcements = newAnnouncements;
   }
 };
 const actions = {
@@ -119,6 +126,9 @@ const actions = {
   },
   changeContests(context, newContests) {
     context.commit('changeContestsM', newContests);
+  },
+  changeAnnouncements(context, newAnnouncements) {
+    context.commit('changeAnnouncementsM', newAnnouncements);
   },
   storeInfoWhenLogin(context, newInfo) {
     context.commit('changeAccessM', newInfo.newAccess);

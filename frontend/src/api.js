@@ -159,5 +159,16 @@ export default {
                 resolve(response);
             }).catch(error => {reject(error)})
         })
+    },
+    APIgetAnnouncementList() {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.get('announcement/getannouncementlist/').then(response => {
+                console.log(response);
+                store.dispatch('changeAnnouncements', response.data);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
     }
 }

@@ -43,10 +43,6 @@ const Routers = [{
     }
   },
   {
-    path: '/questions',
-    component: (resolve) => require(['./router/views/questions.vue'], resolve)
-  },
-  {
     path: '/classdetail',
     component: (resolve) => require(['./router/views/classdetail.vue'], resolve),
     children: [
@@ -86,8 +82,10 @@ const router = new VueRouter(RouterConfig)
 
 router.beforeEach((to, from, next) => {
   let {path} = to;
+  
   if (sessionStorage.getItem('store')) {
     store.replaceState(Object.assign({}, store.state, JSON.parse(sessionStorage.getItem('store'))))
+    sessionStorage.clear();
   }
   if (store.getters.getUsername === '' && path !== '/index') 
     next('/index');

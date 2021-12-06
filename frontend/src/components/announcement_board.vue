@@ -2,47 +2,56 @@
 
 <template>
     <Carousel  autoplay = "false" autoplay-speed = "5000" v-model="value" loop height = "350px" style = "padding:80px 0px 60px 0px; background:#d7dde4">
-        <CarouselItem>
-          <div style="background:#d7dde4;padding: 10px 300px 30px 300px">
-            <Card :bordered="true" style="background:#f5f7f9">
-              <p slot="title"><Icon type="md-paper-plane"></Icon>公告一</p>
-              <p style="height: 240px">{{content[0]}}</p>
-            </Card>
-          </div>
-        </CarouselItem>
-        <CarouselItem>
-          <div style="background:#d7dde4;padding: 10px 300px 30px 300px">
-            <Card :bordered="true" style="background:#f5f7f9">
-              <p slot="title"><Icon type="md-paper-plane"></Icon>公告二</p>
-              <p style="height: 240px">{{content[1]}}</p>
-            </Card>
-          </div>
-        </CarouselItem>
-        <CarouselItem>
-          <div style="background:#d7dde4;padding: 10px 300px 30px 300px">
-            <Card :bordered="true" style="background:#f5f7f9">
-              <p slot="title"><Icon type="md-paper-plane"></Icon>公告三</p>
-              <p style="height: 240px">{{content[2]}}</p>
-            </Card>
-          </div>
-        </CarouselItem>
-        <CarouselItem>
-          <div style="background:#d7dde4;padding: 10px 300px 30px 300px">
-            <Card :bordered="true" style="background:#f5f7f9">
-              <p slot="title"><Icon type="md-paper-plane"></Icon>公告四</p>
-              <p style="height: 240px">{{content[3]}}</p>
-            </Card>
-          </div>
-        </CarouselItem>
+      <CarouselItem>
+        <div style="background:#d7dde4;padding: 10px 300px 30px 300px">
+          <Card :bordered="true" style="background:#f5f7f9">
+            <p slot="title"><Icon type="md-paper-plane"></Icon>{{announcements[0].title}}</p>
+            <p style="height: 240px">{{announcements[0].content}}</p>
+          </Card>
+        </div>
+      </CarouselItem>
+      <CarouselItem>
+        <div style="background:#d7dde4;padding: 10px 300px 30px 300px">
+          <Card :bordered="true" style="background:#f5f7f9">
+            <p slot="title"><Icon type="md-paper-plane"></Icon>{{announcements[1].title}}</p>
+            <p style="height: 240px">{{announcements[1].content}}</p>
+          </Card>
+        </div>
+      </CarouselItem>
+      <CarouselItem>
+        <div style="background:#d7dde4;padding: 10px 300px 30px 300px">
+          <Card :bordered="true" style="background:#f5f7f9">
+            <p slot="title"><Icon type="md-paper-plane"></Icon>{{announcements[2].title}}</p>
+            <p style="height: 240px">{{announcements[2].content}}</p>
+          </Card>
+        </div>
+      </CarouselItem>
+      <CarouselItem>
+        <div style="background:#d7dde4;padding: 10px 300px 30px 300px">
+          <Card :bordered="true" style="background:#f5f7f9">
+            <p slot="title"><Icon type="md-paper-plane"></Icon>{{announcements[3].title}}</p>
+            <p style="height: 240px">{{announcements[3].content}}</p>
+          </Card>
+        </div>
+      </CarouselItem>
     </Carousel>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                value: 0,
-                content: ['选课一时爽 期末火葬场', 'content 2', 'content 3', 'content 4']
-            }
+import store from '../store'
+export default {
+    data () {
+        return {
+            value: 0,
         }
+    },
+    computed: {
+      announcements: function() {
+        let temp = store.getters.getAnnouncements;
+        while(temp.length < 4) {
+          temp.push({title: "", content: ""});
+        }
+        return temp
+      },
     }
+}
 </script>

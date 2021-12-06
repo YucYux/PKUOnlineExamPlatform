@@ -51,11 +51,12 @@ export default {
           store.dispatch(
             'changeFooterInfo',
             '欢迎，' + store.getters.getUsername
-          )
+          );
           this.$Notice.success({
             title: '登录成功',
             desc: '您的身份是：' + store.getters.getUsertype
-          })
+          });
+          api.APIgetAnnouncementList();
         },
         (error) => {
           this.$Notice.error({
