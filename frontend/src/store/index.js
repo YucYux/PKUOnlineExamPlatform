@@ -13,7 +13,8 @@ const state = {
   student_number: '',
   classes: [],
   classinfonumber: 0,
-  classmembers: []
+  classmembers: [],
+  contests:[]
 };
 const getters = {
   getAccess(state) {
@@ -45,6 +46,9 @@ const getters = {
   },
   getStudentname(state) {
     return state.student_name;
+  },
+  getContests(state) {
+    return state.contests;
   }
 };
 const mutations = {
@@ -77,6 +81,9 @@ const mutations = {
   },
   changeStudentnumberM(state, newStudentnumber) {
     state.student_number = newStudentnumber;
+  },
+  changeContestsM(state, newContests) {
+    state.contests = newContests;
   }
 };
 const actions = {
@@ -109,6 +116,9 @@ const actions = {
   },
   changeStudentnumber(context, newStudentnumber) {
     context.commit('changeStudentnumberM', newStudentnumber);
+  },
+  changeContests(context, newContests) {
+    context.commit('changeContestsM', newContests);
   },
   storeInfoWhenLogin(context, newInfo) {
     context.commit('changeAccessM', newInfo.newAccess);
