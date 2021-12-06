@@ -43,11 +43,7 @@
 </template>
 
 <script>
-//TODO : 改成import {Vue} from "vue";
-import { defineComponent } from "vue";
-//https://tiptap.dev/installation/vue2
-//TODO : 改成...-vue2
-import { Editor, EditorContent,VueNodeViewRenderer } from '@tiptap/vue-3';
+import { Editor, EditorContent,VueNodeViewRenderer } from '@tiptap/vue-2';
 import { Extension } from '@tiptap/core';
 import Blockquote from '@tiptap/extension-blockquote';
 import BulletList from '@tiptap/extension-bullet-list';
@@ -74,8 +70,8 @@ import CharacterCount from "@tiptap/extension-character-count";
 
 import Monaco from "./Monaco.vue";
 import Milkdown from "./Milkdown.vue";
-//改成Vue.component("QuestionFramework",{...})
-export default defineComponent({
+
+export default {
   name: "QuestionFramework",
   components: {
     EditorContent,
@@ -86,7 +82,7 @@ export default defineComponent({
   data() {
     let editor={
       title:{
-
+        editor:false
       },
       type:{
         buttons:[
@@ -112,11 +108,17 @@ export default defineComponent({
         chosen:3
       },
       tag:{
+        editor:false,
       },
       content:{
+        editor:false,
       },
-      choice:{},
-      compute:{},
+      choice:{
+        editor:false,
+      },
+      compute:{
+      editor:false,
+      },
     }
     return {
       editor,
@@ -235,7 +237,7 @@ export default defineComponent({
       }
     }
   },
-});
+};
 </script>
 
 <style>

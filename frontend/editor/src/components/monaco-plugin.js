@@ -1,9 +1,9 @@
 //It seems that this plugin is missing.
 //import {RemarkPlugin} from '@milkdown/core';
 import Monaco from "./Monaco.vue";
-import {
-    createApp
-} from "vue";
+//import {
+//    createApp
+//} from "vue";
 import directive from 'remark-directive';
 import {
     InputRule,textblockTypeInputRule

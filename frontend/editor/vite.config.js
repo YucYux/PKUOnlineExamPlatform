@@ -1,8 +1,8 @@
 import {
   defineConfig
 } from 'vite'
-import vue from '@vitejs/plugin-vue'
 import path from 'path'
+import { createVuePlugin } from 'vite-plugin-vue2'
 import monacoEditorPlugin from "vite-plugin-monaco-editor"
 export default defineConfig({ // 服务
   server: { // 服务器主机名
@@ -39,7 +39,7 @@ export default defineConfig({ // 服务
   // 全局变量替换 Record<string, string>
   define: {},
   // 插件
-  plugins: [vue(),monacoEditorPlugin()],
+  plugins: [monacoEditorPlugin(),createVuePlugin()],
   // 静态资源服务文件夹
   publicDir: 'public',
   resolve: {

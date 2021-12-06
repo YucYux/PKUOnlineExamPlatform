@@ -1,13 +1,9 @@
 <template>
-  <div ref="main">
-  <VueEditor :editor="editorf" ref="ve" />
+  <div ref="editor">
   </div>
 </template>
 
 <script>
-import { defineComponent } from "vue";
-//https://milkdown.dev/#/vue2
-//降级根据官方文档改代码，有些没用到的功能可以删掉
 import {
   Editor,
   rootCtx,
@@ -17,11 +13,9 @@ import {
   serializerCtx,
   themeFactory,
 } from "@milkdown/core";
-//import { createPlugin } from "@milkdown/utils";
 //import { nord } from "@milkdown/theme-nord";
-import { VueEditor, useEditor } from "@milkdown/vue";
 import { commonmark } from "@milkdown/preset-commonmark";
-import { fakecommonmark } from "@milkdown/preset-fakecommonmark";
+//import { fakecommonmark } from "@milkdown/preset-fakecommonmark";
 import { tooltip } from "@milkdown/plugin-tooltip";
 import { slash } from "@milkdown/plugin-slash";
 import { upload, uploadPlugin } from "@milkdown/plugin-upload";
@@ -127,42 +121,42 @@ fileHandler.uploader = async (files, schema) => {
   return nodes;
 };
 //TODO : 改成Vue.component("Milkdown",{...})
-export default defineComponent({
+export default {
   name: "Milkdown",
   components: {
-    VueEditor,
   },
   props: {
     text: { type: String, default: tutorial },
-    json: { type: Object, default: null },
+    json: { type: Object, default: ()=>{return{isEmpty:true}} },
     editable: { type: Boolean, default: true },
   },
-  data(props) {
-    console.log(props);
+  mounted() {
+  console.log(this);
+    let props=this;
     let globalPlugins = [diagram,math];
     let editorPlugins = [tooltip, emoji, gfm, history, indent, slash, clipboard,commonmark.headless()];
     let rendererPlugins = [commonmark.headless(),monacoeditor];
-    let editor = Editor.make()
+    let that=this;
+    this.editor = Editor.make()
       .config((ctx) => {
-        //TODO :
-        ctx.set(rootCtx,this.$refs.main);
+        ctx.set(rootCtx,that.$refs.editor);
         ctx.set(editorViewOptionsCtx, {
           editable() {
             return !!props.editable;
           },
         });
-        ctx.set(defaultValueCtx, props.json?{
+        ctx.set(defaultValueCtx, props.json.isEmpty?props.text:{
           type: "json",
           value: props.json,
-        }:props.text);
+        });
       });
-
+    let editor=this.editor;
       editor.use(
         themeFactory({
           slots,
         })
       );
-    if (!!props.editable) {
+    if (props.editable) {
       for (let i of editorPlugins) editor.use(i);
     } else {
       for (let i of rendererPlugins) editor.use(i);
@@ -201,7 +195,9 @@ export default defineComponent({
       markdown: [],
       doc: [console.log],
     };
-    if (!!props.editable) {
+    this.listeners=[];
+    this.ls=ls;
+    if (props.editable) {
       editor.use(
         upload.configure(uploadPlugin, {
           uploader: fileHandler.uploader,
@@ -214,21 +210,7 @@ export default defineComponent({
         })
         .use(listener);
     }
-    //TODO : 删掉这句话
-    let editorf = useEditor((root) => {
-      return editor.config((ctx) => {
-        ctx.set(rootCtx, root);
-      });
-    });
-    return {
-      editor,
-      ls,
-      editorf,
-      listeners: [],
-      ...props,
-    };
-  },
-  mounted() {
+    this.editor=this.editor.create();
     this.ls.markdown.push(this.attention);
     if (this.doc) {
       let that = this;
@@ -270,7 +252,7 @@ export default defineComponent({
       this.editable = bool;
     },
   },
-});
+};
 </script>
 <style>
 .milkdown {

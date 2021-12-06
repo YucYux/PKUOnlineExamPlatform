@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+//import { vue } from "vue";
 //可以把注释都删掉
 //这个文件包括了一个弱智自动补全算法，用于为python语言提供自动补全
 import completion from "../assets/completion.js";
@@ -40,7 +40,7 @@ function loadjs(src, isModule) {
 }
 //https://github.com/brijeshb42/monaco-themes
 //定义了一个Monaco组件
-export default defineComponent({
+export default {
   name: "Monaco",
   components: {},
   //使用vue-monaco-editor则不需要定义这些
@@ -56,7 +56,7 @@ export default defineComponent({
     resizable: { type: Boolean, default: true },
     model: Object,
   },
-  setup: function (p) {
+  data: function (p) {
     let props = { ...p };
     if (props.type === "edit") props.editable = true;
     console.log(props.editable ? "editable" : "ineditable");
@@ -424,7 +424,7 @@ export default defineComponent({
   beforeDestroy() {
     if (this.editor) this.editor.dispose();//丢弃内容
   },
-});
+};
 /*
 彩色括号插件，注意其中使用了全局变量monaco，确保它存在
 repo:https://github.com/McvCar/monaco-editor-bracket-pair-colorizer

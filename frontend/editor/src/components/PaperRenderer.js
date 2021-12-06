@@ -1,11 +1,9 @@
 //TODO
-import {
-    defineComponent
-} from "vue";
-import Milkdown from "./Milkdown.vue";
 import Monaco from "./Monaco.vue";
+import Milkdown from "./Milkdown.vue";
 //TODO
-export default defineComponent({
+export default {
+    name:"PaperRenderer",
     props: {
         paper: Object,
     },
@@ -229,4 +227,4 @@ export default defineComponent({
             }
         }
     }
-});
+};

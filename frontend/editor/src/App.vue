@@ -1,11 +1,21 @@
-<script setup>
+<template>
+  <div class="main">
+    <QuestionFramework />
+    <PaperRenderer :paper="paper1" />
+    <Monaco language="markdown" size="20px" type="edit" />
+    <Milkdown :editable="true"/>
+    <timer :time="100" />
+    <TodoList/>
+  </div>
+</template>
+<script>
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 //import Monaco from "./components/Monaco.vue";
-import QuestionFramework from "./components/QuestionFramework.vue";
+//import Milkdown from './components/Milkdown.vue';
 import "./assets/global.css";
-//import timer  from "./components/timer.vue";
 import PaperRenderer from "./components/PaperRenderer.vue";
+import QuestionFramework from "./components/QuestionFramework.vue";
 let paper2=[{type: "code",
     title: "11:生日礼物",
     language:"c++",
@@ -23,8 +33,8 @@ let paper2=[{type: "code",
 
 一个整数，最大的和。
 
-**样例输入**
 
+**样例输入**
 \`\`\`\`text
 5 2
 
@@ -38,7 +48,7 @@ let paper2=[{type: "code",
 \`\`\`
 
   `}];
-let paper = [
+window.paper1 = [
   {
     type: "title",
     content: "一个考试标题",
@@ -228,16 +238,17 @@ let paper = [
     disableCodeArea: false,
   },
 ];
+export default {
+	components: {
+		QuestionFramework,
+		PaperRenderer,
+		//Monaco,Milkdown
+	//	TodoList
+	},
+	data(){return{paper1}}
+}
 </script>
 
-<template>
-  <div class="main">
-    <QuestionFramework />
-    <PaperRenderer :paper="paper" />
-    <Monaco language="markdown" size="20px" type="edit" />
-    <timer :time="100" />
-  </div>
-</template>
 
 <style>
 #app > .main {

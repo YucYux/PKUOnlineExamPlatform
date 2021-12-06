@@ -1,3 +1,9 @@
-import { createApp } from 'vue'
+import Vue  from 'vue'
 import App from './App.vue'
-createApp(App).mount('#app')
+Vue.config.productionTip = false;
+new Vue({
+  el: '#app',
+  template: '<App/>',
+  components: { App }
+})
+
