@@ -15,3 +15,6 @@ class Announcement(models.Model):
         db_table = "Announcement"
         ordering = ("-create_time",)
         verbose_name = verbose_name_plural = u'公告信息'
+
+    def __str__(self):
+        return self.title
