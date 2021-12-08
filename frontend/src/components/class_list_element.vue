@@ -32,7 +32,7 @@ export default {
     handleClickCard() {
       store.dispatch('changeClassinfonumber', this.aClass['id'])
       .then(
-        result => {this.$router.push("/classdetail/membersList");}
+        result => {this.$router.push("/classdetail/membersList")}
       )
     }
   }

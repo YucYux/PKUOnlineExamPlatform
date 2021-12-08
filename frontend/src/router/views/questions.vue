@@ -6,13 +6,13 @@
 <script>
 import questionlist from '../../components/question_list.vue'
 export default {
-    data: function (){
-        return {
+  data: function () {
+    return {
 
-        }
-    },
-    components: {
-        questionlist
     }
+  },
+  components: {
+    questionlist
+  }
 }
 </script>

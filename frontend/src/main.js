@@ -29,8 +29,16 @@ const Routers = [{
     component: (resolve) => require(['./router/views/grade.vue'], resolve)
   },
   {
+    path: '/gradeshow',
+    component: (resolve) => require(['./router/views/gradeshow.vue'], resolve)
+  },
+  {
     path: '/coding',
     component: (resolve) => require(['./router/views/coding.vue'], resolve)
+  },
+  {
+    path: '/questions',
+    component: (resolve) => require(['./router/views/questions.vue'], resolve)
   },
   {
     path: '/classes',

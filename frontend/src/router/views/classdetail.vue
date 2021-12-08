@@ -61,7 +61,7 @@ export default {
     menuitemClasses: function () {
       return ['menu-item', this.isCollapsed ? 'collapsed-menu' : '']
     },
-    usertype: function() {
+    usertype: function () {
       return store.getters.getUsertype;
     }
   },

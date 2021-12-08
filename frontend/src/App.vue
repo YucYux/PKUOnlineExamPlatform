@@ -29,6 +29,9 @@ import api from "./api.js"
 
 export default {
   created() {
+    // store.dispatch("changeUsername", "jjc")
+    // store.dispatch("changeStudentname", "JJC")
+    // store.dispatch("changeStudentnumber", 1900012997)
     window.addEventListener('beforeunload', () => {
       sessionStorage.setItem('store', JSON.stringify(this.$store.state));
     })

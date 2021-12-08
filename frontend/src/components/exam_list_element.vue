@@ -7,7 +7,7 @@
       padding="0"
       shadow
       style="width: 100%"
-      to="/coding"
+      :to="{path: '/questions', query: {examid : exam_id}}"
     >
       <CellGroup>
         <Cell :title="contest_info"></Cell>
@@ -24,7 +24,7 @@
 </template>
 <script>
 export default {
-  props: ['contest_name', 'contest_info', 'contest_date', 'contest_time'],
+  props: ['contest_name', 'contest_info', 'contest_date', 'contest_time', 'exam_id'],
   data () {
     return {
       informations: 'exam-informations',
