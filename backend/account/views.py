@@ -73,7 +73,7 @@ class GetUserListFromClassAPI(generics.ListAPIView):
     search_fields = ['class_info']
 
 
-class SetUserClass(APIView):
+class SetUserClassAPI(APIView):
     permission_classes = (IsAdminUser,)
 
     def post(self, request):
@@ -87,7 +87,7 @@ class SetUserClass(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class SetUserTA(APIView):
+class SetUserTAAPI(APIView):
     permission_classes = (IsAdminUser,)
 
     def post(self, request):

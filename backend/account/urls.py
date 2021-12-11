@@ -1,6 +1,6 @@
 from django.urls import path, re_path
 from .views import UserRegisterAPI, UserLogoutAPI, GetUserInfoAPI, \
-    GetClassListAPI, GetUserListFromClassAPI, SetUserClass, SetUserTA, \
+    GetClassListAPI, GetUserListFromClassAPI, SetUserClassAPI, SetUserTAAPI, \
     EditUserProfileAPI
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -15,6 +15,6 @@ urlpatterns = [
 
     path('getclasslist/', GetClassListAPI.as_view(), name='get_class_list'),
     re_path(r'^getuserlist/$', GetUserListFromClassAPI.as_view(), name='get_user_list'),
-    path('setuserclass/', SetUserClass.as_view(), name='set_user_class'),
-    path('setuserta/', SetUserTA.as_view(), name='set_user_as_ta')
+    path('setuserclass/', SetUserClassAPI.as_view(), name='set_user_class'),
+    path('setuserta/', SetUserTAAPI.as_view(), name='set_user_as_ta')
 ]
