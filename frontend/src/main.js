@@ -88,6 +88,7 @@ const router = new VueRouter(RouterConfig)
 router.beforeEach((to, from, next) => {
   let {path} = to;
   
+  
   if (sessionStorage.getItem('store')) {
     store.replaceState(Object.assign({}, store.state, JSON.parse(sessionStorage.getItem('store'))))
     sessionStorage.clear();
