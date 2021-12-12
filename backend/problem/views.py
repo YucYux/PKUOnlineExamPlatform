@@ -6,13 +6,16 @@ from wsgiref.util import FileWrapper
 
 from django.conf import settings
 from django.http import StreamingHttpResponse
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .models import Problem
-from .serializers import TestCaseUploadForm
-from ..utils.shortcuts import rand_str, natural_sort_key
+from .models import Problem, ProblemTag
+from .serializers import TestCaseUploadForm, GetContestIDSerializer, \
+    GetProblemIDSerializer, ProblemListSerializer, GetProblemTagSerializer, \
+    GetProblemTitleSerializer
+from contest.models import Contest, ContestStatus
+from utils.shortcuts import rand_str, natural_sort_key
 
 
 class ZipError(Exception):
@@ -130,3 +133,75 @@ class TestCaseAPI(APIView, TestCaseZipProcessor):
         info, test_case_id = self.process_zip(zip_file)
         os.remove(zip_file)
         return Response({"id": test_case_id, "info": info}, status=status.HTTP_201_CREATED)
+
+
+class GetProblemFromContestAPI(APIView):
+    def post(self, request):
+        serializer = GetContestIDSerializer(data=request.data)
+        if serializer.is_valid():
+            contest = Contest.objects.get(id=serializer.data["id"])
+            if contest.status == ContestStatus.TO_BE_STARTED:
+                return Response({}, status=status.HTTP_400_BAD_REQUEST)
+            problem_list = Problem.objects.filter(contest__id=serializer.data["id"])
+            problem_list_json = problem_list.values("_id", "title")
+            return Response(problem_list_json, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetProblemDetailAPI(APIView):
+    def post(self, request):
+        serializer = GetProblemIDSerializer(data=request.data)
+        if serializer.is_valid():
+            problem = Problem.objects.filter(_id=serializer.data["id"])
+            probelm_json = problem.values()
+            return Response(probelm_json, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetProblemListAPI(generics.ListAPIView):
+    queryset = Problem.objects.all()
+    serializer_class = ProblemListSerializer
+
+
+class SearchProblemByIDAPI(APIView):
+    def post(self, request):
+        serializer = GetProblemIDSerializer(data=request.data)
+        if serializer.is_valid():
+            problems = Problem.objects.filter(_id=serializer.data["id"])
+            problems_json = problems.values("_id", "title")
+            return Response(problems_json, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class SearchProblemByTagAPI(APIView):
+    def post(self, request):
+        serializer = GetProblemTagSerializer(data=request.data)
+        if serializer.is_valid():
+            tags = ProblemTag.objects.filter(name__contains=serializer.data["tag"])
+            problem_list = []
+            for tag_name in tags:
+                tag = ProblemTag.objects.get(name=tag_name)
+                problems = Problem.objects.filter(tags=tag.id)
+                for problem in problems:
+                    problem_list.append({
+                        "_id": problem._id,
+                        "title": problem.title
+                    })
+            return Response(problem_list, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class SearchProblemByNameAPI(APIView):
+    def post(self, request):
+        serializer = GetProblemTitleSerializer(data=request.data)
+        if serializer.is_valid():
+            problems = Problem.objects.filter(title__icontains=serializer.data["name"])
+            problems_json = problems.values("_id", "title")
+            return Response(problems_json, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+

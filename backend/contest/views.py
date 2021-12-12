@@ -36,6 +36,7 @@ class GetContestListAPI(generics.ListAPIView):
         serializer = ContestListSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 """
 class ContestAPI(APIView):
     def get(self, request):
