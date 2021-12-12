@@ -32,6 +32,7 @@ export default {
     // store.dispatch("changeUsername", "jjc")
     // store.dispatch("changeStudentname", "JJC")
     // store.dispatch("changeStudentnumber", 1900012997)
+    // store.dispatch("changeUsertype", 'Teacher')
     window.addEventListener('beforeunload', () => {
       sessionStorage.setItem('store', JSON.stringify(this.$store.state));
     })
