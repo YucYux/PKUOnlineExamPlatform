@@ -34,7 +34,8 @@ const Routers = [{
   },
   {
     path: '/coding',
-    component: (resolve) => require(['./router/views/coding.vue'], resolve)
+    component: (resolve) => require(['./router/views/coding.vue'], resolve),
+    props: route => ({ contest_id: route.query.contest_id, question_id: route.query.question_id })
   },
   {
     path: '/questions',

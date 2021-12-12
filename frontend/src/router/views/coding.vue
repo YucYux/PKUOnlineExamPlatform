@@ -11,13 +11,13 @@
           </p>
         </Card>
         <Card :bordered="false" style="height: 25%">
-          <p slot="title">测试样例</p>
+          <p slot="title">输入说明</p>
           <p>
             {{standard_input}}
           </p>
         </Card>
         <Card :bordered="false" style="height: 25%">
-          <p slot="title">样例输出</p>
+          <p slot="title">输出说明</p>
           <p>
             {{standard_output}}
           </p>
@@ -49,9 +49,13 @@
 
 <script>
 import MonacoEditor from 'vue-monaco-editor'
+import api from '../../api.js'
+import store from '../../store'
 export default {
   data: function () {
     return {
+      contest_id: 0,
+      question_id: 0,
       editor: null,
       split1: 0.5,
       randomkey: 123321,
@@ -60,8 +64,8 @@ export default {
       },
       question_title: '题目名称',
       question_content: '题目内容',
-      standard_input: '样例输入',
-      standard_output: '样例输出'
+      standard_input: '输入说明',
+      standard_output: '输出说明'
     }
   },
   components: {
@@ -78,6 +82,18 @@ export default {
       this.$Message.info(code)
       // code发送到后端
     }
+  },
+  created: function() {
+    this.contest_id = this.$route.query.contest_id;
+    this.question_id = this.$route.query.question_id;
+    store.commit("changeQuestiondetailM", {});
+    api.APIgetQuestionDetail(this.question_id).
+    then(resolve => {
+      this.question_title = store.getters.getQuestiondetail['title'];
+      this.question_content = store.getters.getQuestiondetail['description'];
+      this.standard_input = store.getters.getQuestiondetail['input_description'];
+      this.standard_output = store.getters.getQuestiondetail['output_description'];
+    })
   }
 }
 </script>

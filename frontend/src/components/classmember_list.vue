@@ -34,6 +34,7 @@ export default {
     classmember
   },
   created: function() {
+    store.commit("changeClassmembersM", []);
     api.APIclassInfo(this.$route.query.class_id);
   }
 }

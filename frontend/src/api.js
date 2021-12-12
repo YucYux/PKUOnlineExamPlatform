@@ -178,7 +178,57 @@ export default {
                 id: exam_id
             }).then(response => {
                 console.log(response);
-                store.dispatch('changeQuestionlist', response.data);
+                store.commit('changeQuestionlistM', response.data);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
+    },
+    APIgetQuestionDetail(question_id) {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.post('problem/getproblemdetail/', {
+                id: question_id
+            }).then(response => {
+                console.log(response);
+                store.commit('changeQuestiondetailM', response.data);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
+    },
+    APIgetAllQuestions() {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.get('problem/getproblemlist/').then(response => {
+                console.log(response);
+                //store.dispatch('changeAnnouncements', response.data);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
+    },
+    APIsearchQuestionsByID(id) {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.post('problem/searchproblem/id/', {
+                id: id
+            }).then(response => {
+                console.log(response);
+                //store.commit('changeQuestiondetailM', response.data);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
+    },
+    APIsearchQuestionsByTag(tag) {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.post('problem/searchproblem/tag/', {
+                tag: tag
+            }).then(response => {
+                console.log(response);
+                //store.dispatch('changeQuestiondetail', response.data);
                 resolve(response);
             }).catch(error => {reject(error)})
         })
