@@ -26,8 +26,7 @@ export default {
   },
   computed: {
     classes: function () {
-      // return store.getters.getClasses
-      return [{class_name: 'class 1', id: 3}]
+      return store.getters.getClasses;
     }
   },
   mounted: function () {

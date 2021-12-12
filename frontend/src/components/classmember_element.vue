@@ -2,7 +2,7 @@
 <template>
   <div style="padding: 10px; background: #f8f8f9">
     <Card
-      :title="classmember['student_name']"
+      :title="classmember['student_name']+' '"
       icon="md-happy"
       padding="0"
       shadow
@@ -10,7 +10,8 @@
       to="#"
     >
       <CellGroup>
-        <Cell :title="'username: '+classmember['username']"></Cell>
+        <Cell :title="'用户名: '+classmember['username']"></Cell>
+        <Cell :title="'身份: '+classmember['admin_type']"></Cell>
       </CellGroup>
     </Card>
   </div>
