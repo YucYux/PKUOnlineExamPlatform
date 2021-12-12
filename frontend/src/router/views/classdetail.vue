@@ -15,22 +15,22 @@
           :class="menuitemClasses"
           on-select="select"
         >
-          <MenuItem name="members_list" to='membersList'>
+          <MenuItem name="members_list" :to="{path: '/classdetail/membersList', query:{class_id: this.class_id}}">
             <Icon type="md-contacts"></Icon>
             <span>成员列表</span>
           </MenuItem>
           <div v-if="usertype != 'Student'">
-            <MenuItem name="set_contest" to='setContest'>
+            <MenuItem name="set_contest" :to="{path: '/classdetail/setContest', query:{class_id: this.class_id}}">
               <Icon type="md-search"></Icon>
               <span>考试管理</span>
             </MenuItem>
-          <MenuItem name="set_members" to='setMembers'>
+          <MenuItem name="set_members" :to="{path: '/classdetail/setMembers', query:{class_id: this.class_id}}">
             <Icon type="md-settings"></Icon>
             <span>学生管理</span>
           </MenuItem>
           </div>
           <div v-if="usertype === 'Teacher'">
-            <MenuItem name="set_TA" to='setTA'>
+            <MenuItem name="set_TA" :to="{path: '/classdetail/setTA', query:{class_id: this.class_id}}">
               <Icon type="md-settings"></Icon>
               <span>助教管理</span>
             </MenuItem>
@@ -54,7 +54,8 @@ export default {
   data () {
     return {
       isCollapsed: false,
-      Content: 'content'
+      Content: 'content',
+      class_id: 0
     }
   },
   computed: {
@@ -69,6 +70,9 @@ export default {
     select (name) {
       this.$Message.info(name)
     }
+  },
+  created: function() {
+    this.class_id = this.$route.query.class_id;
   }
 }
 </script>

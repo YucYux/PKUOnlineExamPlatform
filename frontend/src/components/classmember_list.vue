@@ -8,6 +8,7 @@
 <script>
 import classmember from './classmember_element.vue'
 import store from '../store'
+import api from '../api'
 export default {
   data () {
     return {

@@ -55,6 +55,7 @@ const Routers = [{
   {
     path: '/classdetail',
     component: (resolve) => require(['./router/views/classdetail.vue'], resolve),
+    props: route => ({ class_id: route.query.class_id }),
     children: [
       {
         path: 'membersList',
@@ -63,15 +64,18 @@ const Routers = [{
       },
       {
         path: 'setContest',
-        component: (resolve) => require(['./components/set_contest.vue'], resolve)
+        component: (resolve) => require(['./components/set_contest.vue'], resolve),
+        props: route => ({ class_id: route.query.class_id })
       },
       {
         path: 'setMembers',
-        component: (resolve) => require(['./components/set_members.vue'], resolve)
+        component: (resolve) => require(['./components/set_members.vue'], resolve),
+        props: route => ({ class_id: route.query.class_id })
       },
       {
         path: 'setTA',
-        component: (resolve) => require(['./components/set_TA.vue'], resolve)
+        component: (resolve) => require(['./components/set_TA.vue'], resolve),
+        props: route => ({ class_id: route.query.class_id })
       }
     ]
   },
