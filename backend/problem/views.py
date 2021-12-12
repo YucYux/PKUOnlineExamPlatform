@@ -190,7 +190,11 @@ class SearchProblemByTagAPI(APIView):
                         "_id": problem._id,
                         "title": problem.title
                     })
-            return Response(problem_list, status=status.HTTP_200_OK)
+            ret_problems =[]
+            for problem in problem_list:
+                if problem not in ret_problems:
+                    ret_problems.append(problem)
+            return Response(ret_problems, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
