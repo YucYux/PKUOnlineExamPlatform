@@ -4,7 +4,7 @@ from django.urls import path
 # from rest_framework.routers import DefaultRouter
 # from ..contest import views
 #from contest.views import ContestAccessAPI, ContestRankAPI,ContestAPI,ContestListAPI,ContestAdminAPI,DownloadContestSubmissions
-from .views import GetContestListAPI
+from .views import GetContestListAPI, CreateContestAPI
 # router = DefaultRouter()
 # router.register(r'contest', views.ContestViewSet)
 
@@ -23,4 +23,5 @@ urlpatterns = [
 
 urlpatterns = [
     path("getcontestlist/", GetContestListAPI.as_view(), name='get_contest_list_api'),
+    path("createcontest/", CreateContestAPI.as_view(), name='create_contest_api'),
 ]

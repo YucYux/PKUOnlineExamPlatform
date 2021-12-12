@@ -17,13 +17,17 @@ from .serializers import ContestRankSerializer,ContestAdminSerializer,CreateCone
 from django.http import JsonResponse
 
 """
+
+import dateutil.parser
+
 from rest_framework import status, generics
-from .serializers import ContestListSerializer
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .models import Contest
+from .serializers import ContestListSerializer, CreateContestSerializer
+from account.models import Class
 from account.views import getUserFromRequest
 
 
@@ -35,6 +39,34 @@ class GetContestListAPI(generics.ListAPIView):
         queryset = Contest.objects.filter(class_info=user.class_info)
         serializer = ContestListSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class CreateContestAPI(APIView):
+    permission_classes = (IsAdminUser,)
+
+    def post(self, request):
+        serializer = CreateContestSerializer(data=request.data)
+        if serializer.is_valid():
+            data = serializer.data
+            user = getUserFromRequest(request)
+            data["start_time"] = dateutil.parser.parse(data["start_time"])
+            data["end_time"] = dateutil.parser.parse(data["end_time"])
+            data["visible"] = True
+            if data["end_time"] <= data["start_time"]:
+                return Response({"msg": u"考试结束时间在开始时间之前！"},
+                                status=status.HTTP_400_BAD_REQUEST)
+            contest_obj = Contest.objects.create(title=data["title"],
+                                   description=data["description"],
+                                   start_time=data["start_time"],
+                                   end_time=data["end_time"],
+                                   created_by=user,
+                                   visible=True,
+                                   class_info=Class.objects.get(class_number=data["class_info"]))
+            data["id"] = contest_obj.id
+            return Response(data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 """

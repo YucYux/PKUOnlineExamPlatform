@@ -16,14 +16,6 @@ class ContestAdminSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CreateConetestSeriaizer(serializers.Serializer):
-    title = serializers.CharField(max_length=128)
-    description = serializers.CharField()
-    start_time = serializers.DateTimeField()
-    end_time = serializers.DateTimeField()
-    visible = serializers.BooleanField()
-
-
 class EditConetestSeriaizer(serializers.Serializer):
     id = serializers.IntegerField()
     title = serializers.CharField(max_length=128)
@@ -52,3 +44,11 @@ class ContestListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contest
         fields = "__all__"
+
+
+class CreateContestSerializer(serializers.Serializer):
+    title = serializers.CharField()
+    description = serializers.CharField()
+    start_time = serializers.DateTimeField()
+    end_time = serializers.DateTimeField()
+    class_info = serializers.IntegerField()
