@@ -96,6 +96,7 @@ import exam from './set_contest_element.vue'
 export default {
   data: function () {
     return {
+      contest_id: 0,
       examlist: [],
       modal: false,
       cur_index: -1,
@@ -279,6 +280,9 @@ export default {
   },
   components: {
     exam
+  },
+  created: function() {
+    this.contest_id = this.$route.query.contest_id;
   }
 }
 </script>

@@ -17,7 +17,7 @@ import board from '../../components/announcement_board.vue'
 export default {
     methods: {
         APItest: function() {
-            api.APItemp();
+            api.APIaddQuestionsToContest();
         }
     },
     computed: {

@@ -6,9 +6,11 @@
 </template>
 <script>
 import exam from './exam_list_element.vue'
+import store from '../store'
 export default {
   data () {
     return {
+      list: [],
       list_name: ['文计-笔试', '文计-Python', '文计-期末考试'],
       list_info: ['笔试考试', '考察python编程', '期末考试'],
       list_date: ['2021/11/15', '2021/11/16', '2022/01/10'],
