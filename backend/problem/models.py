@@ -25,8 +25,8 @@ class Problem(models.Model):
     TODO：算法/文件IO题
     因为Judger还没研究明白，先只考虑算法题
     """
-    _id = models.TextField(db_index=True, verbose_name=u'题目ID')
-    contest = models.ManyToManyField(Contest, null=True, verbose_name=u'所属考试')
+    _id = models.CharField(db_index=True, max_length=100, verbose_name=u'题目ID')
+    contest = models.ManyToManyField(Contest, verbose_name=u'所属考试')
     title = models.TextField(verbose_name=u'题目标题')
     description = models.TextField(verbose_name=u'题目描述')
     input_description = models.TextField(verbose_name=u'输入描述')
@@ -41,7 +41,7 @@ class Problem(models.Model):
         ('Hard', u'困难'),
     )
     difficulty = models.TextField(choices=difficulty_choices, verbose_name=u'题目难度')
-    tags = models.ManyToManyField(ProblemTag, null=True, verbose_name=u'题目标签')
+    tags = models.ManyToManyField(ProblemTag, verbose_name=u'题目标签')
     type_choices = (
         (ProblemType.ALGORITHM, u"算法"),
         (ProblemType.FILE_IO, u"文件IO"),
