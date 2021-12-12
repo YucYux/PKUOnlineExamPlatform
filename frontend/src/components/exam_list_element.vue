@@ -9,9 +9,6 @@
       style="width: 100%"
       :to="{path: '/questions', query: {exam_id : this.exam_id}}"
     >
-    <Button type="info" @click="handleClickCard">
-        进入考试
-    </Button>
       <CellGroup>
         <Cell :title="contest_info"></Cell>
         <Cell>
@@ -36,10 +33,6 @@ export default {
     }
   },
   methods: {
-    handleClickCard() {
-      alert(this.exam_id);
-      this.$router.push({path: '/questions', query: {exam_id : this.exam_id}});
-    }
   }
 }
 </script>

@@ -178,7 +178,74 @@ export default {
                 id: exam_id
             }).then(response => {
                 console.log(response);
-                store.dispatch('changeQuestionlist', response.data);
+                store.commit('changeQuestionlistM', response.data);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
+    },
+    APIgetQuestionDetail(question_id) {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.post('problem/getproblemdetail/', {
+                id: question_id
+            }).then(response => {
+                console.log(response);
+                store.commit('changeQuestiondetailM', response.data);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
+    },
+    APIgetAllQuestions() {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.get('problem/getproblemlist/').then(response => {
+                console.log(response);
+                //store.dispatch('changeAnnouncements', response.data);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
+    },
+    APIsearchQuestionsByID(id) {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.post('problem/searchproblem/id/', {
+                id: id
+            }).then(response => {
+                console.log(response);
+                //store.commit('changeQuestiondetailM', response.data);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
+    },
+    APIsearchQuestionsByTag(tag) {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.post('problem/searchproblem/tag/', {
+                tag: tag
+            }).then(response => {
+                console.log(response);
+                //store.dispatch('changeQuestiondetail', response.data);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
+    },
+    APItemp() {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.post('contest/createcontest/', {
+                title: "创建考试测试",
+                description: "test",
+                start_time: "2021-12-12T18:00:00",
+                end_time: "2021-12-12T19:00:00",
+                class_info: 1
+            }).then(response => {
+                console.log(response);
+                //store.commit('changeQuestiondetailM', response.data);
                 resolve(response);
             }).catch(error => {reject(error)})
         })

@@ -7,14 +7,14 @@
       padding="0"
       shadow
       style="width: 100%"
-      :to="{path: '/coding', query: {questionid : question_id}}"
+      :to="{path: '/coding', query: {question_id: question_id, contest_id: contest_id}}"
     >
     </Card>
   </div>
 </template>
 <script>
 export default {
-  props: ['question_name', 'question_id'],
+  props: ['contest_id', 'question_name', 'question_id'],
   data () {
     return {
     }

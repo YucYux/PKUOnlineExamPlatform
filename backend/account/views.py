@@ -96,6 +96,7 @@ class SetUserTAAPI(APIView):
             user = User.objects.get(id=serializer.data["user_id"])
             user.class_info = serializer.data["new_class_id"]
             user.admin_type = AdminType.TEACHING_ASSISTANT
+            user.is_staff = True
             user.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:

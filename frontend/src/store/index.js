@@ -16,7 +16,9 @@ const state = {
   classmembers: [],
   contests: [],
   announcements: [],
-  questionlist: []
+  questionlist: [],
+  questiondetail: {},
+  allquestions: []
 };
 const getters = {
   getAccess(state) {
@@ -57,6 +59,12 @@ const getters = {
   },
   getQuestionlist(state) {
     return state.questionlist;
+  },
+  getQuestiondetail(state) {
+    return state.questiondetail;
+  },
+  getAllquestions(state) {
+    return state.allquestions;
   }
 };
 const mutations = {
@@ -98,6 +106,12 @@ const mutations = {
   },
   changeQuestionlistM(state, newQuestionlist) {
     state.questionlist = newQuestionlist;
+  },
+  changeQuestiondetailM(state, newQuestiondetail) {
+    state.questiondetail = newQuestiondetail;
+  },
+  changeAllquestionsM(state, newAllquestions) {
+    state.allquestions = newAllquestions;
   }
 };
 const actions = {
@@ -139,6 +153,12 @@ const actions = {
   },
   changeQuestionlist(context, newQuestionlist) {
     context.commit('changeQuestionlistM', newQuestionlist);
+  },
+  changeQuestiondetail(context, newQuestiondetail) {
+    context.commit('changeQuestiondetailM', newQuestiondetail);
+  },
+  changeAllquestions(context, newAllquestions) {
+    context.commit('changeAllquestionsM', newAllquestions);
   },
   storeInfoWhenLogin(context, newInfo) {
     context.commit('changeAccessM', newInfo.newAccess);

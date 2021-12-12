@@ -34,7 +34,8 @@ const Routers = [{
   },
   {
     path: '/coding',
-    component: (resolve) => require(['./router/views/coding.vue'], resolve)
+    component: (resolve) => require(['./router/views/coding.vue'], resolve),
+    props: route => ({ contest_id: route.query.contest_id, question_id: route.query.question_id })
   },
   {
     path: '/questions',
@@ -86,6 +87,7 @@ const router = new VueRouter(RouterConfig)
 
 router.beforeEach((to, from, next) => {
   let {path} = to;
+  
   
   if (sessionStorage.getItem('store')) {
     store.replaceState(Object.assign({}, store.state, JSON.parse(sessionStorage.getItem('store'))))
