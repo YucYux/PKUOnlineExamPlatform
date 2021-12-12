@@ -32,6 +32,9 @@ export default {
   },
   components: {
     classmember
+  },
+  created: function() {
+    api.APIclassInfo(this.$route.query.class_id);
   }
 }
 </script>

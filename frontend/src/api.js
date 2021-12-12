@@ -80,12 +80,11 @@ export default {
             }).catch(error => {reject(error)})
         })
     },
-    APIclassInfo () {
+    APIclassInfo (class_id) {
         return new Promise((resolve, reject) =>
         {
-            let class_number = store.getters.getClassinfonumber;
             axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
-            axios.get('user/getuserlist/?search='+class_number).then(response => {
+            axios.get('user/getuserlist/?search='+class_id).then(response => {
                 console.log(response);
                 store.dispatch('changeClassmembers', response.data);
                 resolve(response);
@@ -167,6 +166,19 @@ export default {
             axios.get('announcement/getannouncementlist/').then(response => {
                 console.log(response);
                 store.dispatch('changeAnnouncements', response.data);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
+    },
+    APIgetQuestionList(exam_id) {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.post('problem/getproblemlistfromcontest/', {
+                id: exam_id
+            }).then(response => {
+                console.log(response);
+                store.dispatch('changeQuestionlist', response.data);
                 resolve(response);
             }).catch(error => {reject(error)})
         })

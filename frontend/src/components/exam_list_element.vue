@@ -7,8 +7,11 @@
       padding="0"
       shadow
       style="width: 100%"
-      :to="{path: '/questions', query: {examid : exam_id}}"
+      :to="{path: '/questions', query: {exam_id : this.exam_id}}"
     >
+    <Button type="info" @click="handleClickCard">
+        进入考试
+    </Button>
       <CellGroup>
         <Cell :title="contest_info"></Cell>
         <Cell>
@@ -30,6 +33,12 @@ export default {
       informations: 'exam-informations',
       exam_date: 'xxxx-xx-xx',
       time_limit: 'xx:xx -- xx:xx'
+    }
+  },
+  methods: {
+    handleClickCard() {
+      alert(this.exam_id);
+      this.$router.push({path: '/questions', query: {exam_id : this.exam_id}});
     }
   }
 }

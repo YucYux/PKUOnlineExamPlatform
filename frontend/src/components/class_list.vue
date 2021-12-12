@@ -34,6 +34,8 @@ export default {
   },
   components: {
     aClass
+  },
+  created: function() {
   }
 }
 </script>

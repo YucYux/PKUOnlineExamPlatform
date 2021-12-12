@@ -30,10 +30,7 @@ export default {
   },
   methods: {
     handleClickCard() {
-      store.dispatch('changeClassinfonumber', this.aClass['id'])
-      .then(
-        result => {this.$router.push("/classdetail/membersList")}
-      )
+      this.$router.push({path:'/classdetail/membersList', query:{class_id: this.aClass['id']}});
     }
   }
 }

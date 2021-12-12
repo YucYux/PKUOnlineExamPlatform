@@ -38,7 +38,8 @@ const Routers = [{
   },
   {
     path: '/questions',
-    component: (resolve) => require(['./router/views/questions.vue'], resolve)
+    component: (resolve) => require(['./router/views/questions.vue'], resolve),
+    props: route => ({ exam_id: route.query.exam_id })
   },
   {
     path: '/classes',
@@ -46,8 +47,8 @@ const Routers = [{
     beforeEnter: (to, from, next) => {
       api.APIclassesList().
       then(
-        result => {next();}, 
-        error  => {next();});
+        result => {next();}
+      );
     }
   },
   {
@@ -57,12 +58,7 @@ const Routers = [{
       {
         path: 'membersList',
         component: (resolve) => require(['./components/classmember_list.vue'], resolve),
-        beforeEnter: (to, from, next) => {
-          api.APIclassInfo().
-          then(
-            result => {next();}, 
-            error  => {next();});
-        },
+        props: route => ({ class_id: route.query.class_id })
       },
       {
         path: 'setContest',
