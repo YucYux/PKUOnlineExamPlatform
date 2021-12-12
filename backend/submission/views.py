@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from problem.models import Problem
 from contest.models import Contest,ContestStatus
 from account.models import User
+from .serializers import SubmissionSerializer
 from judge.tasks import judge_task
 
 def check_contest(contest):
@@ -52,3 +53,14 @@ class SubmissionAPI(APIView):
         else:
             return self.response({"error": "sub error", "data": "contest_title or problem_id not included"})
 
+    def get(self, request):
+        sub_id = request.GET.get('id')
+        if not sub_id:
+            return self.response({"error": "sub error", "data": "GET sub id not exist"})
+        try:
+            submission = Submission.objects.select_related("problem").get(id=sub_id)
+        except Submission.DoesNotExist:
+            return self.response({"error": "sub error", "data": "GET sub not exist"})
+
+        submission_data = SubmissionSerializer(submission).data
+        return self.response({"error": None, "data": submission_data})
