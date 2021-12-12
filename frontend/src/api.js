@@ -232,5 +232,22 @@ export default {
                 resolve(response);
             }).catch(error => {reject(error)})
         })
+    },
+    APItemp() {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.post('contest/createcontest/', {
+                title: "创建考试测试",
+                description: "test",
+                start_time: "2021-12-12T18:00:00",
+                end_time: "2021-12-12T19:00:00",
+                class_info: 1
+            }).then(response => {
+                console.log(response);
+                //store.commit('changeQuestiondetailM', response.data);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
     }
 }

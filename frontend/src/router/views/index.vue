@@ -17,7 +17,7 @@ import board from '../../components/announcement_board.vue'
 export default {
     methods: {
         APItest: function() {
-            api.APIsearchQuestionsByTag("搜索");
+            api.APItemp();
         }
     },
     computed: {
