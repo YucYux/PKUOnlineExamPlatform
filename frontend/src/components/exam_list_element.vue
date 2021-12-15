@@ -14,8 +14,12 @@
         <Cell>
           <Icon type="md-calendar" />{{
             contest_date
-          }}&nbsp;&nbsp;&nbsp;&nbsp;<Icon type="md-clock" />{{
+          }}&nbsp;&nbsp;&nbsp;&nbsp;
+          <Icon type="md-clock" />{{
             contest_time
+          }}&nbsp;&nbsp;&nbsp;&nbsp;
+          <Icon type="md-flag" />{{
+            status
           }}
           </Cell>
       </CellGroup>
@@ -24,12 +28,21 @@
 </template>
 <script>
 export default {
-  props: ['contest_name', 'contest_info', 'contest_date', 'contest_time', 'exam_id'],
+  props: ['contest_name', 'contest_info', 'contest_date', 'contest_time', 'exam_id', 'start_time'],
   data () {
     return {
       informations: 'exam-informations',
       exam_date: 'xxxx-xx-xx',
       time_limit: 'xx:xx -- xx:xx'
+
+    }
+  },
+  computed: {
+    status: function() {
+      let now = new Date();
+      let start = new Date(this.start_time);
+      if(now < start) return "尚未开始";
+      else return "进行中";
     }
   },
   methods: {
