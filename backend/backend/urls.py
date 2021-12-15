@@ -21,5 +21,6 @@ urlpatterns = [
     path('user/', include("account.urls")),
     path('contest/', include("contest.urls")),
     path('announcement/', include("announcement.urls")),
-    path('problem/', include("problem.urls"))
+    path('problem/', include("problem.urls")),
+    path('submission/', include("submission.urls")),
 ]

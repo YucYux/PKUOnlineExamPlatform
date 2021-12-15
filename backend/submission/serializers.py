@@ -1,13 +1,9 @@
-from django import forms
 from rest_framework import serializers
 
 from .models import Submission
 
 
-class SubmissionSerializer(serializers.ModelSerializer):
-    problem = serializers.SlugRelatedField(read_only=True, slug_field="_id")
-    # user = serializers.SlugRelatedField(read_only=True, slug_field='student_name')
-
-    class Meta:
-        model = Submission
-        field = ("code", "sub_time", "result", "user_id", "user_name")
+class SubmitSerializer(serializers.Serializer):
+    code = serializers.CharField()
+    contest_id = serializers.IntegerField()
+    problem_id = serializers.CharField()
