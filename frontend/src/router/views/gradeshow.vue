@@ -48,9 +48,11 @@
 <script>
 import queslist from '../../components/question_grade_list_element.vue'
 import store from '../../store'
+import api from '../../api.js'
 export default {
   data: function () {
     return {
+      contest_id: 0,
       title: '考试名称',
       student_name:"",
       ave_grade:80,
@@ -74,6 +76,7 @@ export default {
         return '#DAA520'
       if (this.grade < 60)
         return '#ff5500'
+      return "#ffffff"
     },
     usertype: function () {
       return store.getters.getUsertype
@@ -85,6 +88,8 @@ export default {
   },
   created: function () {
     // 初始时根据examid从后端获取考试的总分以及每道题的信息
+    this.contest_id = this.$route.query.contest_id;
+    
   }
 }
 

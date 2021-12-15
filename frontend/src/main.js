@@ -32,11 +32,18 @@ const Routers = [{
   },
   {
     path: '/grade',
-    component: (resolve) => require(['./router/views/grade.vue'], resolve)
+    component: (resolve) => require(['./router/views/grade.vue'], resolve),
+    beforeEnter: (to, from, next) => {
+      api.APIgetEndedContests().
+      then(
+        result => {next();}
+      )
+    }
   },
   {
     path: '/gradeshow',
-    component: (resolve) => require(['./router/views/gradeshow.vue'], resolve)
+    component: (resolve) => require(['./router/views/gradeshow.vue'], resolve),
+    props: route => ({ exam_id: route.query.exam_id })
   },
   {
     path: '/coding',

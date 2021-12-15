@@ -9,6 +9,7 @@ import question from './question_grade_list_element.vue'
 export default {
   data () {
     return {
+      list: [],
       list_name: ['题目一', '题目二', '题目三', '题目四'],
       score: [10, 0, 8, 8, 0],
       full_score: [10, 10, 10, 20, 40]

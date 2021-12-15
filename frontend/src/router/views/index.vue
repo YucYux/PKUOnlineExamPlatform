@@ -17,7 +17,7 @@ import board from '../../components/announcement_board.vue'
 export default {
     methods: {
         APItest: function() {
-            api.APIgetCommitStatus(12,"1000");
+            api.APIgetGrade(13);
         }
     },
     computed: {

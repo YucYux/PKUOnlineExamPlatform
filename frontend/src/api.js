@@ -293,4 +293,29 @@ export default {
             }).catch(error => {reject(error)})
         })
     },
+    APIgetEndedContests()
+    {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.get('contest/getendedcontest/').then(response => {
+                console.log(response);
+                store.dispatch('changeContests', response.data);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
+    },
+    APIgetGrade(contest_id)
+    {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.post('contest/getcontestrank/', {
+                contest_id: contest_id,
+            }).then(response => {
+                console.log(response);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
+    },
 }

@@ -7,7 +7,7 @@
       padding="0"
       shadow
       style="width: 100%"
-      :to="{path: '/gradeshow', query: {examid : exam_id}}"
+      :to="{path: '/gradeshow', query: {exam_id : exam_id}}"
     >
       <CellGroup>
         <Cell>
