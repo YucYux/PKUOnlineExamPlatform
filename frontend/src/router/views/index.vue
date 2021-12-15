@@ -17,7 +17,7 @@ import board from '../../components/announcement_board.vue'
 export default {
     methods: {
         APItest: function() {
-            api.APIaddQuestionsToContest();
+            api.APIcommit('s = input()\ns1 = s.split(" ")\nprint(int(s1[0]) + int(s1[1]))',12,"1000");
         }
     },
     computed: {
