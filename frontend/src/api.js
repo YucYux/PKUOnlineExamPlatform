@@ -280,5 +280,20 @@ export default {
                 resolve(response);
             }).catch(error => {reject(error)})
         })
-    }
+    },
+    APIgetCommitStatus(contest_id, question_id)
+    {
+        return new Promise((resolve, reject) =>
+        {
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+            axios.post('submission/getsubmission/', {
+                contest_id: contest_id,
+                problem_id: question_id
+            }).then(response => {
+                console.log(response);
+                //store.commit('changeQuestiondetailM', response.data);
+                resolve(response);
+            }).catch(error => {reject(error)})
+        })
+    },
 }

@@ -22,11 +22,7 @@
             {{standard_output}}
           </p>
         </Card>
-        <List header="提交记录" border size="small" background="white" split="false">
-            <ListItem>This is a piece of text.</ListItem>
-            <ListItem>This is a piece of text.</ListItem>
-            <ListItem>This is a piece of text.</ListItem>
-        </List>
+        <Table height="200" :columns="columns1" :data="history_list"></Table>
       </div>
       <div slot="right" class="split-pane">
         <MonacoEditor
@@ -61,6 +57,25 @@ export default {
     return {
       contest_id: 0,
       question_id: 0,
+      history_list: [],
+      columns1: [
+                    {
+                        title: '提交状态',
+                        key: 'status'
+                    },
+                    {
+                        title: '时间使用',
+                        key: 'time'
+                    },
+                    {
+                        title: '内存使用',
+                        key: 'memory'
+                    },
+                    {
+                        title: '提交时间',
+                        key: 'date'
+                    }
+                ],
       editor: null,
       split1: 0.5,
       randomkey: 123321,

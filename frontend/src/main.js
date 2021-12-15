@@ -18,7 +18,13 @@ const Routers = [{
   },
   {
     path: '/contest',
-    component: (resolve) => require(['./router/views/contest.vue'], resolve)
+    component: (resolve) => require(['./router/views/contest.vue'], resolve),
+    beforeEnter: (to, from, next) => {
+      api.APIgetContestList().
+      then(
+        result => {next();}
+      )
+    }
   },
   {
     path: '/control',
