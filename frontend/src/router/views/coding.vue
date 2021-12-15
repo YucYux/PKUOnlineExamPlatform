@@ -4,24 +4,29 @@
   <div class="split">
     <Split v-model="split1">
       <div slot="left" class="split-pane">
-        <Card :bordered="false" style="height: 45%">
+        <Card :bordered="false" style="height: 25%">
           <p slot="title">{{question_title}}</p>
           <p style="{height:'200'}">
             {{question_content}}
           </p>
         </Card>
-        <Card :bordered="false" style="height: 25%">
+        <Card :bordered="false" style="height: 15%">
           <p slot="title">输入说明</p>
           <p>
             {{standard_input}}
           </p>
         </Card>
-        <Card :bordered="false" style="height: 25%">
+        <Card :bordered="false" style="height: 15%">
           <p slot="title">输出说明</p>
           <p>
             {{standard_output}}
           </p>
         </Card>
+        <List header="提交记录" border size="small" background="white" split="false">
+            <ListItem>This is a piece of text.</ListItem>
+            <ListItem>This is a piece of text.</ListItem>
+            <ListItem>This is a piece of text.</ListItem>
+        </List>
       </div>
       <div slot="right" class="split-pane">
         <MonacoEditor
@@ -104,13 +109,13 @@ export default {
 
 <style>
     .split{
-      height: 480px;
+      height: 780px;
       margin: 10px;
       border: 1px solid #dcdee2;
     }
     .split-pane{
       background: #dcdee2;
-      height: 500px;
+      height: 800px;
       padding: 10px;
     }
     .submit_button{
