@@ -10,13 +10,13 @@
             {{question_content}}
           </p>
         </Card>
-        <Card :bordered="false" style="height: 15%">
+        <Card :bordered="false" style="height: 20%">
           <p slot="title">输入说明</p>
           <p>
             {{standard_input}}
           </p>
         </Card>
-        <Card :bordered="false" style="height: 15%">
+        <Card :bordered="false" style="height: 20%">
           <p slot="title">输出说明</p>
           <p>
             {{standard_output}}
@@ -61,7 +61,7 @@ export default {
       columns1: [
                     {
                         title: '提交状态',
-                        key: 'status'
+                        key: 'result'
                     },
                     {
                         title: '时间使用',
@@ -73,7 +73,7 @@ export default {
                     },
                     {
                         title: '提交时间',
-                        key: 'date'
+                        key: 'sub_time'
                     }
                 ],
       editor: null,
@@ -118,19 +118,40 @@ export default {
       this.standard_input = store.getters.getQuestiondetail['input_description'];
       this.standard_output = store.getters.getQuestiondetail['output_description'];
     })
+    api.APIgetCommitStatus(this.contest_id, this.question_id).
+    then(resolve => {
+      this.history_list = resolve.data;
+      for (let i = 0; i < this.history_list.length; i++) {
+        let result_code = this.history_list[i].result;
+        if(result_code === -2 ) this.history_list[i].result = "COMPILE_ERROR";
+        else if(result_code === -1 ) this.history_list[i].result = "WRONG_ANSWER";
+        else if(result_code === 0 ) this.history_list[i].result = "ACCEPTED";
+        else if(result_code === 1 ) this.history_list[i].result = "CPU_TIME_LIMIT_EXCEEDED";
+        else if(result_code === 2 ) this.history_list[i].result = "REAL_TIME_LIMIT_EXCEEDED";
+        else if(result_code === 3 ) this.history_list[i].result = "MEMORY_LIMIT_EXCEEDED";
+        else if(result_code === 4 ) this.history_list[i].result = "RUNTIME_ERROR";
+        else if(result_code === 5 ) this.history_list[i].result = "SYSTEM_ERROR";
+        else if(result_code === 6 ) this.history_list[i].result = "PENDING";
+        else if(result_code === 7 ) this.history_list[i].result = "JUDGING";
+        else if(result_code === 8 ) this.history_list[i].result = "PARTIALLY_ACCEPTED";
+        else this.history_list[i].result = "UNKNOWN_STATUS";
+        let date = new Date(this.history_list[i].sub_time);
+        this.history_list[i].sub_time = date.toLocaleString('chinese', {hour12:false});
+      }
+    })
   }
 }
 </script>
 
 <style>
     .split{
-      height: 780px;
+      height: 680px;
       margin: 10px;
       border: 1px solid #dcdee2;
     }
     .split-pane{
       background: #dcdee2;
-      height: 800px;
+      height: 700px;
       padding: 10px;
     }
     .submit_button{

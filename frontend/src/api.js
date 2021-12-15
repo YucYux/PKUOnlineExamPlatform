@@ -260,7 +260,6 @@ export default {
                 problem_ids: [1000,1001]
             }).then(response => {
                 console.log(response);
-                //store.commit('changeQuestiondetailM', response.data);
                 resolve(response);
             }).catch(error => {reject(error)})
         })
@@ -276,7 +275,6 @@ export default {
                 problem_id: question_id
             }).then(response => {
                 console.log(response);
-                //store.commit('changeQuestiondetailM', response.data);
                 resolve(response);
             }).catch(error => {reject(error)})
         })
@@ -291,7 +289,6 @@ export default {
                 problem_id: question_id
             }).then(response => {
                 console.log(response);
-                //store.commit('changeQuestiondetailM', response.data);
                 resolve(response);
             }).catch(error => {reject(error)})
         })
