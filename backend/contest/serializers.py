@@ -52,3 +52,7 @@ class CreateContestSerializer(serializers.Serializer):
     start_time = serializers.DateTimeField()
     end_time = serializers.DateTimeField()
     class_info = serializers.IntegerField()
+
+
+class GetContestRankSerializer(serializers.Serializer):
+    contest_id = serializers.IntegerField()

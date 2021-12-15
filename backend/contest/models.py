@@ -45,10 +45,8 @@ class ContestRank(models.Model):
     contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
     submission_number = models.IntegerField(default=0)
     accepted_number = models.IntegerField(default=0)
-    submission_info = JSONField(default=dict)
-    total_time = models.IntegerField(default=0)
 
     class Meta:
         db_table = "Contest_Rank"
         unique_together = (("user", "contest"),)
-        verbose_name = verbose_name_plural = u"考试排名信息"
+        verbose_name = verbose_name_plural = u"考试成绩信息"

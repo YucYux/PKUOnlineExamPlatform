@@ -7,10 +7,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from problem.models import Problem
-from contest.models import Contest
+from contest.models import Contest, ContestRank
 from account.models import User
 from account.views import getUserFromRequest
-from .serializers import SubmitSerializer
+from .serializers import SubmitSerializer, GetSubmissionSerializer
 from .models import Submission, JudgeStatus
 
 
@@ -76,7 +76,6 @@ class JudgeServerClient(object):
 
 
 class SubmitAPI(APIView):
-
     def post(self, request):
         serializer = SubmitSerializer(data=request.data)
         if serializer.is_valid():
@@ -91,11 +90,44 @@ class SubmitAPI(APIView):
                                 max_cpu_time=1000, max_memory=128 * 1024 * 1024,
                                 test_case_id=problem._id, output=True)
             result = JudgeStatus.ACCEPTED
+            if info["err"] == "CompileError":
+                result = JudgeStatus.COMPILE_ERROR
+            else:
+                for test_case in info["data"]:
+                    if test_case["result"] != 0:
+                        result = test_case["result"]
+                        break
             submission_obj = Submission.objects.create(contest=contest,
                                                        problem=problem,
                                                        user=user,
                                                        code=code,
                                                        result=result,
-                                                       info=info
-                                                       )
-            return Response(info, status=status.HTTP_201_CREATED)
+                                                       info=info)
+            rank, _ = ContestRank.objects.get_or_create(contest=contest,
+                                                        user=user)
+            if result == JudgeStatus.ACCEPTED:
+                rank.accepted_number = rank.accepted_number + 1
+            rank.submission_number = rank.submission_number + 1
+            rank.save()
+
+            return Response({"status": result,
+                             "info": info},
+                            status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetSubmissionAPI(APIView):
+    def post(self, request):
+        serializer = GetSubmissionSerializer(data=request.data)
+        if serializer.is_valid():
+            data = serializer.data
+            contest = Contest.objects.get(id=data["contest_id"])
+            problem = Problem.objects.get(_id=data["problem_id"])
+            user = getUserFromRequest(request)
+            submissions = Submission.objects.filter(contest=contest,
+                                                    problem=problem,
+                                                    user=user)
+            return Response(submissions.values("result", "sub_time"), status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
