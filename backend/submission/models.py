@@ -28,7 +28,9 @@ def get_rand_id(len=32, allow_chars="abcdefghijklmnopqrstuvwxyz0123456789"):
 class Submission(models.Model):
     contest = models.ForeignKey(Contest, null=True, on_delete=models.CASCADE, verbose_name=u'对应考试')
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE, verbose_name=u'对应问题')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=u'提交用户')
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=u'提交用户')
+    user_id = models.IntegerField(db_index=True)
+    user_name = models.TextField()
     code = models.TextField(verbose_name=u'代码')
     sub_id = models.TextField(default=get_rand_id, primary_key=True, db_index=True, verbose_name=u'提交ID')
     sub_time = models.DateTimeField(auto_now_add=True, verbose_name=u'提交时间')
