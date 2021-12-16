@@ -99,7 +99,7 @@ export default {
     },
     submit_code () {
       var code = this.editor.getValue()
-      this.$Message.info(code)
+      //this.$Message.info(code)
       // code发送到后端
       api.APIcommit(code, this.contest_id, this.question_id).then(
         (result) => {this.$Notice.success({title: '提交成功', desc: ''});},

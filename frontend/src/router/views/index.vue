@@ -1,8 +1,6 @@
 /* eslint-disable */
 <template>
     <div v-if="username != ''">
-        <div>index</div>
-        <button @click="APItest()">APItest</button>
         <board></board>
     </div>
     <div v-else>
@@ -29,4 +27,6 @@ export default {
         board
     }
 }
+//<div>index</div>
+//<button @click="APItest()">APItest</button>
 </script>

@@ -52,6 +52,7 @@ import api from '../../api.js'
 export default {
   data: function () {
     return {
+      list: [],
       contest_id: 0,
       title: '考试名称',
       student_name:"",
@@ -64,8 +65,8 @@ export default {
       score: [10, 0, 8, 8, 2, 10],
       full_score: [10, 10, 10, 10, 20, 20],
       stuList: [
-        {value: '张三', label: '张三'},
-        {value: '李四', label: '李四'}
+        {value: 'Carol', label: 'Carol'},
+        {value: '田所浩二', label: '田所浩二'}
       ]
     }
   },
@@ -89,7 +90,15 @@ export default {
   created: function () {
     // 初始时根据examid从后端获取考试的总分以及每道题的信息
     this.contest_id = this.$route.query.contest_id;
-    
+    api.APIgetGrade(this.contest_id).
+    then(resolve => {
+      if(store.getters.getUsertype === 'Teacher') {
+        this.list = resolve.data;
+      }
+      else {
+        this.list[0] = resolve.data;
+      }
+    })
   }
 }
 

@@ -300,7 +300,7 @@ export default {
             axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
             axios.get('contest/getendedcontest/').then(response => {
                 console.log(response);
-                store.dispatch('changeContests', response.data);
+                store.commit('changeContestsM', response.data);
                 resolve(response);
             }).catch(error => {reject(error)})
         })
@@ -314,6 +314,7 @@ export default {
                 contest_id: contest_id,
             }).then(response => {
                 console.log(response);
+                store.commit('changeGradelistM', response.data);
                 resolve(response);
             }).catch(error => {reject(error)})
         })

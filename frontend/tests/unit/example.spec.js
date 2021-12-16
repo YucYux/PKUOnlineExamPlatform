@@ -80,7 +80,10 @@ describe('grade.vue', () => {
 })
 
 describe('gradeshow.vue', () => {
-  const wrapper = shallowMount(gradeshow);
+  const $route = {
+    query: { contest_id: 12}
+  }
+  const wrapper = shallowMount(gradeshow, {mocks:{$route}});
   it('the circle is loaded', () => {
     expect(wrapper.html()).contain('</icircle>')
   })
