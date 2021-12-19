@@ -11,6 +11,7 @@ from .serializers import CreateContestSerializer, GetContestRankSerializer
 from account.models import Class, AdminType, User
 from account.views import getUserFromRequest
 from submission.models import Submission
+from problem.models import Problem
 
 
 class GetContestListAPI(APIView):
@@ -38,12 +39,12 @@ class CreateContestAPI(APIView):
                 return Response({"msg": u"考试结束时间在开始时间之前！"},
                                 status=status.HTTP_400_BAD_REQUEST)
             contest_obj = Contest.objects.create(title=data["title"],
-                                   description=data["description"],
-                                   start_time=data["start_time"],
-                                   end_time=data["end_time"],
-                                   created_by=user,
-                                   visible=True,
-                                   class_info=Class.objects.get(class_number=data["class_info"]))
+                                                 description=data["description"],
+                                                 start_time=data["start_time"],
+                                                 end_time=data["end_time"],
+                                                 created_by=user,
+                                                 visible=True,
+                                                 class_info=Class.objects.get(class_number=data["class_info"]))
             data["id"] = contest_obj.id
             return Response(data, status=status.HTTP_201_CREATED)
         else:
@@ -69,14 +70,16 @@ class GetContestRankAPI(APIView):
         if serializer.is_valid():
             data = serializer.data
             contest = Contest.objects.get(id=data["contest_id"])
+            problem_cnt = Problem.objects.filter(contest=contest).count()
             if user.admin_type == AdminType.STUDENT:
                 rank = ContestRank.objects.get(contest=contest,
                                                user=user)
-                rank_info = {"submission_number": rank.submission_number,
+                rank_info = {"problem_cnt": problem_cnt,
+                             "submission_number": rank.submission_number,
                              "accepted_number": rank.accepted_number}
                 return Response(rank_info, status=status.HTTP_200_OK)
             else:
-                rank_list = []
+                rank_list = [{"problem_cnt": problem_cnt}]
                 student_list = User.objects.filter(class_info=user.class_info,
                                                    admin_type=AdminType.STUDENT)
                 for student in student_list:
@@ -88,5 +91,5 @@ class GetContestRankAPI(APIView):
                                  "accepted_number": rank.accepted_number}
                     rank_list.append(rank_info)
                 return Response(rank_list, status=status.HTTP_200_OK)
-
-
+        else:
+            Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
