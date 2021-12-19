@@ -131,3 +131,38 @@ class GetSubmissionAPI(APIView):
             return Response(submissions.values("result", "sub_time"), status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ContestSubmissionAPI(APIView):
+    def post(self, request):
+        serializer = GetSubmissionSerializer(data=request.data)
+        if serializer.is_valid():
+            data = serializer.data
+            contest = Contest.objects.get(id=data["contest_id"])
+            submissions = Submission.objects.filter(contest=contest)
+            return Response(submissions.values("result", "sub_time"), status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProblemSubmissionAPI(APIView):
+    def post(self, request):
+        serializer = GetSubmissionSerializer(data=request.data)
+        if serializer.is_valid():
+            data = serializer.data
+            problem = Problem.objects.get(_id=data["problem_id"])
+            submissions = Submission.objects.filter(problem=problem)
+            return Response(submissions.values("result", "sub_time"), status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserSubmissionAPI(APIView):
+    def post(self, request):
+        serializer = GetSubmissionSerializer(data=request.data)
+        if serializer.is_valid():
+            user = getUserFromRequest(request)
+            submissions = Submission.objects.filter(user=user)
+            return Response(submissions.values("result", "sub_time"), status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
