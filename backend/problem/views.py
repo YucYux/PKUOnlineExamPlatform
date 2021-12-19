@@ -8,7 +8,6 @@ from .serializers import GetContestIDSerializer, \
     GetProblemIDSerializer, ProblemListSerializer, GetProblemTagSerializer, \
     GetProblemTitleSerializer, AddProblemToContestSerializer
 from contest.models import Contest, ContestStatus
-from utils.shortcuts import rand_str, natural_sort_key
 from account.views import getUserFromRequest
 
 
