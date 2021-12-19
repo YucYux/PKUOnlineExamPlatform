@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'contest',
     'problem',
     'submission',
+
+    'silk',
 ]
 
 REST_FRAMEWORK = {
@@ -59,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'silk.middleware.SilkyMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

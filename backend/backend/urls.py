@@ -24,3 +24,6 @@ urlpatterns = [
     path('problem/', include("problem.urls")),
     path('submission/', include("submission.urls")),
 ]
+
+
+urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
