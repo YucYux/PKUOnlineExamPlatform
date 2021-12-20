@@ -97,6 +97,14 @@ class SubmitAPI(APIView):
                     if test_case["result"] != 0:
                         result = test_case["result"]
                         break
+            already_ac = False
+            last_submissions = Submission.objects.filter(contest=contest,
+                                                         problem=problem,
+                                                         user=user)
+            for last_submission in last_submissions.values("result"):
+                if last_submission["result"] == JudgeStatus.ACCEPTED:
+                    already_ac = True
+                    break
             submission_obj = Submission.objects.create(contest=contest,
                                                        problem=problem,
                                                        user=user,
@@ -105,7 +113,7 @@ class SubmitAPI(APIView):
                                                        info=info)
             rank, _ = ContestRank.objects.get_or_create(contest=contest,
                                                         user=user)
-            if result == JudgeStatus.ACCEPTED:
+            if result == JudgeStatus.ACCEPTED and not already_ac:
                 rank.accepted_number = rank.accepted_number + 1
             rank.submission_number = rank.submission_number + 1
             rank.save()
