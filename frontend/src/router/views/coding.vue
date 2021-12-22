@@ -1,34 +1,34 @@
 /* eslint-disable */
 <template>
-<div style="height: 100%">
+<div style="height: 1250px">
   <div class="split">
     <Split v-model="split1">
       <div slot="left" class="split-pane">
-        <Card :bordered="false" style="height: 25%">
-          <p slot="title">{{question_title}}</p>
+        <Card :bordered="false" style="height: 50%">
+          <p slot="title" >{{question_title}}</p>
           <p style="{height:'200'}">
             {{question_content}}
           </p>
         </Card>
-        <Card :bordered="false" style="height: 20%">
+        <Card :bordered="false" style="height: 45%">
           <p slot="title">输入说明</p>
           <p>
             {{standard_input}}
           </p>
         </Card>
-        <Card :bordered="false" style="height: 20%">
+        <Card :bordered="false" style="height: 45%">
           <p slot="title">输出说明</p>
           <p>
             {{standard_output}}
           </p>
         </Card>
-        <Table height="200" :columns="columns1" :data="history_list"></Table>
+        <Table style="height: 50%" :columns="columns1" :data="history_list"></Table>
       </div>
       <div slot="right" class="split-pane">
         <MonacoEditor
           style="position:relative"
           width="99%"
-          height="95%"
+          height="1100"
           language="python"
           theme="vs-dark"
           :key="randomkey"
@@ -43,7 +43,7 @@
     </Split>
   </div>
   <div  class="submit_button">
-    <Button type = "success" @click = "submit_code">提交</Button>
+    <Button type = "success" @click = "submit_code" size="large">提交</Button>
   </div>
 </div>
 </template>
@@ -145,18 +145,19 @@ export default {
 
 <style>
     .split{
-      height: 680px;
+      z-index: -1;
+      height: 500px;
       margin: 10px;
       border: 1px solid #dcdee2;
     }
     .split-pane{
       background: #dcdee2;
-      height: 700px;
+      height: 600px;
       padding: 10px;
     }
     .submit_button{
       position: relative;
-      margin-top: 20px;
+      margin-top: 650px;
       text-align: center;
     }
 </style>

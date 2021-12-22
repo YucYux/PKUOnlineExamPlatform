@@ -5,14 +5,14 @@
       padding="0"
       shadow
       style="width: 100%"
-      :to="{path:'/classdetail/membersList', query:{class_id: this.aClass['id']}}"
+      :to="{path:'/classdetail/membersList', query:{class_number: this.aClass['class_number']}}"
     >
       <p slot="title">
             <Icon type="md-contacts"></Icon>
             {{aClass['class_name']}}
       </p>
       <CellGroup>
-        <Cell :title="'ID: '+aClass['id']"></Cell>
+        <Cell :title="'ID: '+aClass['id'] +' 班号: ' +aClass['class_number']"></Cell>
       </CellGroup>
     </Card>
   </div>

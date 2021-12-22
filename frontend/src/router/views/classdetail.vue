@@ -15,22 +15,22 @@
           :class="menuitemClasses"
           on-select="select"
         >
-          <MenuItem name="members_list" :to="{path: '/classdetail/membersList', query:{class_id: this.class_id}}">
+          <MenuItem name="members_list" :to="{path: '/classdetail/membersList', query:{class_number: this.class_number}}">
             <Icon type="md-contacts"></Icon>
             <span>成员列表</span>
           </MenuItem>
           <div v-if="usertype != 'Student'">
-            <MenuItem name="set_contest" :to="{path: '/classdetail/setContest', query:{class_id: this.class_id}}">
+            <MenuItem name="set_contest" :to="{path: '/classdetail/setContest', query:{class_number: this.class_number}}">
               <Icon type="md-search"></Icon>
               <span>考试管理</span>
             </MenuItem>
-          <MenuItem name="set_members" :to="{path: '/classdetail/setMembers', query:{class_id: this.class_id}}">
+          <MenuItem name="set_members" :to="{path: '/classdetail/setMembers', query:{class_number: this.class_number}}">
             <Icon type="md-settings"></Icon>
             <span>学生管理</span>
           </MenuItem>
           </div>
           <div v-if="usertype === 'Teacher'">
-            <MenuItem name="set_TA" :to="{path: '/classdetail/setTA', query:{class_id: this.class_id}}">
+            <MenuItem name="set_TA" :to="{path: '/classdetail/setTA', query:{class_number: this.class_number}}">
               <Icon type="md-settings"></Icon>
               <span>助教管理</span>
             </MenuItem>
@@ -55,7 +55,7 @@ export default {
     return {
       isCollapsed: false,
       Content: 'content',
-      class_id: 0
+      class_number: 0
     }
   },
   computed: {
@@ -72,7 +72,7 @@ export default {
     }
   },
   created: function() {
-    this.class_id = this.$route.query.class_id;
+    this.class_number = this.$route.query.class_number;
   }
 }
 </script>

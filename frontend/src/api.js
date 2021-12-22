@@ -120,12 +120,12 @@ export default {
             }).catch(error => {reject(error)})
         })
     },
-    APIchangeStudentname (newStudentname) {
+    APIchangeStudentinfo (newStudentname,newStudentnumber) {
         return new Promise((resolve, reject) =>
         {
             axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
             axios.post('user/edituserprofile/', {
-                student_number: '',
+                student_number: newStudentnumber,
                 student_name: newStudentname
             }).then(response => {
                 console.log(response);
@@ -134,20 +134,20 @@ export default {
             }).catch(error => {reject(error)})
         })
     },
-    APIchangeStudentnumber (newStudentnumber) {
-        return new Promise((resolve, reject) =>
-        {
-            axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
-            axios.post('user/edituserprofile/', {
-                student_number: newStudentnumber,
-                student_name: ''
-            }).then(response => {
-                console.log(response);
-                store.dispatch('changeStudentnumber', newStudentnumber);
-                resolve(response);
-            }).catch(error => {reject(error)})
-        })
-    },
+    // APIchangeStudentnumber (newStudentnumber) {
+    //     return new Promise((resolve, reject) =>
+    //     {
+    //         axios.defaults.headers.common['Authorization'] = 'Bearer '+store.getters.getAccess;
+    //         axios.post('user/edituserprofile/', {
+    //             student_number: newStudentnumber,
+    //             student_name: ''
+    //         }).then(response => {
+    //             console.log(response);
+    //             store.dispatch('changeStudentnumber', newStudentnumber);
+    //             resolve(response);
+    //         }).catch(error => {reject(error)})
+    //     })
+    // },
     APIgetContestList () {
         return new Promise((resolve, reject) =>
         {

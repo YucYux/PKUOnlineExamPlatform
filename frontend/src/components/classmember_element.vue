@@ -7,7 +7,6 @@
       padding="0"
       shadow
       style="width: 100%"
-      to="#"
     >
       <CellGroup>
         <Cell :title="'用户名: '+classmember['username']"></Cell>

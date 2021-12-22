@@ -84,40 +84,27 @@ export default {
         this.notunderchange = true
         //这里把数据发回后端，即v_studentname中的值
         //再更新store中的值
-        api.APIchangeStudentname(this.v_studentname).then(
+        api.APIchangeStudentinfo(this.v_studentname,this.v_studentid).then(
             (result) => {
             store.dispatch(
               'changeStudentname',
               result.data.student_name
             )
-            this.$Notice.success({
-              title: '修改成功',
-              desc: '您的姓名是：' + result.data.student_name
-            })
-          },
-          (error) => {
-            this.v_studentname = this.temp_studentname;
-            this.$Notice.error({
-              title: '修改失败',
-              desc: ''
-            });
-            console.log(error);
-          }
-        )
-
-        api.APIchangeStudentnumber(this.v_studentid).then(
-            (result) => {
             store.dispatch(
               'changeStudentnumber',
               result.data.student_number
             )
             this.$Notice.success({
               title: '修改成功',
+              desc: '您的姓名是：' + result.data.student_name
+            })
+            this.$Notice.success({
+              title: '修改成功',
               desc: '您的学号是：' + result.data.student_number
             })
           },
           (error) => {
-            this.v_studentid = this.temp_studentid;
+            this.v_studentname = this.temp_studentname;
             this.$Notice.error({
               title: '修改失败',
               desc: ''
