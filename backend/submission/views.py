@@ -13,7 +13,15 @@ from account.views import getUserFromRequest
 from .serializers import SubmitSerializer, GetSubmissionSerializer
 from .models import Submission, JudgeStatus
 
+"""
+一点说明：
+提交相关的接口与模型的设计高度依赖于最后的判题服务器的选择
+目前的设计全部是基于QDU Judge Server来做的
+后续更换了其他判题服务器或者是写好了自己的判题服务器的话，需要对整个提交app进行相应的改动
+"""
 
+
+# 在QDU Judge Server上运行Python程序的一些设置
 default_env = ["LANG=en_US.UTF-8", "LANGUAGE=en_US:en", "LC_ALL=en_US.UTF-8"]
 
 py3_lang_config = {
@@ -33,6 +41,7 @@ py3_lang_config = {
 }
 
 
+# 给QDU Judge Server发消息的相关函数
 class JudgeServerClientError(Exception):
     pass
 
@@ -76,6 +85,10 @@ class JudgeServerClient(object):
 
 
 class SubmitAPI(APIView):
+    """
+    提交的API
+    token和client的设置需要根据具体在docker-compose里是怎么设置的来进行相应的设置
+    """
     def post(self, request):
         serializer = SubmitSerializer(data=request.data)
         if serializer.is_valid():
@@ -126,6 +139,9 @@ class SubmitAPI(APIView):
 
 
 class GetSubmissionAPI(APIView):
+    """
+    返回用户在哪场考试哪个题目里的所有提交记录
+    """
     def post(self, request):
         serializer = GetSubmissionSerializer(data=request.data)
         if serializer.is_valid():
@@ -136,41 +152,6 @@ class GetSubmissionAPI(APIView):
             submissions = Submission.objects.filter(contest=contest,
                                                     problem=problem,
                                                     user=user)
-            return Response(submissions.values("result", "sub_time"), status=status.HTTP_200_OK)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class ContestSubmissionAPI(APIView):
-    def post(self, request):
-        serializer = GetSubmissionSerializer(data=request.data)
-        if serializer.is_valid():
-            data = serializer.data
-            contest = Contest.objects.get(id=data["contest_id"])
-            submissions = Submission.objects.filter(contest=contest)
-            return Response(submissions.values("result", "sub_time"), status=status.HTTP_200_OK)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class ProblemSubmissionAPI(APIView):
-    def post(self, request):
-        serializer = GetSubmissionSerializer(data=request.data)
-        if serializer.is_valid():
-            data = serializer.data
-            problem = Problem.objects.get(_id=data["problem_id"])
-            submissions = Submission.objects.filter(problem=problem)
-            return Response(submissions.values("result", "sub_time"), status=status.HTTP_200_OK)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class UserSubmissionAPI(APIView):
-    def post(self, request):
-        serializer = GetSubmissionSerializer(data=request.data)
-        if serializer.is_valid():
-            user = getUserFromRequest(request)
-            submissions = Submission.objects.filter(user=user)
             return Response(submissions.values("result", "sub_time"), status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

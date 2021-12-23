@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 from account.models import User
 from problem.models import Problem
 from contest.models import Contest
@@ -8,6 +7,9 @@ import secrets
 
 
 class JudgeStatus:
+    """
+    判题的状态，与QDU的Judge Server相对应
+    """
     COMPILE_ERROR = -2
     WRONG_ANSWER = -1
     ACCEPTED = 0
@@ -26,6 +28,9 @@ def get_rand_id(len=32, allow_chars="abcdefghijklmnopqrstuvwxyz0123456789"):
 
 
 class Submission(models.Model):
+    """
+    提交相关的字段
+    """
     contest = models.ForeignKey(Contest, on_delete=models.CASCADE, verbose_name=u'对应考试')
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE, verbose_name=u'对应题目')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=u'提交用户')
