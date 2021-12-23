@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 from .models import Contest, ContestRank
 from .serializers import CreateContestSerializer, GetContestRankSerializer
-from account.models import Class, AdminType, User
+from account.models import Class, AdminType, User, Class
 from account.views import getUserFromRequest
 from submission.models import Submission
 from problem.models import Problem
@@ -19,7 +19,8 @@ class GetContestListAPI(APIView):
 
     def get(self, request):
         user = getUserFromRequest(request)
-        contests = Contest.objects.filter(class_info=user.class_info,
+        user_class = Class.objects.get(class_number=user.class_info)
+        contests = Contest.objects.filter(class_info=user_class,
                                           end_time__gt=now())
         return Response(contests.values(), status=status.HTTP_200_OK)
 
