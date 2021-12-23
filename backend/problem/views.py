@@ -11,7 +11,21 @@ from contest.models import Contest, ContestStatus
 from account.views import getUserFromRequest
 
 
+"""
+创建题目因为涉及输入输出文件的传输和存储，前端上比较难做还没有做好
+所以目前是将题目注册到了admin以纯后端来进行题目的添加，暂时没有创建和修改题目的接口
+另外因为使用的是QDU开源的Judger Server，其对题目的存储格式有特殊要求，纯后端没有处理的方法
+目前暂时将其需要对输入输出文件进行的格式处理写成了一个脚本放在了/problem_data里，具体的使用方法见其中的README
+后续如果使用其他的Judger或者自己写好了判题沙箱的话可以定义好题目输入输出文件的使用规则，从而好写创建和修改题目的接口
+
+还有一个问题是添加题目到考试前端也比较难没有做好
+但后端这边从题目的搜索到添加接口都已经做好了，只需要前端做好之后测以下交互即可
+"""
+
 class GetProblemFromContestAPI(APIView):
+    """
+    获取某场考试的所有题目列表
+    """
     def post(self, request):
         serializer = GetContestIDSerializer(data=request.data)
         if serializer.is_valid():
@@ -26,6 +40,9 @@ class GetProblemFromContestAPI(APIView):
 
 
 class GetProblemDetailAPI(APIView):
+    """
+    获取某个题目的具体信息
+    """
     def post(self, request):
         serializer = GetProblemIDSerializer(data=request.data)
         if serializer.is_valid():
@@ -37,11 +54,17 @@ class GetProblemDetailAPI(APIView):
 
 
 class GetProblemListAPI(generics.ListAPIView):
+    """
+    获取所有题目
+    """
     queryset = Problem.objects.all()
     serializer_class = ProblemListSerializer
 
 
 class SearchProblemByIDAPI(APIView):
+    """
+    按照题目ID搜索题目
+    """
     def post(self, request):
         serializer = GetProblemIDSerializer(data=request.data)
         if serializer.is_valid():
@@ -53,6 +76,9 @@ class SearchProblemByIDAPI(APIView):
 
 
 class SearchProblemByTagAPI(APIView):
+    """
+    按照题目Tag搜索题目
+    """
     def post(self, request):
         serializer = GetProblemTagSerializer(data=request.data)
         if serializer.is_valid():
@@ -76,6 +102,9 @@ class SearchProblemByTagAPI(APIView):
 
 
 class SearchProblemByNameAPI(APIView):
+    """
+    按照题目名称搜索题目
+    """
     def post(self, request):
         serializer = GetProblemTitleSerializer(data=request.data)
         if serializer.is_valid():
@@ -87,6 +116,9 @@ class SearchProblemByNameAPI(APIView):
 
 
 class AddProblemToContestAPI(APIView):
+    """
+    添加某个题目到某场考试
+    """
     def post(self, request):
         serializer = AddProblemToContestSerializer(data=request.data)
         if serializer.is_valid():
