@@ -3,12 +3,20 @@ from django.db import models
 
 
 class AdminType(object):
+    """
+    需求所要求的权限类型
+    其中"超级管理员"按照Django superuser即可，不需要在该字段中加入
+    """
     STUDENT = "Student"
     TEACHING_ASSISTANT = "Teaching_Assistant"
     TEACHER = "Teacher"
 
 
 class User(AbstractUser):
+    """
+    在User的实现上继承了AbstractUser，获得了扩展字段的能力
+    功能上来说已经够用，后续要继续扩展的可以直接扩展字段，如果要大改的话可以考虑继承AbstractBaseUser
+    """
     student_name = models.CharField(max_length=30, blank=True, verbose_name=u"姓名")
     student_number = models.CharField(max_length=11, blank=True, verbose_name=u"学号")
     class_info = models.IntegerField(null=True, blank=True, verbose_name=u"班级")
