@@ -1,5 +1,7 @@
 # 2021秋软件工程第7组：文科计算机考试平台
 
+## 前端部署
+
 
 ## 后端部署
 [![Python](https://img.shields.io/badge/python-3.8.10-red.svg?style=flat-square)](https://www.python.org/downloads/release/python-3810/)
@@ -33,7 +35,9 @@ DATABASES = {
 
 ## 判题服务器部署
 
-使用的是https://github.com/QingdaoU/JudgeServer，其部署方式见https://opensource.qduoj.com/#/judgeserver/deploy
+使用的是https://github.com/QingdaoU/JudgeServer。
+
+其部署方式见https://opensource.qduoj.com/#/judgeserver/deploy。
 
 完成部署后在存有`docker-compose.yml`的目录下执行`docker-compose up`即可启动判题服务器。
 
