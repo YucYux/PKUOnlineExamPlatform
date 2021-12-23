@@ -1,17 +1,22 @@
 from django.db import models
-from django.db.models import JSONField
 from django.utils.timezone import now
 
 from account.models import User, Class
 
 
 class ContestStatus:
+    """
+    表明考试状态
+    """
     TO_BE_STARTED = "1"
     ENDED = "-1"
     UNDERWAY = "0"
 
 
 class Contest(models.Model):
+    """
+    考试相关的字段
+    """
     title = models.CharField(max_length=100, verbose_name=u'考试名称')
     description = models.TextField(verbose_name=u'考试信息')
     start_time = models.DateTimeField(verbose_name=u'考试开始时间')
@@ -41,6 +46,9 @@ class Contest(models.Model):
 
 
 class ContestRank(models.Model):
+    """
+    考试成绩相关的字段
+    """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
     submission_number = models.IntegerField(default=0)

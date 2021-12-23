@@ -1,7 +1,7 @@
 import dateutil.parser
 
 from django.utils.timezone import now
-from rest_framework import status, generics
+from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -10,11 +10,13 @@ from .models import Contest, ContestRank
 from .serializers import CreateContestSerializer, GetContestRankSerializer
 from account.models import Class, AdminType, User, Class
 from account.views import getUserFromRequest
-from submission.models import Submission
 from problem.models import Problem
 
 
 class GetContestListAPI(APIView):
+    """
+    用于返回当前用户所在班级的尚未开始或正在进行的考试
+    """
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
@@ -26,6 +28,9 @@ class GetContestListAPI(APIView):
 
 
 class CreateContestAPI(APIView):
+    """
+    用于创建考试
+    """
     permission_classes = (IsAdminUser,)
 
     def post(self, request):
@@ -53,6 +58,9 @@ class CreateContestAPI(APIView):
 
 
 class GetEndedContestListAPI(APIView):
+    """
+    用于返回当前用户所在班级的已经结束的考试
+    """
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
@@ -63,6 +71,10 @@ class GetEndedContestListAPI(APIView):
 
 
 class GetContestRankAPI(APIView):
+    """
+    用于返回当前用户所在班级的已经结束的某场考试用户的成绩
+    TODO：考虑将成绩进一步细化为具体每道题通过了几个测试点，并且能够返回班级的平均分、中位数以及用户的排名等
+    """
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
