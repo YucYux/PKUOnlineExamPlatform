@@ -4,6 +4,9 @@ from account.models import User
 
 
 class Announcement(models.Model):
+    """
+    公告类
+    """
     title = models.CharField(max_length=100, verbose_name=u'公告标题')
     content = models.TextField(verbose_name=u'公告内容')
     create_time = models.DateTimeField(auto_now_add=True, verbose_name=u'公告创建时间')
