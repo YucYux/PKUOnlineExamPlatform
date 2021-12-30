@@ -56,9 +56,9 @@ DATABASES = {
 
 ## 判题服务器部署
 
-使用的是https://github.com/QingdaoU/JudgeServer。
+使用的是https://github.com/QingdaoU/JudgeServer
 
-其部署方式见https://opensource.qduoj.com/#/judgeserver/deploy。
+其部署方式见https://opensource.qduoj.com/#/judgeserver/deploy
 
 完成部署后在存有`docker-compose.yml`的目录下执行`docker-compose up`即可启动判题服务器。
 
